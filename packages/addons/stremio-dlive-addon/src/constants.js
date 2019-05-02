@@ -1,3 +1,3 @@
 module.exports = {
-    "url": "https://graphigo.prd.dlive.tv/"
+    url: "https://graphigo.prd.dlive.tv/"
 };
