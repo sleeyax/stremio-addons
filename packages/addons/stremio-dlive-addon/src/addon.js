@@ -36,7 +36,7 @@ module.exports = dlive.getCategories().then(categories => {
                 results = dlive.getLiveStreams(categoryId, args.extra.skip || -1, 50).then(streams => {
                     return streams.list.map(stream => {
                         return {
-                            id: stream.id,
+                            id: "dlive_user:" + stream.creator.username,
                             type: "tv",
                             genres: [streams.category],
                             name: stream.title,
@@ -61,16 +61,25 @@ module.exports = dlive.getCategories().then(categories => {
 
         let results;
 
-        switch (args) {
+        switch (args.type) {
             case "tv":
-                // TODO
+                results = dlive.getStreamSources(args.id).then(sources => {
+                    return sources.map(stream => {
+                        return {
+                            url: stream.url,
+                            title: stream.RESOLUTION + " " + stream.VIDEO
+                        };
+                    })
+                });
                 break;
             default:
-                results = Promise.resolve();
+                results = Promise.resolve([]);
                 break;
         }
 
-        return Promise.resolve({streams: []});
+        return results.then(items => {
+            return {streams: items};
+        });
     });
 
     builder.defineMetaHandler(args => {

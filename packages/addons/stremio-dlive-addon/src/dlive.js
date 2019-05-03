@@ -1,5 +1,6 @@
 const request = require("request-promise");
 const constants = require("./constants");
+const m3u8 = require("m3u8-stream-list");
 
 class Dlive {
     constructor() {}
@@ -12,14 +13,14 @@ class Dlive {
                 variables: {
                     text: "",
                     first: count,
-                    after: offset + ""
+                    after: offset.toString()
                 },
                 query: "query BrowsePageSearchCategory($text: String!, $first: Int, $after: String) {\n  search(text: $text) {\n    trendingCategories(first: $first, after: $after) {\n      ...HomeCategoriesFrag\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment HomeCategoriesFrag on CategoryConnection {\n  pageInfo {\n    endCursor\n    hasNextPage\n    __typename\n  }\n  list {\n    ...VCategoryCardFrag\n    __typename\n  }\n  __typename\n}\n\nfragment VCategoryCardFrag on Category {\n  id\n  backendID\n  title\n  imgUrl\n  watchingCount\n  __typename\n}\n"
             }
         }).then((response) => {
             currentList = currentList.concat(response["data"]["search"]["trendingCategories"]["list"]);
 
-            // Recursively call this function until we have all categories
+            // Recursively call current function until we have all categories
             if (response["data"]["search"]["trendingCategories"]["pageInfo"]["hasNextPage"] === true) {
                 const next = response["data"]["search"]["trendingCategories"]["pageInfo"]["endCursor"];
                 return this.getCategories(next, count, currentList);
@@ -51,6 +52,14 @@ class Dlive {
                 list: response["data"]["category"]["livestreams"]["list"],
                 category: response["data"]["category"]["title"]
             };
+        });
+    }
+
+    getStreamSources(username) {
+        // dlive_user:username
+        username = username.split(":")[1];
+        return request(constants.url_streams + username + ".m3u8").then(response => {
+            return m3u8(response);
         });
     }
 }
