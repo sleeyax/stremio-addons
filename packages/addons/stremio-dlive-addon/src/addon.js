@@ -3,12 +3,14 @@ const Dlive = require("./dlive");
 
 const dlive = new Dlive();
 
+// TODO: fetch stream background, avatar & description from operationName=LivestreamPage
+
 module.exports = dlive.getCategories().then(categories => {
     const manifest = {
-        "id": "com.sleeyax.dliveaddon",
+        "id": "com.sleeyax.dlive-addon",
         "name": "Dlive.tv",
         "version": "0.0.1",
-        "description": "View live streams from dlive.tv",
+        "description": "View livestreams from dlive.tv",
         "catalogs": [{
             "id": "dlive_catalog", "type": "tv", "name": "Dlive.tv", "genres": categories.map(item => item["title"]), "extra": [{
                 "name": "search", "isRequired": false
@@ -24,62 +26,45 @@ module.exports = dlive.getCategories().then(categories => {
 
     const builder = new addonBuilder(manifest);
 
-    builder.defineCatalogHandler((args) => {
-        console.log(args);
+    builder.defineCatalogHandler(async (args) => {
 
-        let results;
-
-        switch (args.type) {
-            case "tv":
-                const selectedCatagory = categories.find(item => item.title === args.extra.genre) || {backendID: 0};
-                const categoryId = selectedCatagory.backendID;
-                results = dlive.getLiveStreams(categoryId, args.extra.skip || -1, 50).then(streams => {
-                    return streams.list.map(stream => {
-                        return {
-                            id: "dlive_user:" + stream.creator.username,
-                            type: "tv",
-                            genres: [streams.category],
-                            name: stream.title,
-                            poster: stream.thumbnailUrl,
-                            posterShape: "landscape"
-                        };
-                    });
-                });
-                break;
-            default:
-                results = Promise.resolve([]);
-                break;
+        if (args.type !== "tv") {
+            return {metas: []};
         }
 
-        return results.then(items => {
-            return {metas: items};
+        const selectedCatagory = categories.find(item => item.title === args.extra.genre) || {backendID: 0};
+        const categoryId = selectedCatagory.backendID;
+        const streams = await dlive.getLiveStreams(categoryId, args.extra.skip || -1, 50);
+        const metas = streams.list.map(stream => {
+            return {
+                id: "dlive_user:" + stream.creator.username,
+                type: "tv",
+                genres: [streams.category],
+                name: stream.title,
+                poster: stream.thumbnailUrl,
+                posterShape: "landscape"
+            };
         });
+
+        return {metas};
     });
 
-    builder.defineStreamHandler(args => {
+    builder.defineStreamHandler(async (args) => {
         console.log(args);
 
-        let results;
-
-        switch (args.type) {
-            case "tv":
-                results = dlive.getStreamSources(args.id).then(sources => {
-                    return sources.map(stream => {
-                        return {
-                            url: stream.url,
-                            title: stream.RESOLUTION + " " + stream.VIDEO
-                        };
-                    })
-                });
-                break;
-            default:
-                results = Promise.resolve([]);
-                break;
+        if (args.type !== "tv") {
+            return {streams: []};
         }
 
-        return results.then(items => {
-            return {streams: items};
+        const streamSources = await dlive.getStreamSources(args.id);
+        const streams = streamSources.map(stream => {
+            return {
+                url: stream.url,
+                title: stream.RESOLUTION + " " + stream.VIDEO
+            };
         });
+
+        return {streams};
     });
 
     builder.defineMetaHandler(args => {
