@@ -6,53 +6,74 @@ class Dlive {
     constructor() {}
 
     getCategories(offset = -1, count = 50, currentList = []) {
-        return request(constants.url, {
-            method: "POST",
-            json: {
-                operationName: "BrowsePageSearchCategory",
-                variables: {
-                    text: "",
-                    first: count,
-                    after: offset.toString()
-                },
-                query: "query BrowsePageSearchCategory($text: String!, $first: Int, $after: String) {\n  search(text: $text) {\n    trendingCategories(first: $first, after: $after) {\n      ...HomeCategoriesFrag\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment HomeCategoriesFrag on CategoryConnection {\n  pageInfo {\n    endCursor\n    hasNextPage\n    __typename\n  }\n  list {\n    ...VCategoryCardFrag\n    __typename\n  }\n  __typename\n}\n\nfragment VCategoryCardFrag on Category {\n  id\n  backendID\n  title\n  imgUrl\n  watchingCount\n  __typename\n}\n"
-            }
-        }).then((response) => {
-            currentList = currentList.concat(response["data"]["search"]["trendingCategories"]["list"]);
+        return this.sendPost(constants.url, "BrowsePageSearchCategory", {
+            text: "",
+            first: count,
+            after: offset.toString()
+        }, constants.queries.BrowsePageSearchCategory)
+            .then(response => {
+                currentList = currentList.concat(response["data"]["search"]["trendingCategories"]["list"]);
 
-            // Recursively call current function until we have all categories
-            if (response["data"]["search"]["trendingCategories"]["pageInfo"]["hasNextPage"] === true) {
-                const next = response["data"]["search"]["trendingCategories"]["pageInfo"]["endCursor"];
-                return this.getCategories(next, count, currentList);
-            }
+                // Recursively call current function until we have all categories
+                if (response["data"]["search"]["trendingCategories"]["pageInfo"]["hasNextPage"] === true) {
+                    const next = response["data"]["search"]["trendingCategories"]["pageInfo"]["endCursor"];
+                    return this.getCategories(next, count, currentList);
+                }
 
-            return currentList;
-        });
+                return currentList;
+            });
     }
 
     getLiveStreams(categoryId, offset, count) {
+        return this.sendPost(constants.url, "CategoryLivestreamsPage", {
+            id: categoryId.toString(),
+            opt: {
+                first: count,
+                after: offset.toString(),
+                languageID: null,
+                order: "TRENDING",
+                showNSFW: true
+            }
+        }, constants.queries.CategoryLivestreamsPage)
+            .then(response => {
+                return {
+                    list: response["data"]["category"]["livestreams"]["list"],
+                    category: response["data"]["category"]["title"]
+                };
+            });
+    }
+
+    sendPost(url, operationName, variables, query) {
+        return request(url, {
+            method: "POST",
+            json: {operationName: operationName, variables: variables, query: query}
+        });
+    }
+
+    getUserInfo(displayname) {
         return request(constants.url, {
             method: "POST",
             json: {
-                operationName: "CategoryLivestreamsPage",
+                operationName: "LivestreamPage",
                 variables: {
-                    id: categoryId.toString(),
-                    opt: {
-                        first: count,
-                        after: offset.toString(),
-                        languageID: null,
-                        order: "TRENDING",
-                        showNSFW: true
-                    }
+                    add: false,
+                    displayname,
+                    isLoggedIn: false
                 },
-                query: "query CategoryLivestreamsPage($id: Int!, $opt: CategoryLivestreamsOption) {\n" + "  category(id: $id) {\n" + "    id\n" + "    backendID\n" + "    title\n" + "    imgUrl\n" + "    watchingCount\n" + "    languages {\n" + "      ...LanguageFrag\n" + "      __typename\n" + "    }\n" + "    livestreams(opt: $opt) {\n" + "      ...VCategoryLivestreamFrag\n" + "      __typename\n" + "    }\n" + "    __typename\n" + "  }\n" + "}\n" + "\n" + "fragment VCategoryLivestreamFrag on LivestreamConnection {\n" + "  pageInfo {\n" + "    endCursor\n" + "    hasNextPage\n" + "    __typename\n" + "  }\n" + "  list {\n" + "    permlink\n" + "    ageRestriction\n" + "    ...VLivestreamSnapFrag\n" + "    __typename\n" + "  }\n" + "  __typename\n" + "}\n" + "\n" + "fragment VLivestreamSnapFrag on Livestream {\n" + "  id\n" + "  creator {\n" + "    username\n" + "    displayname\n" + "    ...VDliveAvatarFrag\n" + "    ...VDliveNameFrag\n" + "    __typename\n" + "  }\n" + "  title\n" + "  totalReward\n" + "  watchingCount\n" + "  thumbnailUrl\n" + "  lastUpdatedAt\n" + "  __typename\n" + "}\n" + "\n" + "fragment VDliveAvatarFrag on User {\n" + "  avatar\n" + "  __typename\n" + "}\n" + "\n" + "fragment VDliveNameFrag on User {\n" + "  displayname\n" + "  partnerStatus\n" + "  __typename\n" + "}\n" + "\n" + "fragment LanguageFrag on Language {\n" + "  id\n" + "  backendID\n" + "  language\n" + "  __typename\n" + "}\n"
+                query: constants.queries.LivestreamPage
             }
         }).then((response) => {
-            return {
-                list: response["data"]["category"]["livestreams"]["list"],
-                category: response["data"]["category"]["title"]
-            };
+            return response["data"]["userByDisplayName"];
         });
+    }
+
+    searchLiveStreams(searchTerm) {
+        return this.sendPost(constants.url, "SearchPage", {
+            first: 10, text:
+            searchTerm,
+            isLoggedIn: false
+        }, constants.queries.SearchPage)
+            .then(response => response["data"]["search"]["livestreams"]["list"]);
     }
 
     getStreamSources(username) {
