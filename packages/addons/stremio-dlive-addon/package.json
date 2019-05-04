@@ -1,5 +1,5 @@
 {
-	"name": "stremio-addon-dlive",
+	"name": "stremio-dlive-addon",
 	"version": "0.0.1",
 	"description": "View streams from dlive.tv",
 	"scripts": {
