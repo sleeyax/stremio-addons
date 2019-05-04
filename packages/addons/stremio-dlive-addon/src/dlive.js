@@ -3,7 +3,6 @@ const constants = require("./constants");
 const m3u8 = require("m3u8-stream-list");
 
 class Dlive {
-    constructor() {}
 
     getCategories(offset = -1, count = 50, currentList = []) {
         return this.sendPost(constants.url, "BrowsePageSearchCategory", {
@@ -72,8 +71,8 @@ class Dlive {
     }
 
     getStreamSources(username) {
-        // dlive_user:username
-        username = username.split(":")[1];
+        // dlive_user:username|displayname
+        username = username.split(":")[1].split("|")[0];
         return request(constants.url_streams + username + ".m3u8").then(response => {
             return m3u8(response);
         });

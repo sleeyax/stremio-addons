@@ -43,7 +43,7 @@ async function init() {
 
         streams = streams.map(stream => {
             return {
-                id: "dlive_user:" + stream.creator.username,
+                id: "dlive_user:" + stream.creator.username + "|" + stream.creator.displayname,
                 type: "tv",
                 genres: [stream.category.title],
                 name: stream.title,
@@ -75,9 +75,30 @@ async function init() {
         return {streams};
     });
 
-    builder.defineMetaHandler(args => {
+    builder.defineMetaHandler(async args => {
         console.log("meta: ", args);
-        return Promise.resolve({meta: {}});
+
+        if (args.type !== "tv")
+            return Promise.resolve({meta: {}});
+
+        const displayname = args.id.split(":")[1].split("|")[1];
+        const userStreamInfo = await dlive.getUserInfo(displayname);
+
+        return {
+            meta: {
+                id: args.id,
+                type: "tv",
+                name: userStreamInfo.livestream.title,
+                genres: [userStreamInfo.livestream.category.title],
+                poster: userStreamInfo.livestream.thumbnailUrl,
+                posterShape: "landscape",
+                background: userStreamInfo.livestream.thumbnailUrl,
+                logo: userStreamInfo.avatar,
+                description: userStreamInfo.about,
+                director: [displayname],
+                language: userStreamInfo.livestream.language.language
+            }
+        };
     });
 
     return builder.getInterface();
