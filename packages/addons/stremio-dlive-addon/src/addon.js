@@ -21,7 +21,8 @@ async function init() {
         }],
         "resources": ["stream", "meta", "catalog"],
         "types": ["tv"],
-        "logo": "https://i.imgur.com/ATBbkfz.png"
+        "logo": "https://i.imgur.com/ATBbkfz.png",
+        "idPrefixes": ["dlive_"]
     };
 
     const builder = new addonBuilder(manifest);
