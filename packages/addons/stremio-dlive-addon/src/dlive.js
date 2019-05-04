@@ -35,12 +35,7 @@ class Dlive {
                 showNSFW: true
             }
         }, constants.queries.CategoryLivestreamsPage)
-            .then(response => {
-                return {
-                    list: response["data"]["category"]["livestreams"]["list"],
-                    category: response["data"]["category"]["title"]
-                };
-            });
+            .then(response => response["data"]["category"]["livestreams"]["list"]);
     }
 
     sendPost(url, operationName, variables, query) {

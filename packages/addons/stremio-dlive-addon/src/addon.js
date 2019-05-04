@@ -3,9 +3,8 @@ const Dlive = require("./dlive");
 
 const dlive = new Dlive();
 
-// TODO: fetch stream background, avatar & description from operationName=LivestreamPage
-
-module.exports = dlive.getCategories().then(categories => {
+async function init() {
+    const categories = await dlive.getCategories();
     const manifest = {
         "id": "com.sleeyax.dlive-addon",
         "name": "Dlive.tv",
@@ -27,30 +26,39 @@ module.exports = dlive.getCategories().then(categories => {
     const builder = new addonBuilder(manifest);
 
     builder.defineCatalogHandler(async (args) => {
+        console.log("catalog: ", args);
 
         if (args.type !== "tv") {
             return {metas: []};
         }
 
-        const selectedCatagory = categories.find(item => item.title === args.extra.genre) || {backendID: 0};
-        const categoryId = selectedCatagory.backendID;
-        const streams = await dlive.getLiveStreams(categoryId, args.extra.skip || -1, 50);
-        const metas = streams.list.map(stream => {
+        let streams = [];
+        if (args.extra.search) {
+            streams = await dlive.searchLiveStreams(args.extra.search);
+        }else{
+            const selectedCatagory = categories.find(item => item.title === args.extra.genre) || {backendID: 0};
+            const categoryId = selectedCatagory.backendID;
+            streams = await dlive.getLiveStreams(categoryId, args.extra.skip || -1, 50);
+        }
+
+        streams = streams.map(stream => {
             return {
                 id: "dlive_user:" + stream.creator.username,
                 type: "tv",
-                genres: [streams.category],
+                genres: [stream.category.title],
                 name: stream.title,
                 poster: stream.thumbnailUrl,
-                posterShape: "landscape"
+                posterShape: "landscape",
+                logo: stream.creator.avatar,
+                banner: stream.thumbnailUrl
             };
         });
 
-        return {metas};
+        return {metas: streams};
     });
 
     builder.defineStreamHandler(async (args) => {
-        console.log(args);
+        console.log("stream: ", args);
 
         if (args.type !== "tv") {
             return {streams: []};
@@ -68,10 +76,12 @@ module.exports = dlive.getCategories().then(categories => {
     });
 
     builder.defineMetaHandler(args => {
-        console.log(args);
+        console.log("meta: ", args);
         return Promise.resolve({meta: {}});
     });
 
     return builder.getInterface();
-});
+}
+
+module.exports = init();
 

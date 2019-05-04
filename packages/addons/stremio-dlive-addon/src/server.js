@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 const { serveHTTP } = require("stremio-addon-sdk");
-const addonReady = require("./addon");
+const addonInit = require("./addon");
 
-addonReady.then(addonInterface => {
+addonInit.then(addonInterface => {
     serveHTTP(addonInterface, { port: 49305 });
 });
 
