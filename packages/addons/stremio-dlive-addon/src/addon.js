@@ -20,7 +20,8 @@ async function init() {
             }]
         }],
         "resources": ["stream", "meta", "catalog"],
-        "types": ["tv"]
+        "types": ["tv"],
+        "logo": "https://i.imgur.com/ATBbkfz.png"
     };
 
     const builder = new addonBuilder(manifest);
@@ -105,4 +106,3 @@ async function init() {
 }
 
 module.exports = init();
-
