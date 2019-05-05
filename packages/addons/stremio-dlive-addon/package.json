@@ -4,7 +4,8 @@
 	"description": "View livestreams from dlive.tv",
 	"scripts": {
 		"start": "node src/server.js",
-		"start:watch": "node node_modules/nodemon/bin/nodemon.js src/server.js"
+		"start:watch": "node node_modules/nodemon/bin/nodemon.js src/server.js",
+		"publish": "node src/publish.js"
 	},
 	"dependencies": {
 		"m3u8-stream-list": "^1.1.0",
