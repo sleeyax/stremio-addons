@@ -20,8 +20,9 @@ module.exports = async () => {
         }],
         "resources": ["catalog", "meta", "stream"],
         "types": ["channel"],
-        "name": "stremio-podcasts-addon",
-        "description": "Listen to podcasts from gpodder",
+        "name": "Podcasts",
+        "logo": "https://i.imgur.com/d3ZykZR.png",
+        "description": "Listen to podcasts from gpodder.net",
         "idPrefixes": ["podcasts_"]
     };
     const builder = new addonBuilder(manifest);
@@ -42,7 +43,7 @@ module.exports = async () => {
                 poster: podcast.logo_url,
                 posterShape: "square",
                 background: podcast.logo_url,
-                logo: podcast.scaled_logo_url,
+                logo: podcast.logo_url,
                 description: podcast.description
             }
         });
