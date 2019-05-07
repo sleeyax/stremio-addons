@@ -47,6 +47,10 @@ class Gpodder {
     getPodCastInfo(feedUrl) {
         return this.sendGet(`${this.api_v2}/data/podcast.json?url=${feedUrl}`);
     }
+
+    searchPodCasts(searchTerm) {
+        return this.sendGet(`${this.url}/search.json?q=${searchTerm}`);
+    }
 }
 
 module.exports = Gpodder;

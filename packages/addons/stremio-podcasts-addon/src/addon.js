@@ -30,7 +30,8 @@ module.exports = async () => {
         console.log("catalogs: ", args);
 
         const count = args.extra.skip || 50;
-        let podcasts = args.extra.genre != null ? await gpodder.getPodCasts(args.extra.genre, count) : await gpodder.getTopPodcasts(count);
+        let podcasts = args.extra.search ? await gpodder.searchPodCasts(args.extra.search) :
+                       args.extra.genre != null ? await gpodder.getPodCasts(args.extra.genre, count) : await gpodder.getTopPodcasts(count);
 
         let metas = podcasts.map(podcast => {
             return {
@@ -41,7 +42,7 @@ module.exports = async () => {
                 poster: podcast.logo_url,
                 posterShape: "square",
                 background: podcast.logo_url,
-                logo: podcast.logo_url,
+                logo: podcast.scaled_logo_url,
                 description: podcast.description
             }
         });
