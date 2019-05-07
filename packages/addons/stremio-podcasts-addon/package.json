@@ -1,0 +1,20 @@
+{
+	"name": "stremio-podcasts-addon",
+	"version": "0.0.1",
+	"description": "Listen to podcasts from gpodder.net",
+	"scripts": {
+		"start": "node src/server.js",
+		"start:watch": "nodemon src/server.js",
+		"publish": "node src/publish.js"
+	},
+	"dependencies": {
+		"podcast-feed-parser": "^1.0.1",
+		"request": "^2.88.0",
+		"request-promise": "^4.2.4",
+		"stremio-addon-sdk": "1.2.0",
+		"xml-js": "^1.6.11"
+	},
+	"devDependencies": {
+		"nodemon": "^1.19.0"
+	}
+}
