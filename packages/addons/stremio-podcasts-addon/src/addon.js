@@ -1,11 +1,10 @@
 require('dotenv').config();
 const {addonBuilder} = require("stremio-addon-sdk");
-const Gpodder = require("./providers/gpodder");
-const ListenNotes = require("./providers/listennotes");
-const feedParser = require("podcast-feed-parser");
-const {b64decode, b64encode, toHumanReadableFileSize} = require("./helpers");
-const gpodder = new Gpodder();
-const listennotes = new ListenNotes(process.env.LISTEN_NOTES_API_KEY);
+
+const GpodderAdapter = require("./adapters/gpodder-adapter");
+const gpodderAdapter = new GpodderAdapter();
+const ListenNotesAdapter = require("./adapters/listennotes-adapter");
+const listenNotesAdapter = new ListenNotesAdapter();
 
 module.exports = async () => {
     const manifest = {
@@ -16,7 +15,7 @@ module.exports = async () => {
                 "id": "podcasts_gpodder_catalog",
                 "type": "Podcasts",
                 "name": "Gpodder",
-                "genres": (await gpodder.getAllCategories()).map(category => category.title),
+                "genres": await gpodderAdapter.getGenres(),
                 "extra": [{"name": "search", "isRequired": false}, {"name": "genre", "isRequired": false}, {"name": "skip", "isRequired": false}],
             },
             {
@@ -28,7 +27,7 @@ module.exports = async () => {
             }
         ],
         "resources": ["catalog", "meta", "stream"],
-        "types": ["series"],
+        "types": ["series", "channel"],
         "name": "Podcasts",
         "logo": "https://i.imgur.com/d3ZykZR.png",
         "description": "Listen to podcasts from gpodder.net",
@@ -39,71 +38,39 @@ module.exports = async () => {
     builder.defineCatalogHandler(async args => {
         console.log("catalogs: ", args);
 
-        const count = args.extra.skip || 50;
-        let podcasts = args.extra.search ? await gpodder.searchPodCasts(args.extra.search) :
-                       args.extra.genre != null ? await gpodder.getPodCasts(args.extra.genre, count) : await gpodder.getTopPodcasts(count);
+        let metas = [];
 
-        let metas = podcasts.map(podcast => {
-            return {
-                id: "podcasts_" + b64encode(podcast.url),
-                type: "channel",
-                genres: args.extra.genre || "Top",
-                name: podcast.title,
-                poster: podcast.logo_url,
-                posterShape: "square",
-                background: podcast.logo_url,
-                logo: podcast.logo_url,
-                description: podcast.description
-            }
-        });
-
+        switch(args.id.split("_")[1]) {
+            case "gpodder":
+                metas = await gpodderAdapter.getSummarizedMetaDataCollection(args);
+                break;
+            default:
+                break;
+        }
         return {metas};
     });
 
     builder.defineMetaHandler(async args => {
         console.log("meta: ", args);
 
-        const url = b64decode(args.id.split("_")[1]);
-        const feed = await feedParser.getPodcastFromFeed(await gpodder.getPodcastFeed(url));
+        switch(args.id.split("_")[1]) {
+            case "gpodder":
+                return gpodderAdapter.getMetaData(args);
+            default:
+                return Promise.resolve({meta: null});
+        }
 
-        return Promise.resolve({
-            meta: {
-                id: args.id,
-                type: "channel",
-                name: feed.meta.title,
-                genre: feed.meta.categories,
-                poster: feed.meta.imageURL,
-                posterShape: "square",
-                background: feed.meta.imageURL,
-                logo: feed.meta.imageURL,
-                description: feed.meta.description,
-                videos: feed.episodes.map(episode => {
-                    return {
-                        id: "podcasts_episode_" + b64encode(JSON.stringify(episode.enclosure)),
-                        title: episode.title,
-                        released: new Date(episode.pubDate)
-                    }
-                }),
-                director: [feed.meta.owner.name],
-                language: feed.meta.language,
-                website: feed.meta.link
-            }
-        });
     });
 
-    builder.defineStreamHandler(args => {
+    builder.defineStreamHandler(async args => {
         console.log("streams: ", args);
 
-        const episode = JSON.parse(b64decode(args.id.split("_")[2]));
-
-        return Promise.resolve({
-            streams: [
-                {
-                    url: episode.url,
-                    title: `${episode.type} (${toHumanReadableFileSize(episode.length)})`
-                }
-            ]
-        });
+        switch(args.id.split("_")[1]) {
+            case "gpodder":
+                return await gpodderAdapter.getStreams(args);
+            default:
+                return Promise.resolve({streams: null});
+        }
     });
 
     return builder.getInterface();
