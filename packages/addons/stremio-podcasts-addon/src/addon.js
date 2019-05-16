@@ -1,25 +1,34 @@
+require('dotenv').config();
 const {addonBuilder} = require("stremio-addon-sdk");
 const Gpodder = require("./providers/gpodder");
+const ListenNotes = require("./providers/listennotes");
 const feedParser = require("podcast-feed-parser");
 const {b64decode, b64encode, toHumanReadableFileSize} = require("./helpers");
 const gpodder = new Gpodder();
+const listennotes = new ListenNotes(process.env.LISTEN_NOTES_API_KEY);
 
 module.exports = async () => {
     const manifest = {
         "id": "com.sleeyax.podcasts-addon",
         "version": "0.0.1",
-        "catalogs": [{
-            "id": "podcasts_catalog",
-            "type": "channel",
-            "name": "Podcasts",
-            "genres": (await gpodder.getAllCategories()).map(category => category.title),
-            "extra": [{"name": "search", "isRequired": false}, {"name": "genre", "isRequired": false}, {
-                "name": "skip",
-                "isRequired": false
-            }],
-        }],
+        "catalogs": [
+            {
+                "id": "podcasts_gpodder_catalog",
+                "type": "Podcasts",
+                "name": "Gpodder",
+                "genres": (await gpodder.getAllCategories()).map(category => category.title),
+                "extra": [{"name": "search", "isRequired": false}, {"name": "genre", "isRequired": false}, {"name": "skip", "isRequired": false}],
+            },
+            {
+                "id": "podcasts_listennotes_catalog",
+                "type": "Podcasts",
+                "name": "Listen notes",
+                "genres": ["a", "b", "c"],
+                "extra": [{"name": "search", "isRequired": false}, {"name": "genre", "isRequired": false}, {"name": "skip", "isRequired": false}],
+            }
+        ],
         "resources": ["catalog", "meta", "stream"],
-        "types": ["channel"],
+        "types": ["series"],
         "name": "Podcasts",
         "logo": "https://i.imgur.com/d3ZykZR.png",
         "description": "Listen to podcasts from gpodder.net",
