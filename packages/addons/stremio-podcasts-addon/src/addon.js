@@ -22,7 +22,7 @@ module.exports = async () => {
                 "id": "podcasts_listennotes_catalog",
                 "type": "Podcasts",
                 "name": "Listen notes",
-                "genres": ["a", "b", "c"],
+                "genres": await listenNotesAdapter.getGenres(),
                 "extra": [{"name": "search", "isRequired": false}, {"name": "genre", "isRequired": false}, {"name": "skip", "isRequired": false}],
             }
         ],

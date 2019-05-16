@@ -1,5 +1,9 @@
 const request = require("request-promise");
 const querystring = require('querystring');
+const util = require("util");
+const fs = require("fs");
+const readFile = util.promisify(fs.readFile);
+const writeFile = util.promisify(fs.writeFile);
 
 class ListenNotes {
     constructor(apiKey) {
@@ -11,7 +15,17 @@ class ListenNotes {
     }
 
     getAllCategories() {
-        return this.queryAPI("/genres");
+        const genres = "cache/listennotes-genres.json";
+
+        // Load genres from cache or retrieve them from the API
+        if (fs.existsSync(genres)) {
+            return readFile(genres).then(text => JSON.parse(text));
+        }else{
+            return this.queryAPI("/genres").then(async res => {
+                await writeFile(genres, JSON.stringify(res));
+                return res;
+            });
+        }
     }
 
     queryAPI(route, params) {
@@ -23,6 +37,7 @@ class ListenNotes {
             method: "GET",
             headers: this.headers,
             body: querystring.stringify(params),
+            json: true
         });
     }
 }

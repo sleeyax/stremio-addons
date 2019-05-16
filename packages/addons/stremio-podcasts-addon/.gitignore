@@ -3,3 +3,5 @@ node_modules/
 .idea/
 debug.txt
 .env
+cache/*
+!cache/README.md

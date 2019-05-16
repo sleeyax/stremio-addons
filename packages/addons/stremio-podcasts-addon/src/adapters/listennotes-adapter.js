@@ -7,7 +7,9 @@ class ListenNotesAdapter extends BaseAdapter{
         this.provider = new ListenNotes(process.env.LISTEN_NOTES_API_KEY);
     }
 
-    async getGenres() {}
+    async getGenres() {
+        return (await this.provider.getAllCategories()).genres.map(category => category.name);
+    }
 
     async getSummarizedMetaDataCollection(args) {}
 
