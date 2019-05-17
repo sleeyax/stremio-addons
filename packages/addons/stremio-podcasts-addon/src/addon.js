@@ -30,7 +30,7 @@ module.exports = async () => {
         "types": ["series", "channel"],
         "name": "Podcasts",
         "logo": "https://i.imgur.com/d3ZykZR.png",
-        "description": "Listen to high quality podcasts from multiple sources",
+        "description": "#1 podcasts addon offering 688,000+ high quality podcasts from multiple sources!",
         "idPrefixes": ["podcasts_"]
     };
     const builder = new addonBuilder(manifest);
