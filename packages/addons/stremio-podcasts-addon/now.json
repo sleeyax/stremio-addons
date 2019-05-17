@@ -3,5 +3,8 @@
   "builds": [{ "src": "src/server.js", "use": "@now/node-server" }],
   "routes": [
     { "src": "/.*", "dest": "src/server.js"}
-  ]
+  ],
+  "env": {
+    "LISTEN_NOTES_API_KEY": "@listen_notes_api_key"
+  }
 }
