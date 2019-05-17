@@ -1,7 +1,6 @@
 node_modules/
 .vscode/
 .idea/
-debug.txt
 .env
-cache/*
 !cache/README.md
+cache/*
