@@ -179,8 +179,54 @@ class ListenNotesAdapter extends BaseAdapter{
         });
     }
 
-    async getStreams(args) {}
+    async getStreams(args) {
+        const id = args.id.split("_")[2];
+        const episode = await this.provider.getEpisodes(id);
 
+        const streams = [{
+            url: episode.audio,
+            title: "audio"
+        }, {
+            externalUrl: episode.listennotes_url,
+            title: "source"
+        }];
+
+
+        for (let key in episode.podcast.extra) {
+            const value = episode.podcast.extra[key];
+
+            if (key.indexOf("_") > -1) {
+                const name = key.split("_")[0];
+                const type = key.split("_")[1];
+                switch (type) {
+                    case "url":
+                        if (name === "youtube") {
+                            streams.push({
+                                ytid: value.split("?v=")[1],
+                                title: name
+                            });
+                            break;
+                        }
+
+                        value && streams.push({
+                            externalUrl: value,
+                            title: name
+                        });
+                        break;
+                    case "handle":
+                        value && streams.push({
+                            externalUrl: `https://${name}.com/${value}`,
+                            title: name
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        return Promise.resolve({streams});
+    }
 }
 
 module.exports = ListenNotesAdapter;

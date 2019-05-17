@@ -73,6 +73,8 @@ module.exports = async () => {
         switch(args.id.split("_")[1]) {
             case "gpodder":
                 return await gpodderAdapter.getStreams(args);
+            case "listennotes":
+                return await listenNotesAdapter.getStreams(args);
             default:
                 return Promise.resolve({streams: null});
         }

@@ -45,6 +45,10 @@ class ListenNotes {
             this.queryAPI("/podcasts/" + id, {next_episode_pub_date: nextPubDate, sort: "oldest_first"});
     }
 
+    getEpisodes(id) {
+        return this.queryAPI("/episodes/" + id);
+    }
+
     queryAPI(route, params) {
         return this.sendGet(`${this.api_v2}${route}`, params);
     }
