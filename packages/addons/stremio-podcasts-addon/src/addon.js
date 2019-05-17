@@ -9,7 +9,7 @@ const listenNotesAdapter = new ListenNotesAdapter();
 module.exports = async () => {
     const manifest = {
         "id": "com.sleeyax.podcasts-addon",
-        "version": "0.0.1",
+        "version": "1.0.0",
         "catalogs": [
             {
                 "id": "podcasts_gpodder_catalog",
@@ -30,7 +30,7 @@ module.exports = async () => {
         "types": ["series", "channel"],
         "name": "Podcasts",
         "logo": "https://i.imgur.com/d3ZykZR.png",
-        "description": "Listen to podcasts from gpodder.net",
+        "description": "Listen to high quality podcasts from multiple sources",
         "idPrefixes": ["podcasts_"]
     };
     const builder = new addonBuilder(manifest);

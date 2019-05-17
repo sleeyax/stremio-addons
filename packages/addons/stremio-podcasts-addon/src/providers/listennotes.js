@@ -49,6 +49,10 @@ class ListenNotes {
         return this.queryAPI("/episodes/" + id);
     }
 
+    getRandomPodcast() {
+        return this.queryAPI("/just_listen");
+    }
+
     queryAPI(route, params) {
         return this.sendGet(`${this.api_v2}${route}`, params);
     }

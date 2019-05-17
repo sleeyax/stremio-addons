@@ -9,7 +9,11 @@ class ListenNotesAdapter extends BaseAdapter{
     }
 
     async getGenres() {
-        return (await this.provider.getAllCategories()).genres.map(category => category.name.replace("&", "and"));
+        const categories = await this.provider.getAllCategories();
+        const genres =  categories.genres
+            .map(category => category.name.replace("&", "and"))
+            .sort();
+        return ["Random"].concat(genres); // unshift not working for some reason
     }
 
     /**
@@ -83,6 +87,33 @@ class ListenNotesAdapter extends BaseAdapter{
     }
 
     /**
+     * Returns a single random podcast episode as a meta preview object
+     * @return {Promise<{genres: string[], director: *[], background: string | SVGImageElement, releaseInfo: string, name: *, posterShape: string, logo: *, description: string | string, id: string, type: string, poster: *}[]>}
+     */
+    async getRandomPodcast() {
+        const collection = [await this.provider.getRandomPodcast()];
+        return collection.map(podcast => {
+            return {
+                id: "podcasts_listennotes_" + podcast.podcast_id,
+                type: "series",
+                genres: [
+                    `<strong>Length: </strong> ${Math.floor(podcast.audio_length_sec / 60)} minutes`,
+                    `<strong>Explicit content: </strong> ${podcast.explicit_content ? 'yes' : 'no'}`,
+                    `<i>Powered by listen notes</i>`
+                ],
+                director: [podcast.publisher],
+                releaseInfo: `${helpers.getFullYear(podcast.pub_date_ms)}`,
+                name: podcast.title,
+                poster: podcast.thumbnail,
+                posterShape: "square",
+                background: podcast.image,
+                logo: podcast.thumbnail,
+                description: podcast.description,
+            }
+        });
+    }
+
+    /**
      * Calculates the average episode length in minutes
      * @param episodes
      * @return number
@@ -108,6 +139,10 @@ class ListenNotesAdapter extends BaseAdapter{
             // search
             collection = await this.searchPodcasts(args.extra.search, skip);
         }else if (args.extra.genre != null) {
+            // random podcast
+            if (args.extra.genre === "Random")
+                return this.getRandomPodcast();
+
             // filter by genre
             const selectedGenre = (await this.provider.getAllCategories()).genres.find(category => category.name.replace("&", "and") === args.extra.genre);
             collection = await this.getPodcasts(skip, selectedGenre.id);
