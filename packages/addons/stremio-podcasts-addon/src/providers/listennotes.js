@@ -39,6 +39,12 @@ class ListenNotes {
         return this.queryAPI("/search", {q: searchTerm, offset: offset});
     }
 
+    getPodCastInfo(id, nextPubDate = null) {
+        return nextPubDate == null ?
+            this.queryAPI("/podcasts/" + id, {sort: "oldest_first"}) :
+            this.queryAPI("/podcasts/" + id, {next_episode_pub_date: nextPubDate, sort: "oldest_first"});
+    }
+
     queryAPI(route, params) {
         return this.sendGet(`${this.api_v2}${route}`, params);
     }

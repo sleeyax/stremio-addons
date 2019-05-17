@@ -59,6 +59,8 @@ module.exports = async () => {
         switch(args.id.split("_")[1]) {
             case "gpodder":
                 return gpodderAdapter.getMetaData(args);
+            case "listennotes":
+                return listenNotesAdapter.getMetaData(args);
             default:
                 return Promise.resolve({meta: null});
         }

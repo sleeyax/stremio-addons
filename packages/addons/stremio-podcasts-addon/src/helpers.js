@@ -20,13 +20,13 @@ function toHumanReadableFileSize(bytes) {
     return bytes.toFixed(1) +" " + units[i];
 }
 
-function debug(content, file = "debug.txt", jsonStringify = true) {
-    require("fs").writeFileSync(file, jsonStringify ? JSON.stringify(content) : content);
+function getFullYear(datestring) {
+    return new Date(datestring).getFullYear();
 }
 
 module.exports = {
     toHumanReadableFileSize,
     b64encode,
     b64decode,
-    debug
+    getFullYear
 };
