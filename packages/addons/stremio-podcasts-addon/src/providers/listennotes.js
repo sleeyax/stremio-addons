@@ -1,8 +1,4 @@
 const request = require("request-promise");
-const util = require("util");
-const fs = require("fs");
-const readFile = util.promisify(fs.readFile);
-const writeFile = util.promisify(fs.writeFile);
 
 class ListenNotes {
     constructor(apiKey) {
@@ -14,17 +10,7 @@ class ListenNotes {
     }
 
     getAllCategories() {
-        const genres = "cache/listennotes-genres.json";
-
-        // Load genres from cache or retrieve them from the API
-        if (fs.existsSync(genres)) {
-            return readFile(genres).then(text => JSON.parse(text));
-        }else{
-            return this.queryAPI("/genres").then(async res => {
-                await writeFile(genres, JSON.stringify(res));
-                return res;
-            });
-        }
+        return require("../../cache/listennotes-genres");
     }
 
     getPodCasts(genreId, page = 1) {

@@ -1,6 +1,16 @@
 {
   "version": 2,
-  "builds": [{ "src": "src/server.js", "use": "@now/node-server" }],
+  "builds": [
+    {
+      "src": "src/server.js",
+      "use": "@now/node-server",
+      "config": {
+        "includeFiles": [
+          "cache/**"
+        ]
+      }
+    }
+  ],
   "routes": [
     { "src": "/.*", "dest": "src/server.js"}
   ],

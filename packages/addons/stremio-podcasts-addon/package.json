@@ -5,7 +5,8 @@
 	"scripts": {
 		"start": "node src/server.js",
 		"start:watch": "nodemon src/server.js",
-		"publish": "node src/publish.js"
+		"publish": "node src/publish.js",
+		"cache": "node src/cache.js"
 	},
 	"dependencies": {
 		"dotenv": "^8.0.0",
@@ -15,6 +16,7 @@
 		"stremio-addon-sdk": "1.2.0"
 	},
 	"devDependencies": {
-		"nodemon": "^1.19.0"
+		"nodemon": "^1.19.0",
+		"rimraf": "^2.6.3"
 	}
 }
