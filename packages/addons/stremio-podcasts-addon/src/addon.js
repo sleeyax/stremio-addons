@@ -44,6 +44,9 @@ module.exports = async () => {
             case "gpodder":
                 metas = await gpodderAdapter.getSummarizedMetaDataCollection(args);
                 break;
+            case "listennotes":
+                metas = await listenNotesAdapter.getSummarizedMetaDataCollection(args);
+                break;
             default:
                 break;
         }

@@ -1,5 +1,4 @@
 const request = require("request-promise");
-const querystring = require('querystring');
 const util = require("util");
 const fs = require("fs");
 const readFile = util.promisify(fs.readFile);
@@ -28,6 +27,18 @@ class ListenNotes {
         }
     }
 
+    getPodCasts(genreId, page = 1) {
+        return this.queryAPI("/best_podcasts",{genre_id: genreId, page: page});
+    }
+
+    getTopPodcasts(page = 1) {
+        return this.queryAPI("/best_podcasts",  {page});
+    }
+
+    searchPodCasts(searchTerm, offset = 0) {
+        return this.queryAPI("/search", {q: searchTerm, offset: offset});
+    }
+
     queryAPI(route, params) {
         return this.sendGet(`${this.api_v2}${route}`, params);
     }
@@ -36,7 +47,7 @@ class ListenNotes {
         return request(url, {
             method: "GET",
             headers: this.headers,
-            body: querystring.stringify(params),
+            qs: params,
             json: true
         });
     }
