@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fs = require("fs");
 const ListenNotesProvider = require("./providers/listennotes");
 const rimraf = require("rimraf");
@@ -13,9 +14,16 @@ function generate() {
     const lnGenres = dir + "/listennotes-genres.json";
     if (!fs.existsSync(lnGenres)) {
         listenNotesProvider.queryAPI("/genres").then(res => {
-            fs.writeFile(lnGenres, JSON.stringify(res), (err) => {
-                if (!err)
-                    console.log("Successfully wrote to cache file " + lnGenres);
+            fs.writeFile(lnGenres, JSON.stringify(res), () => {
+                console.log("Successfully wrote to cache file " + lnGenres);
+            });
+        });
+    }
+    const lnRegions = dir + "/listennotes-regions.json";
+    if (!fs.existsSync(lnRegions)) {
+        listenNotesProvider.queryAPI("/regions").then(res => {
+            fs.writeFile(lnRegions, JSON.stringify(res), () => {
+                console.log("Successfully wrote to cache file " + lnRegions);
             });
         });
     }

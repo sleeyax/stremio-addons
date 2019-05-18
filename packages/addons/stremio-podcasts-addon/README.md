@@ -50,9 +50,9 @@ LISTEN_NOTES_API_KEY=xxx
 ```
 Replace 'xxx' with your [listen notes API](https://www.listennotes.com/api/) key.
 
-To start a development server that watches for file changes run `npm run start:watch`. In production you should be using `npm run start`.
+Now you have to generate the required cache files by running `npm run cache:generate`. Don't forget this step!
 
-Finally, generate required cache files by running `npm run cache gen` (make sure your server is running before using this command).
+Finally, to start a development server that watches for file changes run `npm run start:watch`. In production you should be using `npm run start`.
 
 ## Contributing
 Feel free to [open an issue](https://github.com/sleeyax/stremio-podcasts-addon/issues/new) in case of any problems. Pull requests are also greatly appreciated, but please open an issue first so it can be referenced.

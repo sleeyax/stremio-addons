@@ -6,7 +6,9 @@
 		"start": "node src/server.js",
 		"start:watch": "nodemon src/server.js",
 		"publish": "node src/publish.js",
-		"cache": "node src/cache.js"
+		"cache": "node src/cache.js",
+		"cache:generate": "npm run cache gen",
+		"cache:clear": "npm run cache clear"
 	},
 	"dependencies": {
 		"dotenv": "^8.0.0",
