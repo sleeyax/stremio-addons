@@ -1,6 +1,6 @@
 {
 	"name": "stremio-podcasts-addon",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Listen to high quality podcasts from multiple sources",
 	"scripts": {
 		"start": "node src/server.js",
