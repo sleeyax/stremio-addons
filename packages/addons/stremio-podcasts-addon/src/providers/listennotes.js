@@ -13,10 +13,6 @@ class ListenNotes {
         return require("../../cache/listennotes-genres");
     }
 
-    getAllRegions() {
-        return require("../../cache/listennotes-regions");
-    }
-
     getPodCasts(genreId, page = 1) {
         return this.queryAPI("/best_podcasts",{genre_id: genreId, page: page});
     }

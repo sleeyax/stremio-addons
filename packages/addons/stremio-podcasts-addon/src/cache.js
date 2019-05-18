@@ -19,14 +19,6 @@ function generate() {
             });
         });
     }
-    const lnRegions = dir + "/listennotes-regions.json";
-    if (!fs.existsSync(lnRegions)) {
-        listenNotesProvider.queryAPI("/regions").then(res => {
-            fs.writeFile(lnRegions, JSON.stringify(res), () => {
-                console.log("Successfully wrote to cache file " + lnRegions);
-            });
-        });
-    }
 }
 
 function clear() {
