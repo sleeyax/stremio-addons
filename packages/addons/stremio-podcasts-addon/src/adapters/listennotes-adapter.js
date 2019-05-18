@@ -50,20 +50,17 @@ class ListenNotesAdapter extends BaseAdapter{
     /**
      * Search specific podcast
      * @param query
-     * @param skip
+     * @param pages
      * @return {Promise<Array>}
      */
-    async searchPodcasts(query, skip) {
-        let offset = 0;
+    async searchPodcasts(query, pages) {
         let collection = [];
-        let total;
-        do {
+        let offset = 0;
+        for (let i=0; i<=pages; i++) {
             const res = await this.provider.searchPodCasts(query, offset);
             collection = collection.concat(res.results);
-            offset = res.nex_offset;
-            total = res.total;
-        } while (collection.length <= total && collection.length <= skip);
-
+            offset += res.next_offset;
+        }
         return collection;
     }
 
@@ -137,7 +134,7 @@ class ListenNotesAdapter extends BaseAdapter{
         let collection = [];
         if (args.extra.search) {
             // search
-            collection = await this.searchPodcasts(args.extra.search, skip);
+            collection = await this.searchPodcasts(args.extra.search, 3);
         }else if (args.extra.genre != null) {
             // random podcast
             if (args.extra.genre === "Random")
