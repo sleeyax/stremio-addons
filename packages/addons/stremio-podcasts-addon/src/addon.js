@@ -11,7 +11,7 @@ const spreakerAdapter = new SpreakerAdapter();
 module.exports = async () => {
     const manifest = {
         "id": "com.sleeyax.podcasts-addon",
-        "version": "2.0.0",
+        "version": "2.0.1",
         "catalogs": [
             {
                 "id": "podcasts_gpodder_catalog",
@@ -74,6 +74,8 @@ module.exports = async () => {
                 return gpodderAdapter.getMetaData(args);
             case "listennotes":
                 return listenNotesAdapter.getMetaData(args);
+            case "spreaker":
+                return spreakerAdapter.getMetaData(args);
             default:
                 return Promise.resolve({meta: null});
         }
@@ -88,6 +90,8 @@ module.exports = async () => {
                 return await gpodderAdapter.getStreams(args);
             case "listennotes":
                 return await listenNotesAdapter.getStreams(args);
+            case "spreaker":
+                return await spreakerAdapter.getStreams(args);
             default:
                 return Promise.resolve({streams: null});
         }

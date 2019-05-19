@@ -1,5 +1,6 @@
 const BaseAdapter = require("./base-adapter");
 const Spreaker = require("../providers/spreaker");
+const {calcAverage} = require("../helpers");
 
 class SpreakerAdapter extends BaseAdapter {
     constructor() {
@@ -22,16 +23,26 @@ class SpreakerAdapter extends BaseAdapter {
      * @param skip
      */
     async getShows(genreId, skip) {
-        let shows = null;
-
         if (skip == null)
             this.storage.nextUrl = undefined;
 
         // The Spreaker API doesn't support offsets for pagination, so just store the nex page URL (next_url) in a private variable so we can recall it later.
-        shows = (this.storage.nextUrl !== undefined) ? await this.provider.sendGet(this.storage.nextUrl) : await this.provider.getShows(genreId, 50);
+        let shows = (this.storage.nextUrl !== undefined) ? await this.provider.sendGet(this.storage.nextUrl) : await this.provider.getShows(genreId, 50);
         this.storage.nextUrl = shows.response.next_url;
 
         return shows;
+    }
+
+    async getEpisodes(showId) {
+        let episodes = await this.provider.getEpisodes(showId);
+        let next = episodes.response.next_url;
+        while (next !== null) {
+            const nextEpisodes = await this.provider.sendGet(next);
+            episodes.response.items = episodes.response.items.concat(nextEpisodes.response.items);
+            next = nextEpisodes.response.next_url;
+        }
+
+        return episodes;
     }
 
     async getSummarizedMetaDataCollection(args) {
@@ -76,9 +87,65 @@ class SpreakerAdapter extends BaseAdapter {
         });
     }
 
-    async getMetaData(args) {}
+    async getMetaData(args) {
+        const showId = args.id.split("_")[2];
+        const details = (await this.provider.getShowDetails(showId)).response.show;
+        const episodes = await this.getEpisodes(details.show_id);
 
-    async getStreams(args) {}
+        return Promise.resolve({
+            meta: {
+                id: args.id,
+                type: "series",
+                name: details.title,
+                genres: [(await this.provider.getAllCategories()).response.categories
+                    .find(category => category.category_id === details.category_id).name
+                    .replace("&", "And")],
+                poster: details.original_image_url,
+                posterShape: "square",
+                background: details.cover_image_url || details.image_original_url,
+                logo: details.image_url,
+                description: details.description,
+                videos: episodes.response.items.map((episode, i) => {
+                    return {
+                        id: "podcasts_spreaker_" + episode.episode_id,
+                        title: episode.title,
+                        released: new Date(episode.published_at).toISOString(),
+                        season: 1,
+                        episode: i + 1,
+                    }
+                }),
+                director: [details.author.username || details.author.fullname],
+                language: details.language,
+                website: details.website_url,
+                runtime: `Average episode length: ${Math.floor((calcAverage(episodes.response.items.map(episode => episode.duration)) / 60) / 1000)} minutes`
+            }
+        });
+    }
+
+    async getStreams(args) {
+        const episodeId = args.id.split("_")[2];
+        const episode = (await this.provider.getEpisode(episodeId)).response.episode;
+
+        return Promise.resolve({
+            streams:
+                [{
+                    url: episode.playback_url,
+                    title: "audio"
+                },
+                {
+                    externalUrl: episode.site_url,
+                    title: "source"
+                },
+                {
+                    externalUrl: episode.download_url,
+                    title: "download"
+                },
+                {
+                    externalUrl: episode.waveform_url,
+                    title: "waveform"
+                }]
+        });
+    }
 }
 
 module.exports = SpreakerAdapter;

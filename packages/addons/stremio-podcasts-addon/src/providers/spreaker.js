@@ -31,6 +31,14 @@ class Spreaker {
         return this.queryAPI("/shows/" + showId);
     }
 
+    getEpisodes(showId) {
+        return this.queryAPI(`/shows/${showId}/episodes?sorting=oldest&limit=100`);
+    }
+
+    getEpisode(episodeId) {
+        return this.queryAPI("/episodes/" + episodeId);
+    }
+
     getShows(categoryId, count, lastId = null) {
         return this.queryAPI(`/explore/categories/${categoryId}/items?limit=${count}` + (lastId ? `&last_id=${lastId}` : ""));
     }
