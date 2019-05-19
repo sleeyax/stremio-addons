@@ -8,7 +8,7 @@
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/for-you.svg)](https://forthebadge.com)
 
-> Currently over 688,345 podcasts available!
+> Currently over ‭698,345‬ podcasts available!
 
 ## Features
 * Always included
@@ -21,16 +21,22 @@
     * Random podcast generator
     * Explicit content warning
     * Show average episode length
-    * Podcast source & social media links
+    * Podcast source & social media links (if available)
 * 2400+ podcasts from [gpodder](https://www.gpodder.net/) featuring
     * Searchable episodes
+* 10,000+ podcasts from [spreaker](https://www.spreaker.com/) featuring
+    * Popular and recommended podcasts
+    * Download podcast
+    * View podcast source
+    * Show average episode length
+    * Show podcast in waveform (if available)
 
 ## Screenshots
 **catalog**
 ![listen notes catalog](https://i.imgur.com/AGcNgNj.jpg)
 
 **episode selection**
-![listen notes episode selection](https://i.imgur.com/eOCbIUp.png)
+![listen notes episode selection](https://i.imgur.com/sNhsNND.jpg)
 
 ## Installation
 There are multiple ways to install this addon. Luxurious!
