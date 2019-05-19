@@ -20,6 +20,19 @@ function toHumanReadableFileSize(bytes) {
     return bytes.toFixed(1) +" " + units[i];
 }
 
+/**
+ * @param {Array} items
+ * @return {number}
+ */
+function calcAverage(items) {
+    let total = 0;
+    items.forEach(item => {
+        total += item;
+    });
+
+    return total / items.length;
+}
+
 function getFullYear(datestring) {
     return new Date(datestring).getFullYear();
 }
@@ -28,5 +41,6 @@ module.exports = {
     toHumanReadableFileSize,
     b64encode,
     b64decode,
-    getFullYear
+    getFullYear,
+    calcAverage
 };
