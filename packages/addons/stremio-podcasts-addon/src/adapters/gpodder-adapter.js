@@ -59,7 +59,7 @@ class GpodderAdapter extends BaseAdapter{
                 id: args.id,
                 type: "channel",
                 name: feed.meta.title,
-                genre: feed.meta.categories,
+                genres: feed.meta.categories,
                 poster: feed.meta.imageURL,
                 posterShape: "square",
                 background: feed.meta.imageURL,

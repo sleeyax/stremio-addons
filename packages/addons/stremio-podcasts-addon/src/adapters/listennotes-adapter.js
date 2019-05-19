@@ -203,7 +203,7 @@ class ListenNotesAdapter extends BaseAdapter{
                         overview: episode.description
                     }
                 }),
-                director: metadata.publisher,
+                director: [metadata.publisher],
                 language: metadata.language,
                 country: metadata.country,
                 website: metadata.website
