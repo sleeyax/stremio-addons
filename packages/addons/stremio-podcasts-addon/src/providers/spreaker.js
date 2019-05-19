@@ -47,7 +47,7 @@ class Spreaker {
         return this.queryAPI("/explore/lists/211/items");
     }
 
-    getFeatured() {
+    getRecommended() {
         return this.queryAPI("/explore/lists/108/items");
     }
 

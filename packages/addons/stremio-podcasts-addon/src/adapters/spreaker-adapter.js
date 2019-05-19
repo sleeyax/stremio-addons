@@ -11,7 +11,7 @@ class SpreakerAdapter extends BaseAdapter {
 
     async getGenres() {
         const categories = await this.provider.getAllCategories();
-        return ["Featured", "Popular"].concat(categories.response.categories
+        return ["Popular", "Recommended"].concat(categories.response.categories
             .map(category => category.name.replace("&", "And"))
             .sort()
         );
@@ -52,8 +52,8 @@ class SpreakerAdapter extends BaseAdapter {
         if (args.extra.genre) {
             // genre
             switch (args.extra.genre) {
-                case "Featured":
-                    shows = await this.provider.getFeatured();
+                case "Recommended":
+                    shows = await this.provider.getRecommended();
                     break;
                 case "Popular":
                     shows = await this.provider.getPopular();
