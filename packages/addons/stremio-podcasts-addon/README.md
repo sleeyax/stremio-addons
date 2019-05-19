@@ -8,8 +8,6 @@
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/for-you.svg)](https://forthebadge.com)
 
-> Currently over ‭698,345‬ podcasts available!
-
 ## Features
 * Always included
     * Filter by genre (sorted)
@@ -56,7 +54,7 @@ LISTEN_NOTES_API_KEY=xxx
 ```
 Replace 'xxx' with your [listen notes API](https://www.listennotes.com/api/) key.
 
-Now you have to generate the required cache files by running `npm run cache:generate`. Don't forget this step!
+Now you have to generate the required cache files by running `npm run cache:generate`. Don't forget this step if you want the listen notes catalog to work!
 
 Finally, to start a development server that watches for file changes run `npm run start:watch`. In production you should be using `npm run start`.
 

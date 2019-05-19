@@ -40,7 +40,7 @@ module.exports = async () => {
         "name": "Podcasts",
         "logo": "https://i.imgur.com/d3ZykZR.png",
         "background": "https://i.imgur.com/mUFi0SR.jpg",
-        "description": "#1 podcasts addon offering ‭698,000+ high quality podcasts from multiple sources!",
+        "description": "#1 podcasts addon offering ‭almost unlimited high quality podcasts from multiple sources!",
         "idPrefixes": ["podcasts_"]
     };
     const builder = new addonBuilder(manifest);
