@@ -5,17 +5,26 @@ const GpodderAdapter = require("./adapters/gpodder-adapter");
 const gpodderAdapter = new GpodderAdapter();
 const ListenNotesAdapter = require("./adapters/listennotes-adapter");
 const listenNotesAdapter = new ListenNotesAdapter();
+const SpreakerAdapter = require("./adapters/spreaker-adapter");
+const spreakerAdapter = new SpreakerAdapter();
 
 module.exports = async () => {
     const manifest = {
         "id": "com.sleeyax.podcasts-addon",
-        "version": "1.0.2",
+        "version": "2.0.0",
         "catalogs": [
             {
                 "id": "podcasts_gpodder_catalog",
                 "type": "Podcasts",
                 "name": "Gpodder",
                 "genres": await gpodderAdapter.getGenres(),
+                "extra": [{"name": "search", "isRequired": false}, {"name": "genre", "isRequired": false}, {"name": "skip", "isRequired": false}],
+            },
+            {
+                "id": "podcasts_spreaker_catalog",
+                "type": "Podcasts",
+                "name": "Spreaker",
+                "genres": await spreakerAdapter.getGenres(),
                 "extra": [{"name": "search", "isRequired": false}, {"name": "genre", "isRequired": false}, {"name": "skip", "isRequired": false}],
             },
             {
@@ -47,6 +56,9 @@ module.exports = async () => {
                 break;
             case "listennotes":
                 metas = await listenNotesAdapter.getSummarizedMetaDataCollection(args);
+                break;
+            case "spreaker":
+                metas = await spreakerAdapter.getSummarizedMetaDataCollection(args);
                 break;
             default:
                 break;
