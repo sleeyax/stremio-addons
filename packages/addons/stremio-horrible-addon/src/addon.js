@@ -19,7 +19,7 @@ module.exports = async () => {
         "types": ["series", "movie"],
         "name": "Anime from HorribleSubs",
         "logo": "",
-        "background": "",
+        "background": "https://i.imgur.com/VBE8bCb.png",
         "description": "Anime torrents from HorribleSubs",
         "idPrefixes": ["horrible_"]
     };
@@ -35,13 +35,18 @@ module.exports = async () => {
             animes = await horribleSubs.searchAnimes(args.extra.search);
         }
 
-        animes = animes.map(anime => {
+        animes = animes.map(async anime => {
+            const info = await horribleSubs.getAnimeInfo(anime.url);
             return {
-                id: "horrible_" + b64encode(anime.url), type: "series", name: anime.title
+                id: "horrible_" + b64encode(anime.url),
+                type: "series",
+                name: anime.title,
+                poster: info.picture,
+                description: info.description
             };
         });
 
-        return {metas: animes};
+        return {metas: await Promise.all(animes)};
     });
 
     builder.defineMetaHandler(async args => {
@@ -59,6 +64,7 @@ module.exports = async () => {
                 runtime: animeInfo.title,
                 genres: ["Anime"],
                 poster: animeInfo.picture,
+                background: "https://i.imgur.com/zepn5fy.png",
                 logo: animeInfo.picture,
                 description: animeInfo.description,
                 videos: episodes.reverse().map((episode, i) => {
