@@ -43,6 +43,13 @@ There are multiple ways to install this addon. Luxurious!
 * Open the addon manager and paste `https://stremio-podcasts-addon.sleeyax.now.sh/manifest.json` in the addon repository field.<br>
 ![addon repo field](https://i.imgur.com/RODMkww.png)
 
+## FAQ
+Catalog X is not working?
+- Some catalogs (listen notes) are using a paid API to retrieve podcasts info. This means that it will stop working whenever a certain amount of requests is reached, unless paid for. This addon is a community effort and I do not plan to pay for additional costs. You can send me an email if you wish to donate some money.
+
+I found a bug
+- Squash it, fork it or [open an issue](https://github.com/sleeyax/stremio-podcasts-addon/issues/new)!
+
 ## Running locally
 First of all make sure you have a recent version of nodejs (https://nodejs.org/) installed. Then clone this repo and run:
 ```
