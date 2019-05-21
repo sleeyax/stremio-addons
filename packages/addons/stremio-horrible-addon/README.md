@@ -25,9 +25,6 @@
 * Open the addon manager and paste `https://stremio-horrible-addon.sleeyax.now.sh/manifest.json` in the addon repository field.<br>
 ![addon repo field](https://i.imgur.com/RODMkww.png)
 
-## Known bugs
-* Combined episodes (e.g. ep. 1-12 in one torrent) do not show up in the episode selection. This will be fixed in upcoming updates.
-
 ## Running locally
 Make sure you have the latest version of NodeJS installed. Then clone this repo and run `npm install`. 
 You can start a development server with `npm run start:watch`, just make sure to use `npm run start` in production.
