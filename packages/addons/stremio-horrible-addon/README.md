@@ -21,7 +21,7 @@
 
 ## Installation
 * Click on the addon manager icon ![addon manager icon](https://i.imgur.com/oFBLNem.png) on the top right. Browse or search for `Anime from HorribleSubs` and click install. 
-* Go to the [homepage](https://stremio-podcasts-addon.sleeyax.now.sh/) of this addon and click `install`.
+* Go to the [homepage](https://stremio-horrible-addon.sleeyax.now.sh/) of this addon and click `install`.
 * Open the addon manager and paste `https://stremio-horrible-addon.sleeyax.now.sh/manifest.json` in the addon repository field.<br>
 ![addon repo field](https://i.imgur.com/RODMkww.png)
 
