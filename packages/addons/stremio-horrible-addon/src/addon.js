@@ -30,7 +30,7 @@ module.exports = async () => {
 
         let animes = [];
         if (args.extra.genre) {
-            animes = await horribleSubs.getAnimes(args.extra.genre.toLowerCase(), args.extra.skip || 0, 50);
+            animes = await horribleSubs.getAnimes(args.extra.genre.toLowerCase(), args.extra.skip || 0, 25);
         } else if (args.extra.search) {
             animes = await horribleSubs.searchAnimes(args.extra.search);
         }
