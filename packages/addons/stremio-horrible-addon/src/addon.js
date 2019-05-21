@@ -18,7 +18,7 @@ module.exports = async () => {
         "resources": ["catalog", "meta", "stream"],
         "types": ["series", "movie"],
         "name": "Anime from HorribleSubs",
-        "logo": "",
+        "logo": "https://i.imgur.com/hXzIUeN.jpg",
         "background": "https://i.imgur.com/VBE8bCb.png",
         "description": "Anime torrents from HorribleSubs",
         "idPrefixes": ["horrible_"]
