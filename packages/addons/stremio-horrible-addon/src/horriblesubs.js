@@ -21,9 +21,23 @@ async function searchAnimes(query) {
     return (await horribleSubsAPI.getAllAnime()).filter(anime => anime.title.toLowerCase().indexOf(query.toLowerCase()) > -1);
 }
 
+function formatDate(datesString) {
+    switch (datesString.toLowerCase()) {
+        case "today":
+            return new Date().toISOString();
+        case "yesterday":
+            const d = new Date();
+            d.setDate(d.getDate() - 1);
+            return d.toISOString();
+        default:
+            return new Date(datesString).toISOString();
+    }
+}
+
 module.exports = {
     getAnimeEpisodes,
     getAnimes,
     searchAnimes,
-    getAnimeInfo
+    getAnimeInfo,
+    formatDate
 };

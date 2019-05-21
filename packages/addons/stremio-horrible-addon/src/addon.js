@@ -61,7 +61,7 @@ module.exports = async () => {
                 id: "horrible_" + b64encode(animeInfo.id),
                 type: "series",
                 name: animeInfo.title,
-                runtime: animeInfo.title,
+                runtime: `${animeInfo.title} | ${episodes.length} episodes`,
                 genres: ["Anime"],
                 poster: animeInfo.picture,
                 background: "https://i.imgur.com/zepn5fy.png",
@@ -73,7 +73,7 @@ module.exports = async () => {
                         title: `${animeInfo.title} episode ${episode.number}`,
                         episode: i + 1,
                         season: 1,
-                        released: todayMinDays(episodes.length - i).toISOString() // TODO: fork & update api so we can scrape the real date
+                        released: horribleSubs.formatDate(episode.releaseDate)
                     }
                 }),
             }
