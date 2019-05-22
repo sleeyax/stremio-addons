@@ -38,6 +38,6 @@ if (process.argv.length === 3) {
             break;
     }
 }else{
-    console.error("Invalid argumebts: expected 'clear', 'gen'. Example: 'node cache.js gen'");
+    console.error("Invalid arguments: expected 'clear', 'gen'. Example: 'node cache.js gen'");
 }
 
