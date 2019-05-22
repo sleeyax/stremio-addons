@@ -1,6 +1,6 @@
 const {addonBuilder} = require("stremio-addon-sdk");
 const horribleSubs = require("./horriblesubs");
-const {b64encode, b64decode, todayMinDays, base16decode, base16encode, base32decode} = require("./helpers");
+const {b64encode, b64decode, base16encode, base32decode} = require("./helpers");
 
 module.exports = async () => {
     const manifest = {

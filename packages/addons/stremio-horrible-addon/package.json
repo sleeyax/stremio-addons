@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "b32": "^0.2.0",
-    "node-horriblesubs": "github:sleeyax/node-horriblesubs#improvements",
+    "node-horriblesubs": "1.0.3",
     "nodemon": "^1.19.0",
     "stremio-addon-sdk": "1.2.0"
   }

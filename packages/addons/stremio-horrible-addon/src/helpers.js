@@ -16,14 +16,10 @@ function base16encode(plaintext){
     return Buffer.from(plaintext, "utf-8").toString("hex")
 }
 
-function base16decode(encoded) {
-    return Buffer.from(encoded, "hex").toString();
-}
 
 module.exports = {
     b64encode,
     b64decode,
     base32decode,
-    base16encode,
-    base16decode
+    base16encode
 };
