@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "alias": "stremio-horrible-addon.sleeyax.tk",
   "builds": [
     { "src": "src/serverless.js", "use": "@now/node" }
   ],
