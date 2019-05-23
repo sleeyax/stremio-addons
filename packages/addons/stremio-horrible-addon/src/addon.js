@@ -1,11 +1,12 @@
 const {addonBuilder} = require("stremio-addon-sdk");
 const horribleSubs = require("./horriblesubs");
-const {b64encode, b64decode, base16encode, base32decode} = require("./helpers");
+const {b64encode, b64decode} = require("./helpers");
+const parseTorrent = require("parse-torrent");
 
 module.exports = async () => {
     const manifest = {
         "id": "com.sleeyax.horrible-addon",
-        "version": "0.0.2",
+        "version": "0.0.3",
         "catalogs": [{
             "id": "horrible:catalog",
             "type": "series",
@@ -91,7 +92,7 @@ module.exports = async () => {
             streams: selectedEpisode.resolutions.map(resolution => {
                 return {
                     title: resolution.name,
-                    infoHash: base16encode(base32decode(resolution.magnet.substr(0, resolution.magnet.indexOf("&")).split(":")[3]))
+                    infoHash: parseTorrent(resolution.magnet).infoHash
                 };
             })
         });
