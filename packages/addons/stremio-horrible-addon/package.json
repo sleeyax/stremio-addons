@@ -1,6 +1,6 @@
 {
   "name": "stremio-horrible-addon",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Anime torrents from HorribleSubs",
   "scripts": {
     "start": "node src/server.js",

@@ -5,9 +5,9 @@ const {b64encode, b64decode, base16encode, base32decode} = require("./helpers");
 module.exports = async () => {
     const manifest = {
         "id": "com.sleeyax.horrible-addon",
-        "version": "0.0.1",
+        "version": "0.0.2",
         "catalogs": [{
-            "id": "horrible_catalog",
+            "id": "horrible:catalog",
             "type": "series",
             "name": "HorribleSubs",
             "genres": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
@@ -21,7 +21,7 @@ module.exports = async () => {
         "logo": "https://i.imgur.com/hXzIUeN.jpg",
         "background": "https://i.imgur.com/VBE8bCb.png",
         "description": "Anime torrents from HorribleSubs",
-        "idPrefixes": ["horrible_"]
+        "idPrefixes": ["horrible"]
     };
     const builder = new addonBuilder(manifest);
 
@@ -38,7 +38,7 @@ module.exports = async () => {
         animes = animes.map(async anime => {
             const info = await horribleSubs.getAnimeInfo(anime.url);
             return {
-                id: "horrible_" + b64encode(anime.url),
+                id: "horrible:" + b64encode(anime.url),
                 type: "series",
                 name: anime.title,
                 poster: info.picture,
@@ -52,13 +52,13 @@ module.exports = async () => {
     builder.defineMetaHandler(async args => {
         console.log("meta: ", args);
 
-        const url = b64decode(args.id.split("_")[1]);
+        const url = b64decode(args.id.split(":")[1]);
         const animeInfo = await horribleSubs.getAnimeInfo(url);
         const episodes = await horribleSubs.getAnimeEpisodes(animeInfo.id);
 
         return Promise.resolve({
             meta: {
-                id: "horrible_" + b64encode(animeInfo.id),
+                id: "horrible:" + b64encode(url),
                 type: "series",
                 name: animeInfo.title,
                 runtime: `${animeInfo.title} | ${episodes.length} episodes`,
@@ -69,9 +69,9 @@ module.exports = async () => {
                 description: animeInfo.description,
                 videos: episodes.reverse().map((episode, i) => {
                     return {
-                        id: "horrible_" + animeInfo.id + "_" + episode.number,
+                        id: `horrible:${animeInfo.id}:1:${parseInt(episode.number)}`,
                         title: `${animeInfo.title} episode ${episode.number}`,
-                        episode: i + 1,
+                        episode: parseInt(episode.number),
                         season: 1,
                         released: horribleSubs.formatDate(episode.releaseDate)
                     }
@@ -83,10 +83,9 @@ module.exports = async () => {
     builder.defineStreamHandler(async args => {
         console.log("streams: ", args);
 
-        const animeId = args.id.split("_")[1];
-        const episodeNr = args.id.split("_")[2];
-
-        const selectedEpisode = (await horribleSubs.getAnimeEpisodes(animeId)).find(episode => episode.number === episodeNr);
+        const animeId = args.id.split(":")[1];
+        const episodeNr = args.id.split(":")[3];
+        const selectedEpisode = (await horribleSubs.getAnimeEpisodes(animeId)).find(episode => parseInt(episode.number) == episodeNr);
 
         return Promise.resolve({
             streams: selectedEpisode.resolutions.map(resolution => {
