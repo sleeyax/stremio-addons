@@ -1,6 +1,6 @@
 {
   "name": "stremio-horrible-addon",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Anime torrents from HorribleSubs",
   "scripts": {
     "start": "node src/server.js",
@@ -8,7 +8,7 @@
     "publish": "node src/publish.js"
   },
   "dependencies": {
-    "node-horriblesubs": "github:sleeyax/node-horriblesubs#improvements",
+    "node-horriblesubs": "1.0.4",
     "nodemon": "^1.19.0",
     "parse-torrent": "^6.1.2",
     "stremio-addon-sdk": "1.2.0"

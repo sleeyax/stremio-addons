@@ -1,6 +1,4 @@
 const {serveHTTP} = require("stremio-addon-sdk");
-const addonInit = require("./addon");
+const addonInterface = require("./addon");
 
-addonInit().then((addonInterface) => {
-    serveHTTP(addonInterface, {port: 58362});
-});
+serveHTTP(addonInterface, {port: 58362});
