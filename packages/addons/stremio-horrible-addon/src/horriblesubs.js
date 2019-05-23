@@ -1,5 +1,4 @@
 const horribleSubsAPI = require("node-horriblesubs");
-const fs = require("fs");
 
 async function getAnimes(genre, min, max) {
     const animes = (await horribleSubsAPI.getAllAnime())
