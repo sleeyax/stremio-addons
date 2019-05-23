@@ -8,7 +8,7 @@
     "publish": "node src/publish.js"
   },
   "dependencies": {
-    "node-horriblesubs": "1.0.3",
+    "node-horriblesubs": "github:sleeyax/node-horriblesubs#improvements",
     "nodemon": "^1.19.0",
     "parse-torrent": "^6.1.2",
     "stremio-addon-sdk": "1.2.0"

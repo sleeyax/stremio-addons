@@ -68,7 +68,7 @@ module.exports = async () => {
                 background: "https://i.imgur.com/zepn5fy.png",
                 logo: animeInfo.picture,
                 description: animeInfo.description,
-                videos: episodes.reverse().map((episode, i) => {
+                videos: episodes.reverse().map((episode) => {
                     return {
                         id: `horrible:${animeInfo.id}:1:${parseInt(episode.number)}`,
                         title: `${animeInfo.title} episode ${episode.number}`,
