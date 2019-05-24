@@ -7,8 +7,8 @@
 </h4>
 
 ## Features
-* New catalog sorted by letter
-* Watch episodes in 480p, 720p or 1080p
+* New catalog sorted by letter, latest anime releases or season
+* Watch episodes in 360p, 480p, 720p or 1080p
 * Searchable episodes
 * Infinite scroll (pagination)
 
