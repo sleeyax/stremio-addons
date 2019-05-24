@@ -5,12 +5,12 @@ const parseTorrent = require("parse-torrent");
 
 const manifest = {
     "id": "com.sleeyax.horrible-addon",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "catalogs": [{
         "id": "horrible:catalog",
         "type": "series",
         "name": "HorribleSubs",
-        "genres": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+        "genres": ["Latest", "Season", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
         "extra": [{"name": "search", "isRequired": false}, {"name": "genre", "isRequired": false}, {
             "name": "skip", "isRequired": false
         }],
@@ -30,7 +30,17 @@ builder.defineCatalogHandler(async args => {
 
     let animes = [];
     if (args.extra.genre) {
-        animes = await horribleSubs.getAnimes(args.extra.genre.toLowerCase(), args.extra.skip || 0, 25);
+        switch(args.extra.genre) {
+            case "Season":
+                animes = await horribleSubs.getSeasonAnime();
+                break;
+            case "Latest":
+                animes = await horribleSubs.getLatestAnime();
+                break;
+            default:
+                animes = await horribleSubs.getAnimes(args.extra.genre.toLowerCase(), args.extra.skip || 0, 25);
+                break;
+        }
     } else if (args.extra.search) {
         animes = await horribleSubs.searchAnimes(args.extra.search);
     }

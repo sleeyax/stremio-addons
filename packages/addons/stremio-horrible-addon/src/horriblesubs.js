@@ -12,6 +12,14 @@ async function getAnimeInfo(url) {
     return await horribleSubsAPI.getAnimeData(url);
 }
 
+async function getLatestAnime() {
+    return await horribleSubsAPI.getLatestReleases();
+}
+
+async function getSeasonAnime() {
+    return await horribleSubsAPI.getCurrentSeason();
+}
+
 async function getAnimeEpisodes(id) {
     return await horribleSubsAPI.getAnimeEpisodes(id);
 }
@@ -38,5 +46,7 @@ module.exports = {
     getAnimes,
     searchAnimes,
     getAnimeInfo,
-    formatDate
+    formatDate,
+    getLatestAnime,
+    getSeasonAnime
 };
