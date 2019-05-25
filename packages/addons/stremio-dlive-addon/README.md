@@ -22,8 +22,8 @@
 ## Installation
 Pick one of the few options to install this addon:
 * Click on the addon manager icon ![addon manager icon](https://i.imgur.com/oFBLNem.png) on the top right. On the left choose `Community Add-ons > TV Channels`, locate `Dlive.tv` and click install. 
-* Go to the [homepage](https://stremio-dlive-addon.sleeyax.now.sh/) of this addon and click `install`.
-* Open the addon manager and paste `https://stremio-dlive-addon.sleeyax.now.sh/manifest.json` in the addon repository field.<br>
+* Go to the [homepage](https://stremio-dlive-addon.sleeyax.tk/) of this addon and click `install`.
+* Open the addon manager and paste `https://stremio-dlive-addon.sleeyax.tk/manifest.json` in the addon repository field.<br>
 ![addon repo field](https://i.imgur.com/RODMkww.png)
 
 ## Running locally
@@ -31,6 +31,3 @@ There are no specific requirements or API keys required to run this addon locall
 
 ## Disclaimer
 **This addon is unofficial and NOT affiliated with dlive.tv**
-
-<br><br><br>
-Like this addon? You might like [Stremio Podcasts](https://github.com/sleeyax/stremio-podcasts-addon) addon too!

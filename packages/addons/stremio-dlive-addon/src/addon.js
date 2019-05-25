@@ -8,8 +8,8 @@ async function init() {
     const manifest = {
         "id": "com.sleeyax.dlive-addon",
         "name": "Dlive.tv",
-        "version": "0.0.1",
-        "description": "View livestreams from dlive.tv",
+        "version": "0.0.2",
+        "description": "(new) View livestreams from dlive.tv",
         "catalogs": [{
             "id": "dlive_catalog", "type": "tv", "name": "Dlive.tv", "genres": categories.map(item => item["title"]), "extra": [{
                 "name": "search", "isRequired": false
@@ -106,4 +106,4 @@ async function init() {
     return builder.getInterface();
 }
 
-module.exports = init();
+module.exports = init;

@@ -1,10 +1,12 @@
 {
 	"name": "stremio-dlive-addon",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "View livestreams from dlive.tv",
 	"scripts": {
 		"start": "node src/server.js",
 		"start:watch": "node node_modules/nodemon/bin/nodemon.js src/server.js",
+		"deploy": "now",
+		"deploy:production": "now --target production",
 		"publish": "node src/publish.js"
 	},
 	"dependencies": {
