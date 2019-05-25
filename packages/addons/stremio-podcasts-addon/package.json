@@ -1,11 +1,13 @@
 {
 	"name": "stremio-podcasts-addon",
-	"version": "2.0.2",
+	"version": "2.1.0",
 	"description": "Listen to high quality podcasts from multiple sources",
 	"scripts": {
 		"start": "node src/server.js",
 		"start:watch": "nodemon src/server.js",
 		"publish": "node src/publish.js",
+		"deploy": "now",
+		"deploy:production": "now --target production",
 		"cache": "node src/cache.js",
 		"cache:generate": "npm run cache gen",
 		"cache:clear": "npm run cache clear"

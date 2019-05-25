@@ -1,9 +1,11 @@
 {
   "version": 2,
+  "name": "stremio-podcasts-addon-dev",
+  "alias": "stremio-podcasts-addon.sleeyax.tk",
   "builds": [
     {
-      "src": "src/server.js",
-      "use": "@now/node-server",
+      "src": "src/serverless.js",
+      "use": "@now/node",
       "config": {
         "includeFiles": [
           "cache/**"
@@ -12,7 +14,7 @@
     }
   ],
   "routes": [
-    { "src": "/.*", "dest": "src/server.js"}
+    { "src": "/.*", "dest": "/src/serverless.js" }
   ],
   "env": {
     "LISTEN_NOTES_API_KEY": "@listen_notes_api_key"

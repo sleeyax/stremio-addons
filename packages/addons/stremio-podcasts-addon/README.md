@@ -39,8 +39,8 @@
 ## Installation
 There are multiple ways to install this addon. Luxurious!
 * Click on the addon manager icon ![addon manager icon](https://i.imgur.com/oFBLNem.png) on the top right. Browse or search for `Podcasts` and click install. 
-* Go to the [homepage](https://stremio-podcasts-addon.sleeyax.now.sh/) of this addon and click `install`.
-* Open the addon manager and paste `https://stremio-podcasts-addon.sleeyax.now.sh/manifest.json` in the addon repository field.<br>
+* Go to the [homepage](https://stremio-podcasts-addon.sleeyax.tk/) of this addon and click `install`.
+* Open the addon manager and paste `https://stremio-podcasts-addon.sleeyax.tk/manifest.json` in the addon repository field.<br>
 ![addon repo field](https://i.imgur.com/RODMkww.png)
 
 ## FAQ

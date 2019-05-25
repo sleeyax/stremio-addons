@@ -11,7 +11,7 @@ const spreakerAdapter = new SpreakerAdapter();
 module.exports = async () => {
     const manifest = {
         "id": "com.sleeyax.podcasts-addon",
-        "version": "2.0.2",
+        "version": "2.1.0",
         "catalogs": [
             {
                 "id": "podcasts_gpodder_catalog",
@@ -40,7 +40,7 @@ module.exports = async () => {
         "name": "Podcasts",
         "logo": "https://i.imgur.com/d3ZykZR.png",
         "background": "https://i.imgur.com/mUFi0SR.jpg",
-        "description": "#1 podcasts addon offering ‭almost unlimited high quality podcasts from multiple sources!",
+        "description": "(new) #1 podcasts addon offering ‭almost unlimited high quality podcasts from multiple sources!",
         "idPrefixes": ["podcasts_"]
     };
     const builder = new addonBuilder(manifest);
