@@ -8,7 +8,7 @@ async function init() {
     const manifest = {
         "id": "com.sleeyax.dlive-addon",
         "name": "Dlive.tv",
-        "version": "0.0.2",
+        "version": "0.0.3",
         "description": "(new) View livestreams from dlive.tv",
         "catalogs": [{
             "id": "dlive_catalog", "type": "tv", "name": "Dlive.tv", "genres": categories.map(item => item["title"]), "extra": [{
@@ -56,7 +56,7 @@ async function init() {
             };
         });
 
-        return {metas: streams};
+        return {metas: streams, cacheMaxAge:  7 * 60}; // cache for 7 minutes (streamers can go online any second, we don't want this value to be too high)
     });
 
     builder.defineStreamHandler(async (args) => {
@@ -98,8 +98,9 @@ async function init() {
                 logo: userStreamInfo.avatar,
                 description: userStreamInfo.about,
                 director: [displayname],
-                language: userStreamInfo.livestream.language.language
-            }
+                language: userStreamInfo.livestream.language.language,
+            },
+            cacheMaxAge: 4 * 3600 // cache for 4 hours
         };
     });
 
