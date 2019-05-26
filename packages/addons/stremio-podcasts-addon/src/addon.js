@@ -11,7 +11,7 @@ const spreakerAdapter = new SpreakerAdapter();
 module.exports = async () => {
     const manifest = {
         "id": "com.sleeyax.podcasts-addon",
-        "version": "2.1.0",
+        "version": "2.1.1",
         "catalogs": [
             {
                 "id": "podcasts_gpodder_catalog",
@@ -63,7 +63,7 @@ module.exports = async () => {
             default:
                 break;
         }
-        return {metas};
+        return {metas: metas, cacheMaxAge: 24 * 3600};
     });
 
     builder.defineMetaHandler(async args => {
@@ -79,7 +79,6 @@ module.exports = async () => {
             default:
                 return Promise.resolve({meta: null});
         }
-
     });
 
     builder.defineStreamHandler(async args => {

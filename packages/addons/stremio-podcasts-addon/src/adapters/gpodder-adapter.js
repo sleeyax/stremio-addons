@@ -75,7 +75,8 @@ class GpodderAdapter extends BaseAdapter{
                 director: [feed.meta.owner.name],
                 language: feed.meta.language,
                 website: feed.meta.link
-            }
+            },
+            cacheMaxAge: 3 * (24 * 3600)
         });
     }
 
@@ -93,7 +94,8 @@ class GpodderAdapter extends BaseAdapter{
                     url: episode.url,
                     title: `${episode.type} (${toHumanReadableFileSize(episode.length)})`
                 }
-            ]
+            ],
+            cacheMaxAge: 3 * (24 * 3600)
         });
     }
 }

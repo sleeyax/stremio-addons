@@ -207,7 +207,8 @@ class ListenNotesAdapter extends BaseAdapter{
                 language: metadata.language,
                 country: metadata.country,
                 website: metadata.website
-            }
+            },
+            cacheMaxAge: 3 * (24 * 3600)
         });
     }
 
@@ -257,7 +258,7 @@ class ListenNotesAdapter extends BaseAdapter{
             }
         }
 
-        return Promise.resolve({streams});
+        return Promise.resolve({streams: streams, cacheMaxAge: (24 * 3600) * 3});
     }
 }
 

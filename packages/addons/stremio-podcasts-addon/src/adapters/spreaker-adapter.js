@@ -118,7 +118,8 @@ class SpreakerAdapter extends BaseAdapter {
                 language: details.language,
                 website: details.website_url,
                 runtime: `Average episode length: ${Math.floor((calcAverage(episodes.response.items.map(episode => episode.duration)) / 60) / 1000)} minutes`
-            }
+            },
+            cacheMaxAge: 3 * (24 * 3600)
         });
     }
 
@@ -143,7 +144,8 @@ class SpreakerAdapter extends BaseAdapter {
                 {
                     externalUrl: episode.waveform_url,
                     title: "waveform"
-                }]
+                }],
+            cacheMaxAge: 3 * (24 * 3600)
         });
     }
 }
