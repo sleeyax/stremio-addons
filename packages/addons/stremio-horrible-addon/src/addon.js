@@ -5,7 +5,7 @@ const parseTorrent = require("parse-torrent");
 
 const manifest = {
     "id": "com.sleeyax.horrible-addon",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "catalogs": [{
         "id": "horrible:catalog",
         "type": "series",
@@ -20,7 +20,7 @@ const manifest = {
     "name": "Anime from HorribleSubs",
     "logo": "https://i.imgur.com/hXzIUeN.jpg",
     "background": "https://i.imgur.com/VBE8bCb.png",
-    "description": "Anime torrents from HorribleSubs",
+    "description": "(new) Anime torrents from HorribleSubs",
     "idPrefixes": ["horrible"]
 };
 const builder = new addonBuilder(manifest);
@@ -29,6 +29,7 @@ builder.defineCatalogHandler(async args => {
     console.log("catalogs: ", args);
 
     let animes = [];
+    let cache = 24 * 3600;
     if (args.extra.genre) {
         switch(args.extra.genre) {
             case "Season":
@@ -36,6 +37,7 @@ builder.defineCatalogHandler(async args => {
                 break;
             case "Latest":
                 animes = await horribleSubs.getLatestAnime();
+                cache = 3600;
                 break;
             default:
                 animes = await horribleSubs.getAnimes(args.extra.genre.toLowerCase(), args.extra.skip || 0, 25);
@@ -56,7 +58,7 @@ builder.defineCatalogHandler(async args => {
         };
     });
 
-    return {metas: await Promise.all(animes)};
+    return {metas: await Promise.all(animes), cacheMaxAge: cache};
 });
 
 builder.defineMetaHandler(async args => {
@@ -86,7 +88,8 @@ builder.defineMetaHandler(async args => {
                     released: horribleSubs.formatDate(episode.releaseDate)
                 }
             }),
-        }
+        },
+        cacheMaxAge: 24 * 3600
     });
 });
 
@@ -102,7 +105,8 @@ builder.defineStreamHandler(async args => {
             return {
                 title: resolution.name, infoHash: parseTorrent(resolution.magnet).infoHash
             };
-        })
+        }),
+        cacheMaxAge: 5 * (24 * 3600)
     });
 });
 
