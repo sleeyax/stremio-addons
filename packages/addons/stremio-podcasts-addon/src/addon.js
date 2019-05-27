@@ -36,7 +36,7 @@ module.exports = async () => {
             }
         ],
         "resources": ["catalog", "meta", "stream"],
-        "types": ["series", "channel"],
+        "types": ["series", "channel", "Podcasts"],
         "name": "Podcasts",
         "logo": "https://i.imgur.com/d3ZykZR.png",
         "background": "https://i.imgur.com/mUFi0SR.jpg",
