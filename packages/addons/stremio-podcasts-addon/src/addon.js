@@ -11,7 +11,7 @@ const spreakerAdapter = new SpreakerAdapter();
 module.exports = async () => {
     const manifest = {
         "id": "com.sleeyax.podcasts-addon",
-        "version": "2.1.1",
+        "version": "2.1.2",
         "catalogs": [
             {
                 "id": "podcasts_gpodder_catalog",
