@@ -9,7 +9,7 @@ async function init() {
         "id": "com.sleeyax.dlive-addon",
         "name": "Dlive.tv",
         "version": "0.0.3",
-        "description": "(new) View livestreams from dlive.tv",
+        "description": "View livestreams from dlive.tv",
         "catalogs": [{
             "id": "dlive_catalog", "type": "tv", "name": "Dlive.tv", "genres": categories.map(item => item["title"]), "extra": [{
                 "name": "search", "isRequired": false
