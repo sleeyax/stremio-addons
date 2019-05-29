@@ -20,7 +20,7 @@ const manifest = {
     "name": "Anime from HorribleSubs",
     "logo": "https://i.imgur.com/hXzIUeN.jpg",
     "background": "https://i.imgur.com/VBE8bCb.png",
-    "description": "(new) Anime torrents from HorribleSubs",
+    "description": "Anime torrents from HorribleSubs",
     "idPrefixes": ["horrible"]
 };
 const builder = new addonBuilder(manifest);
