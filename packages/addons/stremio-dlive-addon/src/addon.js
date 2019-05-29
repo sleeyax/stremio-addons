@@ -30,10 +30,6 @@ async function init() {
     builder.defineCatalogHandler(async (args) => {
         console.log("catalog: ", args);
 
-        if (args.type !== "tv") {
-            return {metas: []};
-        }
-
         let streams = [];
         if (args.extra.search) {
             streams = await dlive.searchLiveStreams(args.extra.search);
@@ -56,15 +52,11 @@ async function init() {
             };
         });
 
-        return {metas: streams, cacheMaxAge:  7 * 60}; // cache for 7 minutes (streamers can go online any second, we don't want this value to be too high)
+        return Promise.resolve({metas: streams, cacheMaxAge:  7 * 60}); // cache for 7 minutes (streamers can go online any second, we don't want this value to be too high)
     });
 
     builder.defineStreamHandler(async (args) => {
         console.log("stream: ", args);
-
-        if (args.type !== "tv") {
-            return {streams: []};
-        }
 
         const streamSources = await dlive.getStreamSources(args.id);
         const streams = streamSources.map(stream => {
@@ -74,19 +66,16 @@ async function init() {
             };
         });
 
-        return {streams};
+        return Promise.resolve({streams});
     });
 
     builder.defineMetaHandler(async args => {
         console.log("meta: ", args);
 
-        if (args.type !== "tv")
-            return Promise.resolve({meta: {}});
-
         const displayname = args.id.split(":")[1].split("|")[1];
         const userStreamInfo = await dlive.getUserInfo(displayname);
 
-        return {
+        return Promise.resolve({
             meta: {
                 id: args.id,
                 type: "tv",
@@ -101,7 +90,7 @@ async function init() {
                 language: userStreamInfo.livestream.language.language,
             },
             cacheMaxAge: 4 * 3600 // cache for 4 hours
-        };
+        });
     });
 
     return builder.getInterface();
