@@ -10,5 +10,8 @@ module.exports = {
                 infoHash: torrent.infoHash
             };
         });
+    },
+    toZeroPaddedNumber: (num) => {
+        return num <= 9 ? '0' + num : num;
     }
 };
