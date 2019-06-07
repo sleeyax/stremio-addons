@@ -1,8 +1,8 @@
 <h1 align="center">
-  <p>RARBG torrents for Stremio</p>
+  <p>RARBG torrents</p>
 </h1>
 
-<h4 align="center">RARBG torrents for [Stremio](https://www.stremio.com/) are back!</h4>
+<h4 align="center">RARBG torrents for Stremio are back!</h4>
 
 ## FAQ
 **what happened to the RARBG TorrentAPI addon?**<br>
