@@ -1,0 +1,25 @@
+{
+  "name": "stremio-rarbg-torrents",
+  "version": "0.0.1",
+  "description": "Watch movies & Series from RARBG",
+  "scripts": {
+    "token:gen": "node src/scripts/genToken.js",
+    "start": "node src/server.js",
+    "start:dev": "nodemon src/server.js",
+    "deploy": "now",
+    "deploy:production": "now --target production",
+    "publish": "node src/publish.js"
+  },
+  "author": "Sleeyax",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "parse-torrent": "^6.1.2",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "stremio-addon-sdk": "^1.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
