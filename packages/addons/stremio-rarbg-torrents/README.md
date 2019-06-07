@@ -17,8 +17,6 @@ That's where this addon comes in.
 ## Screenshots
 ![avengers infinity war streams](https://i.imgur.com/q3bdXlV.jpg)
 
-## FAQ
-
 ## Installation
 Install from the addon [homepage](https://stremio-rarbg-addon.sleeyax.tk) or install from within
 the stremio addon manager: `Community Addons` > `Movies`.
