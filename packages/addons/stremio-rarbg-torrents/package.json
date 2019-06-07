@@ -1,6 +1,6 @@
 {
   "name": "stremio-rarbg-torrents",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Watch movies & Series from RARBG",
   "scripts": {
     "token:gen": "node src/scripts/genToken.js",
