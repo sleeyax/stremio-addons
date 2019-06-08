@@ -6,10 +6,9 @@
 
 ## FAQ
 **what happened to the RARBG TorrentAPI addon?**<br>
-It stopped working and it looks like the developer abandoned the project. 
-That's where this addon comes in. 
+The developer abandoned the project and now the addon is gone from the addons collection. This addon serves as a replacement, and it's completely rewritten from scratch.
 
-(Thanks to [kianjomi](https://github.com/kianjomi/RARBG-TorrentAPI-Stremio) for the intial addon)
+(Still thanks to [kianjomi](https://github.com/kianjomi/RARBG-TorrentAPI-Stremio) for the intial addon though)
 
 ## Features
 - Adds movies & series from RARBG
@@ -22,6 +21,6 @@ Install from the addon [homepage](https://stremio-rarbg-addon.sleeyax.tk) or ins
 the stremio addon manager: `Community Addons` > `Movies`.
 
 ## Developers
-First of all rename/copy the .env.example file to .env `cp .env.example .env`, add a token and change the settings to your preference. 
+First of all rename/copy the .env.example file to .env `cp .env.example .env`, add a token and change the settings to your preferences. 
 You can generate a new token by running `npm run token:gen`. Install the dependencies using npm `npm install`.
 To start a development server run `npm run start:dev`, in production you should use `npm run start`
