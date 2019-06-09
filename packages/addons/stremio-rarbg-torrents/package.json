@@ -8,7 +8,7 @@
     "start:dev": "nodemon src/server.js",
     "deploy": "now",
     "deploy:production": "now --target production",
-    "publish": "node src/publish.js"
+    "publish": "node src/scripts/publish.js"
   },
   "author": "Sleeyax",
   "license": "MIT",
