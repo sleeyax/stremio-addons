@@ -14,7 +14,7 @@ The developer abandoned the project and now the addon is gone from the addons co
 - Adds movies & series from RARBG
 
 ## Screenshots
-![avengers infinity war streams](https://i.imgur.com/q3bdXlV.jpg)
+![avengers infinity war streams](https://i.imgur.com/tFvGFVO.jpg)
 
 ## Installation
 Install from the addon [homepage](https://stremio-rarbg-addon.sleeyax.tk) or install from within
