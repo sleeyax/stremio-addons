@@ -34,7 +34,7 @@ addon.defineStreamHandler(async args => {
     if (torrentResults != null && torrentResults.length != 0 && !torrentResults.error)
         streams = toStream(torrentResults);
 
-    return Promise.resolve({streams});
+    return Promise.resolve({streams, cacheMaxAge: 2 * (24 * 3600)});
 });
 
 module.exports = addon.getInterface();
