@@ -1,6 +1,6 @@
 {
 	"name": "stremio-dlive-addon",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "View livestreams from dlive.tv",
 	"scripts": {
 		"start": "node src/server.js",
