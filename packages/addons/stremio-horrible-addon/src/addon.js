@@ -2,10 +2,11 @@ const {addonBuilder} = require("stremio-addon-sdk");
 const horribleSubs = require("./horriblesubs");
 const {b64encode, b64decode} = require("./helpers");
 const parseTorrent = require("parse-torrent");
+const {version} = require("../package");
 
 const manifest = {
     "id": "com.sleeyax.horrible-addon",
-    "version": "0.0.6",
+    "version": version,
     "catalogs": [{
         "id": "horrible:catalog",
         "type": "series",
