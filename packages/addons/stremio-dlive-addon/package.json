@@ -13,7 +13,7 @@
 		"m3u8-stream-list": "^1.1.0",
 		"request": "^2.88.0",
 		"request-promise": "^4.2.4",
-		"stremio-addon-sdk": "^1.2.0"
+		"stremio-addon-sdk": "^1.4.0"
 	},
 	"devDependencies": {
 		"nodemon": "^1.18.11"
