@@ -1,5 +1,6 @@
 require('dotenv').config();
 const {addonBuilder} = require("stremio-addon-sdk");
+const {version} = require("../package");
 
 const GpodderAdapter = require("./adapters/gpodder-adapter");
 const gpodderAdapter = new GpodderAdapter();
@@ -11,7 +12,7 @@ const spreakerAdapter = new SpreakerAdapter();
 module.exports = async () => {
     const manifest = {
         "id": "com.sleeyax.podcasts-addon",
-        "version": "2.1.2",
+        "version": version,
         "catalogs": [
             {
                 "id": "podcasts_gpodder_catalog",
