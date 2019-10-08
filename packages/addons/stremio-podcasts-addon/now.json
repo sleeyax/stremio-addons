@@ -1,7 +1,6 @@
 {
   "version": 2,
   "name": "stremio-podcasts-addon-dev",
-  "alias": "stremio-podcasts-addon.sleeyax.tk",
   "builds": [
     {
       "src": "src/serverless.js",
