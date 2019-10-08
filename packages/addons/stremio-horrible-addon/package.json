@@ -13,6 +13,6 @@
     "node-horriblesubs": "1.1.0",
     "nodemon": "^1.19.0",
     "parse-torrent": "^6.1.2",
-    "stremio-addon-sdk": "1.2.0"
+    "stremio-addon-sdk": "^1.4.0"
   }
 }
