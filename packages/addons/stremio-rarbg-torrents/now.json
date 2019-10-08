@@ -1,7 +1,6 @@
 {
   "version": 2,
   "name": "stremio-rarbg-addon-dev",
-  "alias": "stremio-rarbg-addon.sleeyax.tk",
   "builds": [
     {
       "src": "src/serverless.js",
