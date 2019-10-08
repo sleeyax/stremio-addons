@@ -1,7 +1,6 @@
 {
   "version": 2,
   "name": "stremio-dlive-addon-dev",
-  "alias": "stremio-dlive-addon.sleeyax.tk",
   "builds": [
     { "src": "src/serverless.js", "use": "@now/node" }
   ],
