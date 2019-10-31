@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "name": "stremio-1337x-addon",
+  "builds": [
+    {
+      "src": "src/serverless.js",
+      "use": "@now/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/.*",
+      "dest": "/src/serverless.js"
+    }
+  ]
+}
