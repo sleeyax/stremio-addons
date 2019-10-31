@@ -29,15 +29,32 @@ function toStreams(infoList) {
     });
 }
 
+function parseSerie(id) {
+    const splitted = id.split(':');
+    return {
+        imdb: splitted[0],
+        season: splitted[1],
+        episode: splitted[2]
+    };
+}
+
 const nrOfDays = (nr) => nr * (24 * 3600);
+const padZero = (num) => num <= 9 ? '0' + num : num;
 
 addon.defineStreamHandler(async args => {
-    const movieTitle = await imdbIdToTitle(args.id);
+    let query;
+    if (args.type === 'series') {
+        const serie = parseSerie(args.id);
+        query = (await imdbIdToTitle(serie.imdb)).trim() + ` S${padZero(serie.season)}E${padZero(serie.episode)}`;
+    }else {
+        query = await imdbIdToTitle(args.id);
+    }
+
     // query 1337x api & get results
-    let results = await toInfoList(await l33t.search({query: movieTitle}));
+    let results = await toInfoList(await l33t.search({query}));
 
     // filter results based on media type
-    results = results.filter(res => res.category === (args.type === 'movie' ? 'Movies' : 'Series'));
+    results = results.filter(res => res.category === (args.type === 'movie' ? 'Movies' : 'TV'));
 
     // transform results to Stremio stream obj array
     const streams = toStreams(results);
