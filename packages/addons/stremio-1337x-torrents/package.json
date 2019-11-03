@@ -14,5 +14,6 @@
     "parse-torrent": "^7.0.1",
     "stremio-addon-sdk": "^1.4.0",
     "xtorrent": "^0.2.4"
-  }
+  },
+  "minSeeds": 10
 }

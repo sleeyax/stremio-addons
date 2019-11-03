@@ -3,6 +3,7 @@ const l33t = require('xtorrent');
 const imdbIdToTitle = require('imdbid-to-title');
 const parseTorrent = require('parse-torrent');
 const manifest = require('./manifest');
+const {minSeeds} = require('../package');
 
 const addon = new addonBuilder(manifest);
 
@@ -51,13 +52,14 @@ addon.defineStreamHandler(async args => {
     }
 
     // query 1337x api & get results
-    let results = await toInfoList(await l33t.search({query}));
+    const searchResults = (await l33t.search({query})).filter(r => r.seed >= minSeeds);
+    let infoResults = await toInfoList(searchResults);
 
     // filter results based on media type
-    results = results.filter(res => res.category === (args.type === 'movie' ? 'Movies' : 'TV'));
+    // infoResults = infoResults.filter(res => res.category === (args.type === 'movie' ? 'Movies' : 'TV'));
 
     // transform results to Stremio stream obj array
-    const streams = toStreams(results);
+    const streams = toStreams(infoResults);
 
     return Promise.resolve({
         streams,
