@@ -1,6 +1,6 @@
 {
   "name": "stremio-1337x-torrents",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Watch movies & Series from 1337x.to",
   "main": "index.js",
   "scripts": {
