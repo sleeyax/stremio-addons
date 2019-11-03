@@ -55,8 +55,8 @@ addon.defineStreamHandler(async args => {
     const searchResults = (await l33t.search({query})).filter(r => r.seed >= minSeeds);
     let infoResults = await toInfoList(searchResults);
 
-    // filter results based on media type
-    // infoResults = infoResults.filter(res => res.category === (args.type === 'movie' ? 'Movies' : 'TV'));
+    // filter results based on media type (note that series are sometimes listed as movie)
+    infoResults = infoResults.filter(res => res.category === 'Movies' || res.category === 'TV');
 
     // transform results to Stremio stream obj array
     const streams = toStreams(infoResults);
