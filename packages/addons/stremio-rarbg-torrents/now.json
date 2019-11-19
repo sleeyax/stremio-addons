@@ -14,12 +14,15 @@
     }
   ],
   "env": {
-    "APP_ID": "rarbg-addon",
-    "TOKEN": "@rarbg_token",
     "ENDPOINT": "https://torrentapi.org/pubapi_v2.php",
     "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0",
     "SORTING_METHOD": "seeders",
-    "MIN_SEEDERS": "30",
-    "MIN_LEECHERS": "0"
+    "MIN_SEEDERS": "10",
+    "MIN_LEECHERS": "0",
+    "MAX_RESULTS": "25",
+    "REDIS_HOST": "@redis_host",
+    "REDIS_PORT": "@redis_port",
+    "REDIS_PASSWORD": "@redis_password",
+    "REDIS_KEY": "@redis_key"
   }
 }
