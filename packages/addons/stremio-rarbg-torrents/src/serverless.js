@@ -1,6 +1,6 @@
 const {getRouter} = require("stremio-addon-sdk");
 const addonInterface = require("./addon");
-const landingTemplate = require("./landingTemplate");
+const landingTemplate = require("../node_modules/stremio-addon-sdk/src/landingTemplate");
 
 module.exports = function (req, res) {
     const router = getRouter(addonInterface);
