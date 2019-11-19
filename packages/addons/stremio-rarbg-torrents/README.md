@@ -12,6 +12,7 @@ The developer abandoned the project and now the addon is gone from the addons co
 
 ## Features
 - Adds movies & series from RARBG
+- Supports UHD/4K streams!
 
 ## Screenshots
 ![avengers infinity war streams](https://i.imgur.com/tFvGFVO.jpg)

@@ -1,7 +1,7 @@
 {
   "name": "stremio-rarbg-torrents",
-  "version": "0.0.3",
-  "description": "Watch movies & Series from RARBG",
+  "version": "1.0.0",
+  "description": "Watch movies & Series from RARBG. Now includes UHD/4K streams!",
   "scripts": {
     "token:gen": "node src/scripts/genToken.js",
     "start": "node src/server.js",
@@ -15,6 +15,7 @@
   "dependencies": {
     "dotenv": "^8.0.0",
     "parse-torrent": "^6.1.2",
+    "redis": "^2.8.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "stremio-addon-sdk": "^1.4.0"
