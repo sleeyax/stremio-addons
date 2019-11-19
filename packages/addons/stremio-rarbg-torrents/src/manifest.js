@@ -1,9 +1,9 @@
-const {version} = require('../package');
+const {version, description} = require('../package');
 
 module.exports = {
     id: 'com.sleeyax.stremio-rarbg-torrents',
     name: 'RARBG Torrents',
-    description: 'Watch movies & Series from RARBG',
+    description: description,
     version: version,
     catalogs: [],
     background: '',
