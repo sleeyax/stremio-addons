@@ -38,7 +38,7 @@ addon.defineStreamHandler(async args => {
                     search_imdb: series.imdb,
                     // format: S05E21
                     search_string: `S${toZeroPaddedNumber(series.season)}E${toZeroPaddedNumber(series.episode)}`,
-                    category: Object.values(categories.tv) // '18;41;49'
+                    category: Object.values(categories.tv).join(';') // '18;41;49'
                 });
         }
     }catch(ex) {
