@@ -1,18 +1,22 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
-        "module": "commonjs",
-        "declaration": true,
+        "module": "CommonJS",
+        "target": "ESNext",
+        "lib": [
+            "es6",
+            "DOM"
+        ],
+        "baseUrl": "@types/",
+        "typeRoots": [
+            "@types/"
+        ],
+        "preserveConstEnums": true,
         "noImplicitAny": false,
         "removeComments": true,
-        "noLib": false,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "target": "es6",
         "sourceMap": true,
-        "lib": [
-            "es6"
-        ]
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
     },
     "exclude": [
         "node_modules",

@@ -1,6 +1,6 @@
 {
   "packages": [
-    "packages/*"
+    "packages/addons/stream-quality-filter/"
   ],
   "version": "0.0.1"
 }
