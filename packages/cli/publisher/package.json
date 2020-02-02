@@ -1,0 +1,24 @@
+{
+  "name": "publisher",
+  "version": "0.0.1",
+  "description": "Publish your addon to the collection",
+  "author": "Sleeyax <yourd3veloper@gmail.com>",
+  "homepage": "",
+  "license": "",
+  "main": "lib/publisher.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "bin": {
+    "publish": "./lib/publisher.js"
+  },
+  "dependencies": {
+    "stremio-addon-sdk": "^1.6.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no tests available\" && exit 1"
+  }
+}
