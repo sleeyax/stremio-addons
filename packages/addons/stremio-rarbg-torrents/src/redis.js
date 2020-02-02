@@ -33,5 +33,9 @@ function setValue(value, key = process.env.REDIS_KEY) {
     client.set(key, value);
 }
 
-module.exports = {getValue, setValue, generateValue};
+function close() {
+    client.quit();
+}
+
+module.exports = {getValue, setValue, generateValue, close};
 

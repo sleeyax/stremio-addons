@@ -3,12 +3,15 @@ const manifest = require('./manifest');
 const {addonBuilder} = require('stremio-addon-sdk');
 const TorrentApi = require('./torrentapi');
 const categories = require('./categories');
-const {toStream, toZeroPaddedNumber} = require('./utils');
+const {toStream, toZeroPaddedNumber, delay, nrOfDays} = require('./utils');
 const redis = require('./redis');
 const addon = new addonBuilder(manifest);
 
 addon.defineStreamHandler(async args => {
-    // console.log('[INFO] Streams: ', args);
+    // wait 2 seconds per requests for now
+    // TODO: find out how to get last execution time on now, so we can wait using the actual interval instead of the full 2 seconds
+    await delay(2000);
+    console.log('[INFO] Streams: ', args);
 
     // get app id and token from redis store
     let redisValue = await redis.getValue();
@@ -52,7 +55,12 @@ addon.defineStreamHandler(async args => {
     if (torrentResults != null && torrentResults.length != 0 && !torrentResults.error)
         streams = toStream(torrentResults);
 
-    return Promise.resolve({streams, cacheMaxAge: 3 * (24 * 3600)});
+    return Promise.resolve({
+        streams,
+        cacheMaxAge: nrOfDays(3),
+        staleRevalidate: nrOfDays(1),
+        staleError: nrOfDays(5)
+    });
 });
 
 module.exports = addon.getInterface();
