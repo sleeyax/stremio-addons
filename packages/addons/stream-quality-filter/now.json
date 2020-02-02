@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "stremio-quality-filter-addon",
+    "builds": [
+        {
+            "src": "build/serverless.js",
+            "use": "@now/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/.*",
+            "dest": "/build/serverless.js"
+        }
+    ]
+}
