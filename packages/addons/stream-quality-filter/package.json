@@ -15,10 +15,14 @@
   "scripts": {
     "test": "echo \"No tests available\" && exit 1",
     "start": "node build/server.js",
-    "watch": "nodemon build/server.js"
+    "watch": "nodemon build/server.js",
+    "publish": "node ./node_modules/publisher/lib/publisher.js https://stremio-quality-filter-addon.sleeyax.now.sh/manifest.json"
+  },
+  "devDependencies": {
+    "@types/needle": "^2.0.4",
+    "publisher": "^0.0.1"
   },
   "dependencies": {
-    "@types/needle": "^2.0.4",
     "needle": "^2.4.0",
     "stremio-addon-sdk": "^1.6.1"
   }

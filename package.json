@@ -1,6 +1,9 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap --hoist"
+  },
   "devDependencies": {
     "@types/node": "^13.5.1",
     "lerna": "^3.20.2",

@@ -1,6 +1,7 @@
 {
   "packages": [
-    "packages/addons/stream-quality-filter/"
+    "packages/addons/stream-quality-filter/",
+    "packages/cli/publisher"
   ],
   "version": "0.0.1"
 }
