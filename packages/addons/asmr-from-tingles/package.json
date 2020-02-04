@@ -1,0 +1,33 @@
+{
+  "name": "asmr-from-tingles",
+  "version": "0.0.1",
+  "description": "Watch and listen to (exclusive) videos and audio from Tingles.",
+  "author": "Sleeyax <yourd3veloper@gmail.com>",
+  "homepage": "https://github.com/sleeyax/stremio-addons#readme",
+  "license": "MIT",
+  "main": "build/server.js",
+  "directories": {
+    "lib": "build"
+  },
+  "files": [
+    "build"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sleeyax/stremio-addons.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no tests available\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/sleeyax/stremio-addons/issues"
+  },
+  "dependencies": {
+    "stremio-addon-sdk": "^1.6.1",
+    "needle": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.5.1",
+    "@types/needle": "^2.0.4"
+  }
+}
