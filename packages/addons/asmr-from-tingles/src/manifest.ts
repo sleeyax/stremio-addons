@@ -10,13 +10,13 @@ export default function createManifest(genres: string[]) {
         version,
         logo: 'https://i.imgur.com/hH5oekj.png',
         background: 'https://i.imgur.com/H4nPP6Q.jpg',
-        types: [ContentType.MOVIE, 'ASMR'],
+        types: [ContentType.MOVIE, ContentType.CHANNEL, 'ASMR'],
         idPrefixes: ['tingles'],
         resources: ['catalog', 'meta', 'stream'],
         catalogs: [
             {
-                id: 'tingles-catalog',
-                name: 'Tingles',
+                id: 'tingles-triggers-catalog',
+                name: 'Videos',
                 type: 'ASMR',
                 extra: [
                     {
@@ -25,12 +25,19 @@ export default function createManifest(genres: string[]) {
                         options: genres,
                     },
                     {
-                        name: 'skip',
-                        isRequired: false
-                    },
-                    {
                         name: 'search',
                         isRequired: false
+                    }
+                ]
+            },
+            {
+                id: 'tingles-artists-catalog',
+                name: 'Artists',
+                type: 'ASMR',
+                extra: [
+                    {
+                        name: 'search',
+                        isRequired: true
                     }
                 ]
             }
