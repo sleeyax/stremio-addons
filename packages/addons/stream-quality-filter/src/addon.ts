@@ -18,6 +18,16 @@ function findAnyOf(text: string, arr: string[]) {
     return {value: null, index: arr.length};
 }
 
+function getName(filter: string) {
+    switch (filter) {
+        case 'uhd':
+        case '2160p':
+            return '4k';
+        default:
+            return filter;
+    }
+}
+
 builder.defineStreamHandler(async ({id, type}) => {
     // get all streams from our sources
     const allStreams: Stream[] = await getAllStreams(id, type);
@@ -34,11 +44,14 @@ builder.defineStreamHandler(async ({id, type}) => {
         else if (k > e) return 1;
         else return 0;
         
-    }).map(stream => <Stream>({
+    })
+    // remove broken streams & duplicates
+    .filter((stream, i, self) => stream && stream.infoHash && i === self.findIndex(s => s.infoHash == stream.infoHash && s.fileIdx == stream.fileIdx))
+    .map(stream => <Stream>({
         ...stream,
-        name: (findAnyOf(stream.title, filters).value || 'unknown').toUpperCase(),
+        name: (getName(findAnyOf(stream.title, filters).value || 'unknown')).toUpperCase(),
         title: `[${stream.name}] ${stream.title}`
-    }));
+    }));    
 
     return Promise.resolve({ streams, cacheMaxAge: 24 * 3600 * 3 });
 });
