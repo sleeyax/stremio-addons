@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "stremio-asmr-tingles",
+    "builds": [
+        {
+            "src": "build/serverless.js",
+            "use": "@now/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/.*",
+            "dest": "/build/serverless.js"
+        }
+    ]
+}
