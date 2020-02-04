@@ -1,5 +1,4 @@
 import { Manifest, ContentType } from 'stremio-addon-sdk';
-import TinglesApi from './tingles-api';
 const { version, description } = require('../package.json');
 
 export default function createManifest(genres: string[]) {
@@ -16,7 +15,7 @@ export default function createManifest(genres: string[]) {
         catalogs: [
             {
                 id: 'tingles-triggers-catalog',
-                name: 'Videos',
+                name: 'Tingles',
                 type: 'ASMR',
                 extra: [
                     {

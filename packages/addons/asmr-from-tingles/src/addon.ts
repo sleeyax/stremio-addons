@@ -24,6 +24,10 @@ function videoToMetaDetail(video: IVideo): MetaDetail {
     };
 }
 
+/**
+ * Convert artist from tingles API to MetaDetail object
+ * @param artist 
+ */
 function artistToMetaDetail(artist: IArtist): MetaDetail {
     return <MetaDetail>{
         id: 'tingles:' + artist.uuid,
@@ -73,7 +77,7 @@ export default async function (): Promise<AddonInterface> {
             }
         }
 
-        return Promise.resolve({ metas });
+        return Promise.resolve({ metas, cacheMaxAge: 3600 * 24 * 1});
     });
 
     builder.defineMetaHandler(async ({ id, type }) => {
@@ -107,7 +111,7 @@ export default async function (): Promise<AddonInterface> {
             throw 'Unexpected content type ' + type;
         }
 
-        return Promise.resolve({ meta });
+        return Promise.resolve({ meta, cacheMaxAge: 3600 * 24 });
     });
 
     builder.defineStreamHandler(async ({ id }) => {
@@ -131,7 +135,7 @@ export default async function (): Promise<AddonInterface> {
             externalUrl: 'https://www.youtube.com/watch?v=' + uuid,
         });
 
-        return Promise.resolve({ streams });
+        return Promise.resolve({ streams, cacheMaxAge: 3600 * 24 * 7 });
     });
 
     return builder.getInterface();
