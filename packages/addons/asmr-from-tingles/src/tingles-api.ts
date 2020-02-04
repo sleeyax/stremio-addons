@@ -44,6 +44,16 @@ export default class TinglesApi {
     }
 
     /**
+     * Get recent uploads of an ASMR artist
+     * @param artistUUID 
+     */
+    getArtistVideos(artistUUID): Promise<IVideo[]> {
+        return this._get(`4/artist/${artistUUID}/videos?type=recent`)
+            .then(r => r.body)
+            .then(body => body.items.find(item => item.itemType == 'video').items);
+    }
+
+    /**
      * Get details about a single video
      * @param videoUUID 
      */
@@ -74,12 +84,13 @@ export default class TinglesApi {
      * Search ASMR videos
      * @param query 
      */
-    search(query: string): Promise<{playlists: IVideo[], videos: IVideo[]}> {
+    search(query: string): Promise<{playlists: IVideo[], videos: IVideo[], artists: IArtist[]}> {
         return this._get('4/search?term=' + query)
             .then(r => r.body)
             .then(body => ({
                 playlists: body.items.find(item => item.itemType == 'playlist').items,
                 videos: body.items.find(item => item.itemType == 'video').items,
+                artists: body.items.find(item => item.itemType == 'artist').items,
             }));
     }
 }

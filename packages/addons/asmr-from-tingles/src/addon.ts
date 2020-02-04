@@ -1,22 +1,48 @@
-import { addonBuilder, Stream, AddonInterface, MetaPreview, MetaDetail, ContentType } from 'stremio-addon-sdk';
+import { addonBuilder, Stream, AddonInterface, MetaPreview, MetaDetail, ContentType, MetaVideo } from 'stremio-addon-sdk';
 import createManifest from './manifest';
 import TinglesApi from './tingles-api';
 import IVideo from './models/video';
+import IArtist from './models/artist';
 const tingles = new TinglesApi();
 
 /**
- * Convert video from the tingles API to MetaPreview object
+ * Convert video from the tingles API to MetaDetail object
  * @param video 
  */
-function videoToMetaPreview(video: IVideo): MetaPreview {
-    return <MetaPreview>{
+function videoToMetaDetail(video: IVideo): MetaDetail {
+    return <MetaDetail>{
         id: 'tingles:' + video.uuid,
         name: video.title,
         type: ContentType.MOVIE,
         description: video.description.split('\n')[0],
         poster: video.thumbnailURL,
         posterShape: 'landscape',
-        background: video.thumbnailURL
+        background: video.thumbnailURL,
+        runtime: '~' + Math.round(video.duration / 60) + 'm',
+        released: new Date(video.publishedAt).toString(),
+        awards: video.isExclusive ? 'Exclusive' : ''
+    };
+}
+
+function artistToMetaDetail(artist: IArtist): MetaDetail {
+    return <MetaDetail>{
+        id: 'tingles:' + artist.uuid,
+        name: artist.name,
+        type: ContentType.CHANNEL,
+        description: artist.about,
+        poster: artist.profileImageURL,
+        posterShape: 'square',
+        country: artist.country,
+        logo: artist.profileImageBigURL,
+        links: [
+            {
+                category: 'director',
+                name: artist.name,
+                url: artist.shareURL
+            }
+        ],
+        director: [artist.name],
+        background: artist.featuredBanner,
     };
 }
 
@@ -26,57 +52,69 @@ export default async function (): Promise<AddonInterface> {
     const genres = triggers.map(trigger => trigger.title);
     const builder = new addonBuilder(createManifest(genres));
 
-    builder.defineCatalogHandler(async ({ extra }) => {
+    builder.defineCatalogHandler(async ({ extra, id }) => {
         let metas = [];
 
         if (extra.genre) {
             const selectedTrigger = triggers.find(trigger => trigger.title == extra.genre);
             if (selectedTrigger != null) {
                 const videos = await tingles.getVideos(selectedTrigger.uuid);
-                metas = videos.map(video => videoToMetaPreview(video));
+                metas = videos.map(video => videoToMetaDetail(video));
             }
         }
 
         if (extra.search) {
             const searchResults = await tingles.search(extra.search);
-            metas = searchResults.videos.map(video => videoToMetaPreview(video));
+            if (id == 'tingles-triggers-catalog') {
+                metas = searchResults.videos.map(video => videoToMetaDetail(video));
+            }
+            else if (id == 'tingles-artists-catalog') {
+                metas = searchResults.artists.map(artist => artistToMetaDetail(artist));
+            }
         }
 
         return Promise.resolve({ metas });
     });
 
-    builder.defineMetaHandler(async ({ id }) => {
-        // get video uuid from id (format is tingles:<uuid>)
+    builder.defineMetaHandler(async ({ id, type }) => {
+        // get video or artist uuid from id (format is tingles:<uuid>)
         const uuid = id.split(':')[1];
+        
+        let meta: MetaDetail;
+        // single video selected from 'tingles-triggers-catalog' catalog
+        if (type == ContentType.MOVIE) {
+            const video = await tingles.getVideoInfo(uuid);
+            const artist = await tingles.getArtistInfo(video.artistUuid);
 
-        const video = await tingles.getVideoInfo(uuid);
-        const artist = await tingles.getArtistInfo(video.artistUuid);
-
-        // 'convert' metapreview to metadetail
-        const meta = videoToMetaPreview(video) as MetaDetail;
-        meta.runtime = '~' + Math.round(video.duration / 60) + 'm';
-        meta.country = artist.country;
-        meta.logo = artist.profileImageBigURL;
-        meta.links = [
-           {
-               category: 'director',
-               name: artist.name,
-               url: artist.shareURL
-           } 
-        ];
-        meta.director = [artist.name];
-        meta.website = artist.patreonURL || artist.payPalURL;
-        meta.released = new Date(video.publishedAt).toString();
-        meta.awards = video.isExclusive ? 'Exclusive' : '';
+            // combine meta info of both artist and video
+            // but make sure the video id is correct, so vid comes last to overwrite the artist props
+            meta = {...artistToMetaDetail(artist), ...videoToMetaDetail(video)};
+        }
+        // ASMR artist channel selected from 'tingles-artists-catalog' catalog
+        else if (type == ContentType.CHANNEL) {
+            const artist = await tingles.getArtistInfo(uuid);
+            const videos = await tingles.getArtistVideos(uuid);
+            
+            meta = artistToMetaDetail(artist);
+            meta.videos = videos.map(video => (<MetaVideo>{
+                id: 'tingles:' + video.uuid,
+                released: new Date(video.publishedAt).toString(),
+                title: video.title,
+                available: true,
+                thumbnail: video.thumbnailURL
+            }));
+        }else {
+            throw 'Unexpected content type ' + type;
+        }
 
         return Promise.resolve({ meta });
     });
 
-    builder.defineStreamHandler(async ({id}) => {
+    builder.defineStreamHandler(async ({ id }) => {
         const uuid = id.split(':')[1];
 
         const streamsFromAPI = await tingles.getStreams(uuid);
-        
+
         const streams: Stream[] = Object.keys(streamsFromAPI).map(name => (<Stream>{
             name: 'Tingles',
             title: name,
