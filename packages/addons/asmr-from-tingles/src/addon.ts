@@ -20,6 +20,7 @@ function videoToMetaDetail(video: IVideo): MetaDetail {
         background: video.thumbnailURL,
         runtime: '~' + Math.round(video.duration / 60) + 'm',
         released: new Date(video.publishedAt).toString(),
+        releaseInfo: new Date(video.publishedAt).getFullYear().toString(),
         awards: video.isExclusive ? 'Exclusive' : ''
     };
 }
@@ -66,8 +67,7 @@ export default async function (): Promise<AddonInterface> {
                 metas = videos.map(video => videoToMetaDetail(video));
             }
         }
-
-        if (extra.search) {
+        else if (extra.search) {
             const searchResults = await tingles.search(extra.search);
             if (id == 'tingles-triggers-catalog') {
                 metas = searchResults.videos.map(video => videoToMetaDetail(video));
@@ -76,14 +76,19 @@ export default async function (): Promise<AddonInterface> {
                 metas = searchResults.artists.map(artist => artistToMetaDetail(artist));
             }
         }
+        // default catalog - show 'best of the week' videos
+        else {
+            const videos = await tingles.getBestOfTheWeek();
+            metas = videos.map(video => videoToMetaDetail(video));
+        }
 
-        return Promise.resolve({ metas, cacheMaxAge: 3600 * 24 * 1});
+        return Promise.resolve({ metas, cacheMaxAge: 3600 * 24 * 1 });
     });
 
     builder.defineMetaHandler(async ({ id, type }) => {
         // get video or artist uuid from id (format is tingles:<uuid>)
         const uuid = id.split(':')[1];
-        
+
         let meta: MetaDetail;
         // single video selected from 'tingles-triggers-catalog' catalog
         if (type == ContentType.MOVIE) {
@@ -92,13 +97,13 @@ export default async function (): Promise<AddonInterface> {
 
             // combine meta info of both artist and video
             // but make sure the video id is correct, so vid comes last to overwrite the artist props
-            meta = {...artistToMetaDetail(artist), ...videoToMetaDetail(video)};
+            meta = { ...artistToMetaDetail(artist), ...videoToMetaDetail(video) };
         }
         // ASMR artist channel selected from 'tingles-artists-catalog' catalog
         else if (type == ContentType.CHANNEL) {
             const artist = await tingles.getArtistInfo(uuid);
             const videos = await tingles.getArtistVideos(uuid);
-            
+
             meta = artistToMetaDetail(artist);
             meta.videos = videos.map(video => (<MetaVideo>{
                 id: 'tingles:' + video.uuid,
@@ -107,7 +112,7 @@ export default async function (): Promise<AddonInterface> {
                 available: true,
                 thumbnail: video.thumbnailURL
             }));
-        }else {
+        } else {
             throw 'Unexpected content type ' + type;
         }
 
