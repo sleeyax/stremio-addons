@@ -1,11 +1,12 @@
-# `asmr-from-tingles`
+# ASMR-from-tingles
 
-> TODO: description
+ASMR videos and audio from [Tingles](https://www.gettingles.com/).
 
-## Usage
+## Features
 
-```
-const asmrFromTingles = require('asmr-from-tingles');
+- filter by triggers
+- videos of the week
+- search asmrtists (ASMR artists) & videos
 
-// TODO: DEMONSTRATE API
-```
+### Screenshots
+![stremio tingles](https://i.imgur.com/EkoDX33.jpg)
