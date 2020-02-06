@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@types/needle": "^2.0.4",
-    "publisher": "^0.0.1"
+    "@types/node": "^13.5.1"
   },
   "dependencies": {
     "needle": "^2.4.0",
