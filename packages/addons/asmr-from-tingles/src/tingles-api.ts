@@ -93,4 +93,12 @@ export default class TinglesApi {
                 artists: body.items.find(item => item.itemType == 'artist').items,
             }));
     }
+
+    /**
+     * Get best of the week videos
+     */
+    getBestOfTheWeek(): Promise<IVideo[]> {
+        return this._get('1/trigger/6729b844-77b6-4325-9488-5de8974817f1/videos')
+            .then(r => r.body);
+    }
 }
