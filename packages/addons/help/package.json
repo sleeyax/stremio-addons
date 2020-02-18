@@ -1,0 +1,25 @@
+{
+  "name": "help",
+  "version": "0.0.1",
+  "description": "Unofficial Stremio help & FAQ for noobs",
+  "author": "Sleeyax <yourd3veloper@gmail.com>",
+  "homepage": "https://github.com/sleeyax/stremio-addons#readme",
+  "license": "MIT",
+  "main": "build/server.js",
+  "directories": {
+    "lib": "build"
+  },
+  "files": [
+    "build"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sleeyax/stremio-addons.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no tests\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/sleeyax/stremio-addons/issues"
+  }
+}
