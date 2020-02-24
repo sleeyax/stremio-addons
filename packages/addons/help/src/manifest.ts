@@ -15,6 +15,11 @@ export default <Manifest>{
             id: 'communities-catalog',
             name: 'Communities',
             type: 'help'
+        },
+        {
+            id: 'tools-catalog',
+            name: 'Tools',
+            type: 'help'
         }
     ],
     idPrefixes: ['help']
