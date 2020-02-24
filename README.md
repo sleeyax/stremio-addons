@@ -19,4 +19,7 @@ Overview of how this project is structured:
 ```
 
 ## Info for developers
-[lerna](https://lerna.js.org/) is used to manage the monorepo, but you should be able to build and run a single addon without it. Running `npm install` in the addon directory should do the trick. However, if you already have lerna installed just run `lerna bootstrap` at the repo root to get all dependencies for all packages. If you do not have lerna installed yet, run `npm install` at the repo root (the directory where this README is in) and proceed with the command above.
+All addons are written in [TypeScript](https://www.typescriptlang.org/). Also, [lerna](https://lerna.js.org/) is used to manage the monorepo.
+
+### Installation
+To install all required developer dependencies that are shared accross addons, navigate to the root directory (the directory where this README is in) and run `npm install`. Next, run `lerna bootstrap` at the repo root to get all dependencies for all addons. You can also ignore lerna completely and get dependencies for a single addon by running `npm install` within that addon directory as usual.
