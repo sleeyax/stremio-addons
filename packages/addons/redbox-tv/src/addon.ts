@@ -10,7 +10,7 @@ async function addonInit() {
     // populate 'extra.options' in manifest
     manifest.catalogs[0].extra
         .find(extra => extra.name == 'genre')
-        .options = redbox.categories.map(cat => cat.name);
+            .options = redbox.categories.map(cat => cat.name);
 
     const builder = new addonBuilder(manifest);
 
@@ -37,7 +37,7 @@ async function addonInit() {
             metas = toMetaPreviews(channels.slice(skip, max));
         }
 
-        return Promise.resolve({ metas });
+        return Promise.resolve({ metas, cacheMaxAge: 3600 * 24 * 7 });
     });
 
     builder.defineStreamHandler(async ({id}) => {
