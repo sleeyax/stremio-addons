@@ -21,8 +21,8 @@ export default <Manifest>{
                 },
                 {
                     name: 'genre',
-                    isRequired: false,
-                    options: []
+                    isRequired: true,
+                    options: [] // options will be populated later on
                 },
                 {
                     name: 'skip',
