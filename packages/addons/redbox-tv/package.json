@@ -21,5 +21,12 @@
   },
   "bugs": {
     "url": "https://github.com/sleeyax/stremio-addons/issues"
+  },
+  "dependencies": {
+    "needle": "sleeyax/needle",
+    "stremio-addon-sdk": "^1.6.1"
+  },
+  "devDependencies": {
+    "@types/needle": "^2.0.4"
   }
 }
