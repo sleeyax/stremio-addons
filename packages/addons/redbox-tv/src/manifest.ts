@@ -10,7 +10,7 @@ export default <Manifest>{
     background: 'https://i.imgur.com/uVNqq6y.jpg',
     idPrefixes: ['rbtv'],
     types: [ContentType.TV],
-    resources: ['catalog', 'stream'],
+    resources: ['catalog', 'stream', 'meta'],
     catalogs: [
         {
             id: 'redboxtv',
