@@ -1,4 +1,4 @@
-import { addonBuilder, MetaPreview } from "stremio-addon-sdk";
+import { addonBuilder, MetaPreview, MetaDetail } from "stremio-addon-sdk";
 import manifest from "./manifest";
 import RedboxTvApiWrapper from "./api";
 import { toMetaPreviews, toStreams } from "./converters";
@@ -50,6 +50,22 @@ async function addonInit() {
             streams = await toStreams(selectedChannel.streams);
 
         return Promise.resolve({streams});
+    });
+
+    builder.defineMetaHandler(({id}) => {
+        let meta: MetaDetail;
+        
+        const selectedChannel = redbox.channels.find(channel => channel.id == Number.parseInt(id.split(':')[1]));
+
+        if (selectedChannel) {
+            meta = toMetaPreviews([].concat(selectedChannel))[0] as MetaDetail;
+            meta.background = manifest.background;
+            meta.logo = meta.poster;
+            meta.description = selectedChannel.name;
+            meta.genres = [selectedChannel.category.name];
+        }
+
+        return Promise.resolve({meta});
     });
 
     return builder.getInterface();
