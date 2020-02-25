@@ -6,6 +6,7 @@ List of working addons
 
 * [stream quailty filter](packages/addons/stream-quality-filter)
 * [ASMR from Tingles](packages/addons/asmr-from-tingles)
+* [IPTV from RedBox](packages/addons/redbox-tv)
 
 ## Project structure
 Overview of how this project is structured:
