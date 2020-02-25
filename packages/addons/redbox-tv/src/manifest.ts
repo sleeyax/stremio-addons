@@ -6,6 +6,8 @@ export default <Manifest>{
     name: 'RedBox TV',
     version,
     description,
+    logo: 'https://i.imgur.com/5EhJ8iG.png',
+    background: 'https://i.imgur.com/uVNqq6y.jpg',
     idPrefixes: ['rbtv'],
     types: [ContentType.TV],
     resources: ['catalog', 'stream'],
@@ -16,10 +18,6 @@ export default <Manifest>{
             name: 'RedBox TV',
             extra: [
                 {
-                    name: 'search',
-                    isRequired: false
-                },
-                {
                     name: 'genre',
                     isRequired: true,
                     options: [] // options will be populated later on
@@ -28,6 +26,17 @@ export default <Manifest>{
                     name: 'skip',
                     isRequired: false
                 }
+            ]
+        },
+        {
+            id: 'redboxtv-search',
+            type: ContentType.TV,
+            name: 'RedBox TV',
+            extra: [
+                {
+                    name: 'search',
+                    isRequired: true
+                },
             ]
         }
     ]

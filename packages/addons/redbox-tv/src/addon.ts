@@ -14,11 +14,12 @@ async function addonInit() {
 
     const builder = new addonBuilder(manifest);
 
-    builder.defineCatalogHandler(({ extra }) => {
+    builder.defineCatalogHandler(({ extra, id }) => {
         let metas: MetaPreview[] = [];
 
-        if (extra.search) {
-            // metas = searchCatalog
+        if (extra.search && id == 'redboxtv-search') {
+            const channels = redbox.channels.filter(channel => channel.name.toLowerCase().indexOf(extra.search.toLowerCase()) > -1);
+            metas = toMetaPreviews(channels);
         } else {
             // filter channels based on selected genre
             const channels = redbox.channels.filter(channel => channel.category.name == extra.genre);
