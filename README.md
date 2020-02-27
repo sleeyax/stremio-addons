@@ -1,11 +1,14 @@
 # stremio-addons
 More of my stremio addons in one monorepo.
 
-##  Addons
-List of working addons
+## Addons
+List of working addons.
 
+### Remote
 * [stream quailty filter](packages/addons/stream-quality-filter)
 * [ASMR from Tingles](packages/addons/asmr-from-tingles)
+
+### Local
 * [IPTV from RedBox](packages/addons/redbox-tv)
 
 ## Project structure
