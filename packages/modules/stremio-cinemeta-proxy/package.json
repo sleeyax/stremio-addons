@@ -1,0 +1,20 @@
+{
+  "name": "stremio-cinemeta-proxy",
+  "version": "1.0.0",
+  "description": "Fetch meta info of movies and series using Stremio's remote cinemeta addon",
+  "main": "src/index.js",
+  "scripts": {
+    "tests": "jasmine"
+  },
+  "keywords": [],
+  "author": "Sleeyax",
+  "license": "",
+  "dependencies": {
+    "needle": "^2.3.3"
+  },
+  "devDependencies": {
+    "jasmine": "^3.5.0",
+    "jasmine-node": "^3.0.0"
+  },
+  "repository": "https://github.com/sleeyax/stremio-cinemeta-proxy.git"
+}
