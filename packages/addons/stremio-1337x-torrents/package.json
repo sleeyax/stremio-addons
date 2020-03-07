@@ -10,9 +10,10 @@
   "author": "Sleeyax",
   "license": "MIT",
   "dependencies": {
-    "imdbid-to-title": "^1.0.2",
     "parse-torrent": "^7.0.1",
+    "promise.allsettled": "^1.0.2",
     "stremio-addon-sdk": "^1.4.0",
+    "stremio-cinemeta-proxy": "^1.0.0",
     "xtorrent": "^0.2.4"
   },
   "minSeeds": 10
