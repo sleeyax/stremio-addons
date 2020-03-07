@@ -1,7 +1,9 @@
 const {addonBuilder} = require('stremio-addon-sdk');
 const l33t = require('xtorrent');
-const imdbIdToTitle = require('imdbid-to-title');
 const parseTorrent = require('parse-torrent');
+const Video = require('stremio-cinemeta-proxy');
+const allSettled = require('promise.allsettled');
+allSettled.shim();
 const manifest = require('./manifest');
 const {minSeeds} = require('../package');
 
@@ -43,16 +45,25 @@ const nrOfDays = (nr) => nr * (24 * 3600);
 const padZero = (num) => num <= 9 ? '0' + num : num;
 
 addon.defineStreamHandler(async args => {
-    let query;
-    if (args.type === 'series') {
-        const serie = parseSerie(args.id);
-        query = (await imdbIdToTitle(serie.imdb)).trim() + ` S${padZero(serie.season)}E${padZero(serie.episode)}`;
-    }else {
-        query = await imdbIdToTitle(args.id);
-    }
+    // get info about the movie or series
+    const video = new Video(args.id);
+    const videoInfo = await video.getInfo();
+
+    // build all possible search queries
+    // for series, we dont only rely only on the 'SxxExx' format anymore but also search by episode name
+    const searchQueries = [
+        video.isSeries() ? videoInfo.name + ` S${padZero(videoInfo.episode.season)}E${padZero(videoInfo.episode.number)}` : videoInfo.name
+    ];
+    if (video.isSeries())
+        searchQueries.push(`${videoInfo.name} ${videoInfo.episode.name}`);
 
     // query 1337x api & get results
-    const searchResults = (await l33t.search({query})).filter(r => r.seed >= minSeeds);
+    const searchResults = (await Promise.allSettled(searchQueries.map(query => l33t.search({query}))))
+        .filter(promise => promise.status === 'fulfilled')
+        .map(promise => promise.value)
+        .flat()
+        .filter(r => r.seed >= minSeeds);
+
     let infoResults = await toInfoList(searchResults);
 
     // filter results based on media type (note that series are sometimes listed as movie)
