@@ -1,0 +1,28 @@
+{
+  "name": "stremio-quick-search-extension",
+  "version": "0.0.1",
+  "description": "Extends the stremio-addon-sdk to support quick search (requires the Quick Search addon to be installed)",
+  "author": "Sleeyax <yourd3veloper@gmail.com>",
+  "homepage": "https://github.com/sleeyax/stremio-addons#readme",
+  "license": "MIT",
+  "main": "src/index.js",
+  "directories": {
+    "lib": "src"
+  },
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sleeyax/stremio-addons.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no tests\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/sleeyax/stremio-addons/issues"
+  },
+  "dependencies": {
+    "stremio-addon-sdk": "^1.6.1"
+  }
+}
