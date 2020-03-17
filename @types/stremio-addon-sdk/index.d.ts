@@ -259,7 +259,7 @@ interface MetaLink {
      * Some recommended categories are: actor, director, writer, 
      * while the following categories are reserved and should not be used: imdb, share, similar.
      */
-    category: 'actor' | 'director' | 'writer' | string;
+    category: string;
     /**
      * An external URL or Meta Link.
      */
