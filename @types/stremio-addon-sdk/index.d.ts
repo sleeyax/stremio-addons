@@ -4,19 +4,7 @@
 
 type ShortManifestResource = 'catalog' | 'meta' | 'stream' | 'subtitles' | 'addon_catalog';
 type Extra = 'search' | 'genre' | 'skip';
-
-/**
- * Default supported content types.
- * 
- * You don't **have** to pick any of the default ones. 
- * You can specify your own, custom content type as a regular string too.
- */
-export const enum ContentType {
-    MOVIE = 'movie',
-    SERIES = 'series',
-    CHANNEL = 'channel',
-    TV = 'tv'
-}
+type ContentType = 'movie' | 'series' | 'channel' | 'tv';
 
 /**
  * Creates an addon builder object with a given manifest.
@@ -36,14 +24,14 @@ export class addonBuilder {
      * 
      * Docs: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/requests/defineCatalogHandler.md
      */
-    defineCatalogHandler(handler: (args: {type: string, id: string, extra: {search: string, genre: string, skip: number}}) => Promise<{metas: MetaPreview[]}>): void;
+    defineCatalogHandler(handler: (args: {type: ContentType, id: string, extra: {search: string, genre: string, skip: number}}) => Promise<{metas: MetaPreview[]} & Cache>): void;
     
     /**
      * Handles metadata requests (title, year, poster, background, etc.).
      * 
      * Docs: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/requests/defineMetaHandler.md
      */
-    defineMetaHandler(handler: (args: {type: string, id: string}) => Promise<{meta: MetaDetail} & Cache>): void;
+    defineMetaHandler(handler: (args: {type: ContentType, id: string}) => Promise<{meta: MetaDetail} & Cache>): void;
 
     /**
      * Handles stream requests.
@@ -52,14 +40,14 @@ export class addonBuilder {
      * 
      * Docs: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/requests/defineStreamHandler.md
      */
-    defineStreamHandler(handler: (args: {type: string, id: string}) => Promise<{streams: Stream[]} & Cache>): void;
+    defineStreamHandler(handler: (args: {type: ContentType, id: string}) => Promise<{streams: Stream[]} & Cache>): void;
 
     /**
      * Handles subtitle requests.
      * 
      * Docs: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/requests/defineSubtitlesHandler.md
      */
-    defineSubtitlesHandler(handler: (args: {type: string, id: string, extra: {
+    defineSubtitlesHandler(handler: (args: {type: ContentType, id: string, extra: {
         /**
          * OpenSubtitles file hash for the video.
          */
@@ -79,7 +67,7 @@ export class addonBuilder {
      * 
      * Docs: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/requests/defineResourceHandler.md
      */
-    defineResourceHandler(args: {type: string, id: string}): Promise<{addons: AddonCatalog[]}>;
+    defineResourceHandler(args: {type: ContentType, id: string}): Promise<{addons: AddonCatalog[]} & Cache>;
 
     /**
      * Turns the addon into an addonInterface, which is an immutable (frozen) object that has {manifest, get} where:
@@ -101,7 +89,7 @@ interface AddonInterface {
 /**
  * A resolving object can also include the following cache related properties
  */
-type Cache = {
+interface Cache {
     /**
      * (in seconds) sets the Cache-Control header to max-age=$cacheMaxAge 
      * and overwrites the global cache time set in serveHTTP options.
@@ -133,7 +121,7 @@ interface MetaPreview {
     /**
      * Type of the content.
      */
-    type: string;
+    type: ContentType;
     /**
      * Name of the content.
      */
@@ -461,7 +449,7 @@ export interface Manifest {
     /**
      * Supported types.
      */
-    types: string[]
+    types: ContentType[]
     /**
      * Use this if you want your addon to be called only for specific content IDs.
      * 
@@ -538,7 +526,7 @@ interface FullManifestResource {
     /**
      * Supported types.
      */
-    types: string[];
+    types: ContentType[];
     /**
      * Use this if you want your addon to be called only for specific content IDs
      * 
@@ -551,7 +539,7 @@ interface ManifestCatalog {
     /**
      *  This is the content type of the catalog.
      */
-    type: string;
+    type: ContentType;
     /**
      * The id of the catalog, can be any unique string describing the catalog (unique per addon, as an addon can have many catalogs).
      * 

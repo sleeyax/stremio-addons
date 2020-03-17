@@ -1,4 +1,4 @@
-import {addonBuilder, MetaPreview, ContentType, MetaDetail} from 'stremio-addon-sdk';
+import {addonBuilder, MetaPreview, MetaDetail} from 'stremio-addon-sdk';
 import manifest from './manifest';
 import Command from './command';
 
@@ -9,7 +9,7 @@ addon.defineCatalogHandler(async ({extra}) => {
     let metas: MetaDetail[] = [{
        // id: 'abc',
         name: 'test',
-        type: ContentType.CHANNEL,
+        type: 'channel',
         // @ts-ignore
         video_id: 'dlive_user:roxieph|Roxieph',
         behaviourHints: {

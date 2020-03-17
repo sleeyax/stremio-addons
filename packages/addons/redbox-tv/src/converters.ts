@@ -1,5 +1,5 @@
 import Channel from "./models/channel";
-import { MetaPreview, ContentType, Stream } from "stremio-addon-sdk";
+import { MetaPreview, Stream } from "stremio-addon-sdk";
 import RedBoxStream from "./models/stream";
 
 const http2https = (url) => 'https://http2https.sleeyax.now.sh/' + Buffer.from(url).toString('base64');
@@ -7,7 +7,7 @@ const http2https = (url) => 'https://http2https.sleeyax.now.sh/' + Buffer.from(u
 export function toMetaPreviews(channels: Channel[]) {
     return channels.map(channel => <MetaPreview>{
         id: 'rbtv:' + channel.id,
-        type: ContentType.TV,
+        type: 'tv',
         name: channel.name,
         poster: http2https(channel.iconUrl),
         posterShape: 'square',

@@ -1,4 +1,4 @@
-import { addonBuilder, Stream, AddonInterface, MetaPreview, MetaDetail, ContentType, MetaVideo } from 'stremio-addon-sdk';
+import { addonBuilder, Stream, AddonInterface, MetaDetail, MetaVideo } from 'stremio-addon-sdk';
 import createManifest from './manifest';
 import TinglesApi from './tingles-api';
 import IVideo from './models/video';
@@ -13,7 +13,7 @@ function videoToMetaDetail(video: IVideo): MetaDetail {
     return <MetaDetail>{
         id: 'tingles:' + video.uuid,
         name: video.title,
-        type: ContentType.MOVIE,
+        type: 'movie',
         description: video.description.split('\n')[0],
         poster: video.thumbnailURL,
         posterShape: 'landscape',
@@ -33,7 +33,7 @@ function artistToMetaDetail(artist: IArtist): MetaDetail {
     return <MetaDetail>{
         id: 'tingles:' + artist.uuid,
         name: artist.name,
-        type: ContentType.CHANNEL,
+        type: 'channel',
         description: artist.about,
         poster: artist.profileImageURL,
         posterShape: 'square',
@@ -91,7 +91,7 @@ export default async function (): Promise<AddonInterface> {
 
         let meta: MetaDetail;
         // single video selected from 'tingles-triggers-catalog' catalog
-        if (type == ContentType.MOVIE) {
+        if (type == 'movie') {
             const video = await tingles.getVideoInfo(uuid);
             const artist = await tingles.getArtistInfo(video.artistUuid);
 
@@ -100,7 +100,7 @@ export default async function (): Promise<AddonInterface> {
             meta = { ...artistToMetaDetail(artist), ...videoToMetaDetail(video) };
         }
         // ASMR artist channel selected from 'tingles-artists-catalog' catalog
-        else if (type == ContentType.CHANNEL) {
+        else if (type == 'channel') {
             const artist = await tingles.getArtistInfo(uuid);
             const videos = await tingles.getArtistVideos(uuid);
 

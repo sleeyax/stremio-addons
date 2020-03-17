@@ -1,7 +1,8 @@
-import { Manifest, ContentType } from 'stremio-addon-sdk';
+import { Manifest } from 'stremio-addon-sdk';
 const { version, description } = require('../package.json');
 
 export default function createManifest(genres: string[]) {
+    //@ts-ignore
     return <Manifest>{
         id: 'com.sleeyax.asmr-tingles',
         name: 'ASMR from Tingles',
@@ -9,7 +10,7 @@ export default function createManifest(genres: string[]) {
         version,
         logo: 'https://i.imgur.com/hH5oekj.png',
         background: 'https://i.imgur.com/H4nPP6Q.jpg',
-        types: [ContentType.MOVIE, ContentType.CHANNEL, 'ASMR'],
+        types: ['movie', 'channel', 'ASMR'],
         idPrefixes: ['tingles'],
         resources: ['catalog', 'meta', 'stream'],
         catalogs: [

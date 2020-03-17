@@ -1,4 +1,4 @@
-import {Manifest, ContentType} from 'stremio-addon-sdk';
+import {Manifest} from 'stremio-addon-sdk';
 // require so package.json doens't get copied to build folder
 const {version, description} = require('../package.json');
 
@@ -9,7 +9,7 @@ const manifest: Manifest = {
    logo: 'https://i.imgur.com/iUBNpZM.png',
    catalogs: [],
    resources: ['stream'],
-   types: [ContentType.MOVIE, ContentType.SERIES],
+   types: ['movie', 'series'],
    version,
    idPrefixes: ['tt']
 };

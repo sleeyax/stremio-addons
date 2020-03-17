@@ -1,4 +1,4 @@
-import { Manifest, ContentType } from "stremio-addon-sdk";
+import { Manifest } from "stremio-addon-sdk";
 const { version, description } = require('../package.json');
 
 export default <Manifest>{
@@ -9,12 +9,12 @@ export default <Manifest>{
     logo: 'https://i.imgur.com/5EhJ8iG.png',
     background: 'https://i.imgur.com/uVNqq6y.jpg',
     idPrefixes: ['rbtv'],
-    types: [ContentType.TV],
+    types: ['tv'],
     resources: ['catalog', 'stream', 'meta'],
     catalogs: [
         {
             id: 'redboxtv',
-            type: ContentType.TV,
+            type: 'tv',
             name: 'RedBox TV',
             extra: [
                 {
@@ -30,7 +30,7 @@ export default <Manifest>{
         },
         {
             id: 'redboxtv-search',
-            type: ContentType.TV,
+            type: 'tv',
             name: 'RedBox TV',
             extra: [
                 {

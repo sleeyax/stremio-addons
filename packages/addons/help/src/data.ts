@@ -1,4 +1,4 @@
-import { MetaPreview, ContentType } from "stremio-addon-sdk";
+import { MetaPreview } from "stremio-addon-sdk";
 
 export interface Data extends MetaPreview {
     links?: {name: string, url: string}[]
@@ -8,7 +8,7 @@ export const communities: Data[] = [
     {
         id: 'help:community:reddit',
         name: 'Reddit',
-        type: ContentType.MOVIE,
+        type: 'movie',
         poster: 'https://i.imgur.com/ec7o6Hu.png',
         posterShape: 'square',
         description: 'Reddit is a network of communities based on people\'s interest',
@@ -26,7 +26,7 @@ export const communities: Data[] = [
     {
         id: 'help:community:facebook',
         name: 'Facebook',
-        type: ContentType.MOVIE,
+        type: 'movie',
         poster: 'https://i.imgur.com/AzdD4qZ.png',
         posterShape: 'square',
         description: 'Connect with friends, family and other people you know',
@@ -40,7 +40,7 @@ export const communities: Data[] = [
     {
         id: 'help:community:discord',
         name: 'Discord',
-        type: ContentType.MOVIE,
+        type: 'movie',
         poster: 'https://i.imgur.com/MxEgB2o.jpg',
         posterShape: 'square',
         description: 'It\'s time to ditch Skype and TeamSpeak.All -in -one voice and text chat for gamers that\'s free, secure, and works on both your desktop and phone.Connect with friends, family and other people you know',
@@ -57,7 +57,7 @@ export const tools: Data[] = [
     {
         id: 'help:tools:pms',
         name: 'PimpMyStremio',
-        type: ContentType.MOVIE,
+        type: 'movie',
         poster: 'https://raw.githubusercontent.com/sungshon/PimpMyStremio/master/src/web/logo.png',
         posterShape: 'square',
         logo: 'https://avatars0.githubusercontent.com/u/49482512?s=460&v=4',
@@ -80,7 +80,7 @@ export const tools: Data[] = [
     {
         id: 'help:tools:downloader-pc',
         name: 'Stremio Downloader',
-        type: ContentType.MOVIE,
+        type: 'movie',
         poster: 'https://raw.githubusercontent.com/BurningSands70/stremio-downloader/master/assets/addonLogo.png',
         posterShape: 'square',
         logo: 'https://avatars0.githubusercontent.com/u/55944558?s=460&v=4',
@@ -99,7 +99,7 @@ export const tools: Data[] = [
     {
         id: 'help:tools:p2p',
         name: 'Stremio P2P',
-        type: ContentType.MOVIE,
+        type: 'movie',
         poster: 'https://raw.githubusercontent.com/ShivamRawat0l/StremioP2P/master/P2PClient/build/icon.ico',
         posterShape: 'square',
         logo: 'https://avatars0.githubusercontent.com/u/27425384?s=400&u=d83889b1e4e0b27672227091b26589393333e5bc&v=4',
@@ -123,7 +123,7 @@ export const tools: Data[] = [
     {
         id: 'help:tools:catalog-builder',
         name: 'Stremio Catalog Builder',
-        type: ContentType.MOVIE,
+        type: 'movie',
         poster: '',
         posterShape: 'square',
         logo: '',

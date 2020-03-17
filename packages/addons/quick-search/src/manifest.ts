@@ -1,4 +1,4 @@
-import { Manifest, ContentType } from "stremio-addon-sdk";
+import { Manifest } from "stremio-addon-sdk";
 const {description, version} = require('../package.json');
 
 export default <Manifest>{
@@ -6,14 +6,14 @@ export default <Manifest>{
     name: 'Quick Search',
     description,
     version,
-    types: [ContentType.CHANNEL, ContentType.MOVIE, ContentType.SERIES, ContentType.TV],
+    types: ['channel', 'movie', 'series', 'tv'],
     resources: ['catalog'],
     logo: 'https://i.imgur.com/yIgfnKC.png',
     catalogs: [
         {
             id: 'quick-search-channel',
             name: 'Instant Results',
-            type: ContentType.CHANNEL,
+            type: 'channel',
             extra: [
                 {
                     name: 'search',
