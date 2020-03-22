@@ -19,10 +19,14 @@
     "publish": "node ./node_modules/publisher/lib/publisher.js https://stremio-quality-filter-addon.sleeyax.now.sh/manifest.json"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.3",
     "@types/needle": "^2.0.4",
     "@types/node": "^13.5.1"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "needle": "^2.4.0",
     "stremio-addon-sdk": "^1.6.1"
   }
