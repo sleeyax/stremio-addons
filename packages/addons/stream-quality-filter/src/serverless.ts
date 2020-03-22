@@ -1,17 +1,7 @@
-import addonInterface from './addon';
-import {getRouter} from 'stremio-addon-sdk';
-import landingTemplate from 'stremio-addon-sdk/src/landingTemplate';
+import addonRouter from './addon';
 
 module.exports = (req, res) => {
-    const router = getRouter(addonInterface);
-    const landingHTML = landingTemplate(addonInterface.manifest);
-
-    router.get('/', (_, res) => {
-        res.setHeader('content-type', 'text/html');
-        res.end(landingHTML);
-    });
-
-    router(req, res, () => {
+    addonRouter(req, res, () => {
         res.statusCode = 404;
         res.end();
     });
