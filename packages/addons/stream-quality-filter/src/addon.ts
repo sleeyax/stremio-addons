@@ -24,7 +24,7 @@ addonRouter.get('/:filters?/stream/:type/:id.json', async (req, res) => {
     const streams: Stream[] = await getAllStreams(id, type);
     const filter = new StreamFilter(filters ? extractFilters(filters) : null);
 
-    const removeUnknowns = filters.indexOf('unknown') == -1;
+    const removeUnknowns = (filters || false) && filters.indexOf('unknown') == -1;
 
     res.send({ streams: filter.apply(streams, removeUnknowns) });
 });

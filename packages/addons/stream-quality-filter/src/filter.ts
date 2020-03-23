@@ -69,7 +69,7 @@ export default class StreamFilter {
         .filter((stream, i, self) => stream && stream.infoHash && i === self.findIndex(s => s.infoHash == stream.infoHash && s.fileIdx == stream.fileIdx))
         .map(stream => <Stream>({
             ...stream,
-            name: ((this.getFilter(findAnyOf(stream.title, rawFilters).value) || {}).humanReadableName || 'unknown'),
+            name: (this.getFilter(findAnyOf(stream.title, rawFilters).value) || {}).humanReadableName || 'unknown',
             title: `[${stream.name}] ${stream.title}`
         }));
 
