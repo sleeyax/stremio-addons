@@ -1,4 +1,4 @@
 import addonInterface from './addon';
 import { serveHTTP } from 'stremio-addon-sdk';
 
-serveHTTP(addonInterface, { port: 7000 })
+serveHTTP(addonInterface, { port: +process.argv[2] || 7000 })
