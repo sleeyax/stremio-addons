@@ -1,10 +1,11 @@
 import needle, {NeedleResponse} from 'needle';
 
 const urls = [
-    'https://stremio-1337x-addon.sleeyax.now.sh',
-    'https://stremio-yts.joaolvcm.now.sh',
-    'https://thepiratebay-plus.now.sh',
-    'https://stremio-rarbg-addon-dev.sleeyax.now.sh'
+    // TODO: choose sources using UI
+    'https://more-milk.xyz/661MyMwAqRbc.com.sleeyax.stremio-1337x-torrents/manifest.json',
+    // 'https://stremio-yts.joaolvcm.now.sh',
+    // 'https://thepiratebay-plus.now.sh',
+    'https://more-milk.xyz/661MyMwAqRbc.com.sleeyax.stremio-rarbg-torrents/manifest.json'
 ];
 
 export async function getAllStreams(imdbid: string, type: string = 'movie') {
