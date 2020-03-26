@@ -1,6 +1,6 @@
 {
   "name": "stream-quality-filter",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Fetches streams from RARBG, 1337x, YTS and TPB+ addons, removes duplicates and sorts them by quality.",
   "author": "Sleeyax <yourd3veloper@gmail.com>",
   "repository": "https://github.com/sleeyax/stremio-addons",
