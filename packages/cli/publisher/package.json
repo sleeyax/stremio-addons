@@ -16,6 +16,7 @@
     "publish": "./lib/publisher.js"
   },
   "dependencies": {
+    "needle": "^2.3.3",
     "stremio-addon-sdk": "^1.6.1"
   },
   "scripts": {
