@@ -17,7 +17,8 @@
     "url": "git+https://github.com/sleeyax/stremio-addons.git"
   },
   "scripts": {
-    "test": "ts-node --project ./tsconfig.json node_modules/jasmine/bin/jasmine --config=spec/support/jasmine.json"
+    "test": "ts-node --project ./tsconfig.json node_modules/jasmine/bin/jasmine --config=spec/support/jasmine.json",
+    "tsc": "tsc"
   },
   "bugs": {
     "url": "https://github.com/sleeyax/stremio-addons/issues"

@@ -14,6 +14,7 @@
   ],
   "scripts": {
     "test": "echo \"No tests available\" && exit 1",
+    "tsc": "tsc",
     "start": "node build/server.js",
     "watch": "nodemon build/server.js",
     "publish": "node ./node_modules/publisher/lib/publisher.js https://stremio-quality-filter-addon.sleeyax.now.sh/manifest.json"
