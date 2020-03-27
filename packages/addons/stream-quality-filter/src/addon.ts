@@ -26,6 +26,7 @@ addonRouter.get('/:filters?/stream/:type/:id.json', async (req, res) => {
 
     const removeUnknowns = (filters || false) && filters.indexOf('unknown') == -1;
 
+    res.setHeader('Cache-Control', `max-age=${3 * 24 * 3600}, stale-if-error=${6 * 24 * 3600}, public`)
     res.send({ streams: filter.apply(streams, removeUnknowns) });
 });
 
