@@ -36,5 +36,14 @@ If you'd rather not use lerna, you can also install dependencies for a single ad
 You can transpile all addons at once with lerna: `lerna run tsc` or head to a specific addon directory and run `npm run tsc`.
 The target addon(s) should now have a `build` directory next to the `src` directory, containing the transpiled javascript files. To run a debug server for instance, you would usually run `node build/server.js` to start it. 
 
-## Roadmap
-At the end, this repo should contain my other addons (which are now each in their own respective repos) as well. This wil make managing them all much easier, especially if they are deployed on a VPS.
+
+### Conventions
+#### Commit messages
+Your commit messages should respect the following convention table:
+
+| keyword | description                                                      | example                                                                           |
+|---------|------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| global  | global changes that affects many packages or the repo as a whole | <br>`global: update lerna config file`<br>`global: remove console.log()s`         |
+| addon   | changes to an existing addon or adding a new one                 | <br>`addon/stream-quality-filter: add more filters`<br>`addon: create IPTV addon` |
+| cli     | changes to cli packages or adding a new one                      | <br>`cli/publisher: support IPFS publish`<br>`cli: add tool x`                    |
+| module  | changes to (npm) modules or adding a new one                     | `module/extension: fix Y`<br>`module: add extension`                              |
