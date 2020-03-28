@@ -11,14 +11,11 @@ addon.defineStreamHandler(async args => {
     // wait 2 seconds per requests for now
     // TODO: find out how to get last execution time on now, so we can wait using the actual interval instead of the full 2 seconds
     await delay(2000);
-    console.log('[INFO] Streams: ', args);
 
     // get app id and token from redis store
     let redisValue = await redis.getValue();
     if (redisValue == null)
         redisValue = await redis.generateValue();
-
-    console.log('[INFO] Current Appid & Token: ' + redisValue);
 
     const splitted = redisValue.split(':');
     const torrentApi = new TorrentApi(splitted[0], splitted[1]);
@@ -47,7 +44,6 @@ addon.defineStreamHandler(async args => {
     }catch(ex) {
         // get a new app id & token when the api makes them unusable for no reason whatsoever
         if (ex.name == 'StatusCodeError') {
-            console.log(`[ERROR] ${redisValue} became invalid, generating new app id & token...`);
             redisValue = redis.generateValue();
         }else {console.error(ex)}
     }

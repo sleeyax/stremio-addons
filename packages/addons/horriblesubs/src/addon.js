@@ -27,8 +27,6 @@ const manifest = {
 const builder = new addonBuilder(manifest);
 
 builder.defineCatalogHandler(async args => {
-    console.log("catalogs: ", args);
-
     let animes = [];
     let cache = 24 * 3600;
     if (args.extra.genre) {
@@ -63,8 +61,6 @@ builder.defineCatalogHandler(async args => {
 });
 
 builder.defineMetaHandler(async args => {
-    console.log("meta: ", args);
-
     const url = b64decode(args.id.split(":")[1]);
     const animeInfo = await horribleSubs.getAnimeInfo(url);
     const episodes = await horribleSubs.getAnimeEpisodes(animeInfo.id);
@@ -95,8 +91,6 @@ builder.defineMetaHandler(async args => {
 });
 
 builder.defineStreamHandler(async args => {
-    console.log("streams: ", args);
-
     const animeId = args.id.split(":")[1];
     const episodeNr = args.id.split(":")[3];
     const selectedEpisode = (await horribleSubs.getAnimeEpisodes(animeId)).find(episode => parseInt(episode.number) == episodeNr);

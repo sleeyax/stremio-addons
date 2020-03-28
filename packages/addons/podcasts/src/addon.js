@@ -47,8 +47,6 @@ module.exports = async () => {
     const builder = new addonBuilder(manifest);
 
     builder.defineCatalogHandler(async args => {
-        console.log("catalogs: ", args);
-
         let metas = [];
 
         switch(args.id.split("_")[1]) {
@@ -68,8 +66,6 @@ module.exports = async () => {
     });
 
     builder.defineMetaHandler(async args => {
-        console.log("meta: ", args);
-
         switch(args.id.split("_")[1]) {
             case "gpodder":
                 return gpodderAdapter.getMetaData(args);
@@ -83,8 +79,6 @@ module.exports = async () => {
     });
 
     builder.defineStreamHandler(async args => {
-        console.log("streams: ", args);
-
         switch(args.id.split("_")[1]) {
             case "gpodder":
                 return await gpodderAdapter.getStreams(args);

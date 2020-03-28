@@ -28,8 +28,6 @@ async function init() {
     const builder = new addonBuilder(manifest);
 
     builder.defineCatalogHandler(async (args) => {
-        console.log("catalog: ", args);
-
         let streams = [];
         if (args.extra.search) {
             streams = await dlive.searchLiveStreams(args.extra.search);
@@ -56,8 +54,6 @@ async function init() {
     });
 
     builder.defineStreamHandler(async (args) => {
-        console.log("stream: ", args);
-
         const streamSources = await dlive.getStreamSources(args.id);
         const streams = streamSources.map(stream => {
             return {
@@ -70,8 +66,6 @@ async function init() {
     });
 
     builder.defineMetaHandler(async args => {
-        console.log("meta: ", args);
-
         const displayname = args.id.split(":")[1].split("|")[1];
         const userStreamInfo = await dlive.getUserInfo(displayname);
 
