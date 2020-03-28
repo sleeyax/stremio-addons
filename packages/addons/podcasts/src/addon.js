@@ -4,8 +4,6 @@ const {version} = require("../package");
 
 const GpodderAdapter = require("./adapters/gpodder-adapter");
 const gpodderAdapter = new GpodderAdapter();
-const ListenNotesAdapter = require("./adapters/listennotes-adapter");
-const listenNotesAdapter = new ListenNotesAdapter();
 const SpreakerAdapter = require("./adapters/spreaker-adapter");
 const spreakerAdapter = new SpreakerAdapter();
 
@@ -27,13 +25,6 @@ module.exports = async () => {
                 "name": "Spreaker",
                 "genres": await spreakerAdapter.getGenres(),
                 "extra": [{"name": "search", "isRequired": false}, {"name": "genre", "isRequired": false}, {"name": "skip", "isRequired": false}],
-            },
-            {
-                "id": "podcasts_listennotes_catalog",
-                "type": "Podcasts",
-                "name": "Listen notes",
-                "genres": await listenNotesAdapter.getGenres(),
-                "extra": [{"name": "search", "isRequired": false}, {"name": "genre", "isRequired": false}, {"name": "skip", "isRequired": false}],
             }
         ],
         "resources": ["catalog", "meta", "stream"],
@@ -53,9 +44,6 @@ module.exports = async () => {
             case "gpodder":
                 metas = await gpodderAdapter.getSummarizedMetaDataCollection(args);
                 break;
-            case "listennotes":
-                metas = await listenNotesAdapter.getSummarizedMetaDataCollection(args);
-                break;
             case "spreaker":
                 metas = await spreakerAdapter.getSummarizedMetaDataCollection(args);
                 break;
@@ -69,8 +57,6 @@ module.exports = async () => {
         switch(args.id.split("_")[1]) {
             case "gpodder":
                 return gpodderAdapter.getMetaData(args);
-            case "listennotes":
-                return listenNotesAdapter.getMetaData(args);
             case "spreaker":
                 return spreakerAdapter.getMetaData(args);
             default:
@@ -82,8 +68,6 @@ module.exports = async () => {
         switch(args.id.split("_")[1]) {
             case "gpodder":
                 return await gpodderAdapter.getStreams(args);
-            case "listennotes":
-                return await listenNotesAdapter.getStreams(args);
             case "spreaker":
                 return await spreakerAdapter.getStreams(args);
             default:

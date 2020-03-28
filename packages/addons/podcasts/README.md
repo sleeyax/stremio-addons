@@ -14,12 +14,6 @@
     * Search all podcasts
     * Show top podcasts
     * Infinite scroll (pagination)
-* 685,945+ podcasts from [listen notes](https://www.listennotes.com/) featuring
-    * All languages
-    * Random podcast generator
-    * Explicit content warning
-    * Show average episode length
-    * Podcast source & social media links (if available)
 * 2400+ podcasts from [gpodder](https://www.gpodder.net/) featuring
     * Searchable episodes
 * 10,000+ podcasts from [spreaker](https://www.spreaker.com/) featuring
@@ -44,9 +38,6 @@ There are multiple ways to install this addon. Luxurious!
 ![addon repo field](https://i.imgur.com/RODMkww.png)
 
 ## FAQ
-Catalog X is not working?
-- Some catalogs (listen notes) are using a paid API to retrieve podcasts info. This means that it will stop working whenever a certain amount of requests is reached, unless paid for. This addon is a community effort and I do not plan to pay for additional costs. You can send me an email if you wish to donate some money.
-
 I found a bug
 - Squash it, fork it or [open an issue](https://github.com/sleeyax/stremio-podcasts-addon/issues/new)!
 
@@ -55,14 +46,6 @@ First of all make sure you have a recent version of nodejs (https://nodejs.org/)
 ```
 npm install
 ```
-Now copy `.env.example` to `.env` and edit the following lines:
-```
-LISTEN_NOTES_API_KEY=xxx
-```
-Replace 'xxx' with your [listen notes API](https://www.listennotes.com/api/) key.
-
-Now you have to generate the required cache files by running `npm run cache:generate`. Don't forget this step if you want the listen notes catalog to work!
-
 Finally, to start a development server that watches for file changes run `npm run start:watch`. In production you should be using `npm run start`.
 
 ## Contributing
