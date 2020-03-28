@@ -1,8 +1,10 @@
-
+const {config} = require('dotenv');
 const express = require('express');
 const {join} = require('path');
 const {promisify} = require('util');
-const pathExists = promisify(require('fs').exists);
+const fs = require('fs');
+const pathExists = promisify(fs.exists);
+const readDir = promisify(fs.readdir);
 
 const app = express();
 const port = process.argv[2] || 80;
@@ -24,28 +26,26 @@ async function loadServerlessFunc(addon) {
     // load .env file if it exists
     const envFile = join(addonDir, '.env');
     if (await pathExists(envFile))
-        require('dotenv').config({path: envFile});
+        config({path: envFile});
 
     // load the addon
-    const dirs = [
-        'src',
-        'build'
-    ];
     let serverlessFile;
+    const dirs = ['src', 'build'];
     for (const i in dirs) {
         const dir = dirs[i];
         const path = join(addonDir, dir, 'serverless.js');
-        if (await pathExists(path))
+        if (await pathExists(path)) {
             serverlessFile = path;
+            break;
+        }
     }
-    
+
     return serverlessFile ? require(serverlessFile) : null;
 }
 
 app.get('/', (_, res) => res.sendFile(join(__dirname, 'static', 'index.html')));
 
 app.get('/:addon/:route(*)', async (req, res) => {
-    console.log(req.params.route);
     const addonName = aliases[req.params.addon] || req.params.addon;
 
     const serverlessFunc = await loadServerlessFunc(addonName);
@@ -57,6 +57,14 @@ app.get('/:addon/:route(*)', async (req, res) => {
     } else {
         res.send('Not found').status(404);
     }
+});
+
+app.get('/addons', async (req, res) => {
+    const addonsDir = join(__dirname, '..', '..');
+    const directories = (await readDir(addonsDir, { withFileTypes: true }))
+        .filter(dir => dir.isDirectory() && !dir.name.startsWith('aio'))
+        .map(dir => dir.name);
+    res.send(directories);
 });
 
 app.listen(port, () => console.log(`Listening on http://127.0.0.1:${port}`))
