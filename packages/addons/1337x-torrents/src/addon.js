@@ -74,9 +74,9 @@ addon.defineStreamHandler(async args => {
 
     return Promise.resolve({
         streams,
-        cacheMaxAge: nrOfDays(2),
-        staleRevalidate: nrOfDays(1),
-        staleError: nrOfDays(5)
+        cacheMaxAge: nrOfDays(streams.length > 0 ? 7 : 1),
+        staleRevalidate: nrOfDays(2),
+        staleError: nrOfDays(7)
     });
 });
 
