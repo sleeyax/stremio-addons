@@ -45,7 +45,7 @@ addon.defineStreamHandler(async args => {
         // get a new app id & token when the api makes them unusable for no reason whatsoever
         if (ex.name == 'StatusCodeError') {
             redisValue = redis.generateValue();
-        }else {console.error(ex)}
+        }
     }
 
     if (torrentResults != null && torrentResults.length != 0 && !torrentResults.error)

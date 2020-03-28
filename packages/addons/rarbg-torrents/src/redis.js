@@ -6,7 +6,7 @@ const client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST
     password: process.env.REDIS_PASSWORD,
 });
 
-client.on('error', (err) => console.error(err));
+// client.on('error', (err) => console.error(err));
 
 function getValue(key = process.env.REDIS_KEY) {
     return new Promise((resolve, reject) => {

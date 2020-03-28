@@ -13,8 +13,8 @@ export async function getAllStreams(imdbid: string, type: string = 'movie') {
     const streams = await Promise.all(streamPromises)
         .then((results: NeedleResponse[]) => results
             .map(result => result.body.streams || [])
-            .reduce((acc, val) => acc.concat(val), []))
-        .catch(err => console.error(err));
+            .reduce((acc, val) => acc.concat(val), []));
+        //.catch(err => console.error(err));
 
     return streams;
 }
