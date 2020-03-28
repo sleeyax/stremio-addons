@@ -47,3 +47,4 @@ Your commit messages should respect the following convention table:
 | addon   | changes to an existing addon or adding a new one                 | <br>`addon/stream-quality-filter: add more filters`<br>`addon: create IPTV addon` |
 | cli     | changes to cli packages or adding a new one                      | <br>`cli/publisher: support IPFS publish`<br>`cli: add tool x`                    |
 | module  | changes to (npm) modules or adding a new one                     | `module/extension: fix Y`<br>`module: add extension`                              |
+| script  | pure shell, bash or batch helper scripts                         | `script: add deployment script`                                                   |
