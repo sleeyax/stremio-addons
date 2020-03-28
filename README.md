@@ -5,7 +5,7 @@ More of my stremio addons in one monorepo.
 List of working addons.
 
 ### Remote
-* [stream quailty filter](packages/addons/stream-quality-filter)
+* [stream quality filter](packages/addons/stream-quality-filter)
 * [ASMR from Tingles](packages/addons/asmr-from-tingles)
 
 ### Local
