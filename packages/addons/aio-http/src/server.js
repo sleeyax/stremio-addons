@@ -70,12 +70,6 @@ app.get('/:addon/:route(*)', (req, res) => {
     }
 });
 
-app.get('/addons', async (req, res) => {
-    const addonsDir = join(__dirname, '..', '..');
-    const directories = (await readDir(addonsDir, { withFileTypes: true }))
-        .filter(dir => dir.isDirectory() && !dir.name.startsWith('aio'))
-        .map(dir => dir.name);
-    res.send(directories);
-});
+app.get('/addons', async (req, res) => res.send(Object.keys(addonModules)));
 
 app.listen(port, () => console.log(`Listening on http://127.0.0.1:${port}`))
