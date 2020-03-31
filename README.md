@@ -31,10 +31,12 @@ Overview of how this project is structured:
 ```
 
 ## Info for developers
-All addons are written in [TypeScript](https://www.typescriptlang.org/). To manage this monorepo, [lerna](https://lerna.js.org/) is used.
+Newer addons are written in [TypeScript](https://www.typescriptlang.org/). To manage this monorepo, [lerna](https://lerna.js.org/) is used.
+
+The `@types` that are available in this repo are also available on [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped): `npm install @types/stremio-addon-sdk --save-dev`. 
 
 ### Installation
-To install all required developer dependencies that are shared accross addons, navigate to the root directory (the directory where this README is in) and run `npm i`. 
+To install all required developer dependencies that are shared accross addons, navigate to the root directory (the directory where this README is in) and run `npm install`. 
 
 #### Addon dependencies
 To install all dependencies of all addons at once, you can enter the command `npm run bootstrap` at the project root. If you'd rather not use lerna, you can also install dependencies for a single addon by running `npm install` within that addon directory as usual.
