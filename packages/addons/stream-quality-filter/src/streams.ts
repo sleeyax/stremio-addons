@@ -2,10 +2,10 @@ import needle, {NeedleResponse} from 'needle';
 
 const urls = [
     // TODO: choose sources using UI
-    'https://more-milk.xyz/1337x',
+    'https://addon.leetx.more-milk.xyz',
     // 'https://stremio-yts.joaolvcm.now.sh',
     // 'https://thepiratebay-plus.now.sh',
-    'https://more-milk.xyz/rarbg'
+    'https://addon.rarbg.more-milk.xyz'
 ];
 
 export async function getAllStreams(imdbid: string, type: string = 'movie') {

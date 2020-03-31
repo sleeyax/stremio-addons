@@ -17,6 +17,7 @@
     "url": "git+https://github.com/sleeyax/stremio-addons.git"
   },
   "scripts": {
+    "start": "node build/server.js",
     "test": "echo \"Error: no tests available\" && exit 1",
     "tsc": "tsc"
   },

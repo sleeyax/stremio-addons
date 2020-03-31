@@ -1,6 +1,6 @@
 import addonRouter from './addon';
 import express from 'express';
-const port = +process.argv[2] || 1337;
+const port = +process.env.PORT || +process.argv[2] || 1337;
 
 const app = express();
 
