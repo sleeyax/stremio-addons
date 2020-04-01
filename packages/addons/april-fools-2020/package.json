@@ -1,0 +1,30 @@
+{
+  "name": "april-fools-2020",
+  "version": "0.0.1",
+  "description": "April fools joke addon :))",
+  "author": "Sleeyax <yourd3veloper@gmail.com>",
+  "homepage": "https://github.com/sleeyax/stremio-addons#readme",
+  "license": "MIT",
+  "main": "lib/april-fools-2020.js",
+  "directories": {
+    "lib": "src"
+  },
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sleeyax/stremio-addons.git"
+  },
+  "scripts": {
+    "tsc": "tsc",
+    "start": "node build/server.js",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/sleeyax/stremio-addons/issues"
+  },
+  "dependencies": {
+    "stremio-addon-sdk": "^1.6.2"
+  }
+}
