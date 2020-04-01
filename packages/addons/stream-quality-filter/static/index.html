@@ -160,7 +160,7 @@
 
             $('.filters').on('click', '.dropdown-item', function () {
                 var input = $(this).parent().parent().parent().find('input.span2'); // this can probably be improved but 😴
-                $(input).attr('value', $(this).text());
+                $(input).val($(this).text());
             });
 
             $('button.addFilter').click(function () {
