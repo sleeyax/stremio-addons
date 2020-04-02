@@ -8,12 +8,15 @@ async function initAddon() {
     const addon = new addonBuilder(await loadManifest());
 
     addon.defineCatalogHandler(async ({extra, id}) => {
-        const metas = [];
+        let metas = [];
 
         if (id == 'categories') {
             const category = (await xnxx.getAllCategories()).find(cat => cat.name == extra.genre);
-            xnxx.getVideos(category.endpoint);
+            metas = await xnxx.getVideos(category.endpoint);
         }
+
+        // TODO: videos to correct meta format
+        console.log(metas);
 
         return Promise.resolve({metas});
     });
