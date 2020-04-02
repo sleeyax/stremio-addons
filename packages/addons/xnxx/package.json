@@ -1,0 +1,35 @@
+{
+  "name": "xnxx",
+  "version": "0.0.1",
+  "description": "Watch free porn form xnxx.com",
+  "author": "Sleeyax <yourd3veloper@gmail.com>",
+  "homepage": "https://github.com/sleeyax/stremio-addons#readme",
+  "license": "MIT",
+  "main": "build/server.js",
+  "directories": {
+    "lib": "src"
+  },
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sleeyax/stremio-addons.git"
+  },
+  "scripts": {
+    "tsc": "tsc",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/sleeyax/stremio-addons/issues"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "needle": "^2.3.3",
+    "stremio-addon-sdk": "^1.6.2"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.17",
+    "@types/needle": "^2.0.4"
+  }
+}
