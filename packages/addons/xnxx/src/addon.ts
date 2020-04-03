@@ -11,22 +11,16 @@ async function initAddon() {
 
     addon.defineCatalogHandler(async ({extra, id}) => {
         let metas = [];
-        console.log(extra);
-
-        let endpoint;
+        
         if (id == 'categories') {
             const category = (await xnxx.getAllCategories()).find(cat => cat.name == extra.genre);
-            endpoint = category.endpoint;
-        } else if (id = 'search') {
-            endpoint = xnxx.getSearchEndpoint(extra.search);
-        } else {
-            throw new Error('unexpected category id: ' + id);
+            const videos = await xnxx.getVideos(category.endpoint, extra.skip != null ? Math.floor(extra.skip / xnxx.vidsPerPage) : null);
+            // console.log(videos);
+            metas = videos.map(vid => toMetaPreview(vid));
         }
-
-        const videos = await xnxx.getVideos(endpoint, extra.skip != null ? Math.floor(extra.skip / xnxx.vidsPerPage) : null);
-        // console.log(videos);
-        metas = videos.map(vid => toMetaPreview(vid));
-        
+        else if (id == 'search') {
+            metas = (await xnxx.searchVideos(extra.search)).map(vid => toMetaPreview(vid));
+        }
 
         return Promise.resolve({metas});
     });
@@ -34,7 +28,6 @@ async function initAddon() {
     addon.defineMetaHandler(async ({id}) => {
         const endpoint = b64decode(id.split(':')[1]);
         const videoDetails = await xnxx.getVideoDetails(endpoint);
-       // console.log(videoDetails);
 
         let meta = toMetaDetails(videoDetails);
 

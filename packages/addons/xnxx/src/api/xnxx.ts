@@ -186,7 +186,7 @@ export default class XnxxApi {
         };
     }
 
-    getSearchEndpoint(query: string) {
-        return '/search/' + query.split(' ').join('+');
+    searchVideos(query: string) {
+        return this.getVideos('/search/' + query.split(' ').join('+'));
     }
 }
