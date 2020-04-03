@@ -3,5 +3,5 @@ export function b64encode(text: string) {
 }
 
 export function b64decode(encoded: string) {
-    return Buffer.from(encoded).toString('ascii');
+    return Buffer.from(encoded, 'base64').toString('ascii');
 }

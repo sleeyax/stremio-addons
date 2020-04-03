@@ -1,13 +1,18 @@
 export default interface Video {
-    // unique identifier, represented as a long number
-    id: string,
+    // relative URL path to the video
     endpoint: string,
     // thumbnail image URL
     thumbnail: string,
+    // similar to a thumbnail, but shows multiple frames of the video in one image
+    thumbSlide?: string
     title: string,
     views: string,
     duration: string,
-    // average watchtime as a percentage 
-    watchTime: string,
+    // rating as a percentage 
+    rating: string,
     quality: string
+    likes?: number,
+    dislikes?: number,
+    description?: string,
+    tags?: string[]
 }

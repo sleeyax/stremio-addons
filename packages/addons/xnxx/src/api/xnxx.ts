@@ -1,7 +1,9 @@
-import needle, { NeedleHttpVerbs, head } from 'needle';
+import needle from 'needle';
 import cheerio from 'cheerio';
+import m3u8 from 'm3u8-reader';
 import Category from './category';
 import Video from './video';
+import VideoSource, { VideoQuality } from './vide_source';
 
 export default class XnxxApi {
     private readonly url = 'https://www.xnxx.com';
@@ -10,7 +12,12 @@ export default class XnxxApi {
     };
 
     private get(endpoint: string) {
-        return needle('get', `${this.url}${endpoint}`, { headers: this.headers });
+        return needle('get', `${this.url}${endpoint}`, { 
+            headers: this.headers, 
+            follow_max: 3,
+            follow_set_cookies: true,
+            follow_set_referer: true,
+        });
     }
     
     /**
@@ -26,7 +33,7 @@ export default class XnxxApi {
         })).get();
     }
 
-     private getCurrentDateFormatted(): string {
+    private getCurrentDateFormatted(): string {
         const date = new Date();
         let year = date.getFullYear();
         let month = date.getMonth() - 1;
@@ -81,15 +88,81 @@ export default class XnxxApi {
             const metaElement = $(detailsElement).find('.metadata');
 
             return <Video>{
-                id: thumbnailElement.find('img').attr('data-videoid'),
                 thumbnail: thumbnailElement.find('img').attr('data-src'),
                 endpoint: thumbnailElement.attr('href'),
                 title: detailsElement.find('a').attr('title'),
                 duration: metaElement[0].childNodes[1].nodeValue.trim(),
                 views: metaElement.find('.right').text().split(' ')[0].trim(),
                 quality: metaElement.find('.video-hd')[0].childNodes[1].nodeValue.trim(),
-                watchTime: metaElement.find('.right > .superfluous').text(),
+                rating: metaElement.find('.right > .superfluous').text(),
             };
         }).get();
+    }
+    
+    async getVideoDetails(endpoint: string) {
+        const response = await this.get(endpoint);
+        const $ = cheerio.load(response.body);
+
+        const metaData = $('.clear-infobar > .metadata').text().split('-');
+        const votes = $('#video-votes');
+
+        return <Video> {
+            title: $('.clear-infobar > strong').text(),
+            duration: metaData[0] ? metaData[0].trim() : undefined,
+            quality: metaData[1] ? metaData[1].trim() : undefined,
+            views: (metaData[2] || '0').trim(),
+            rating: votes.find('.rating-box').text(),
+            likes: Number.parseInt(votes.find('.vote-action-good .value').text()) || undefined,
+            dislikes: Number.parseInt(votes.find('.vote-action-bad .value').text()) || undefined,
+            tags: $('div.video-tags a').map((_, tagElement) => $(tagElement).text()).get(),
+            endpoint: $('input#copy-video-link').val().replace('http', 'https').replace(this.url, ''),
+            thumbnail: this.readWebPlayerConfig(response.body, 'setThumbUrl'),
+            thumbSlide: this.readWebPlayerConfig(response.body, 'setThumbSlide'),
+            description: $('.video-description').text().trim() || undefined
+        };
+    }
+
+    /**
+     * Get supported qualities from given M3U8 playlist url
+     * @param playlistUrl
+     */
+    private async parseVideoQualities(playlistUrl: string) {
+        // get m3u8 playlist
+        const response = await needle('get', playlistUrl);
+
+        // parse available resolutions
+        const qualities: string[] = m3u8(response.body).filter(item => typeof(item) === 'string');
+
+        return qualities.map(quality => {
+            let resolution = quality.split('-')[1];
+            resolution = resolution.substr(0, resolution.indexOf('p')) + 'p';
+
+            return <VideoQuality>{
+                quality: resolution,
+                sourceUrl: playlistUrl.substring(0, playlistUrl.indexOf('hls.m3u8')) + quality
+            }
+        });
+    }
+
+    /**
+     * Read values from xnxx's html5 web player config
+     * @param source source html page
+     * @param value config value to retrieve
+     */
+    private readWebPlayerConfig(source: string, value: string) {
+        return new RegExp(`html5player\\.${value}\\('(.+?)'\\)`, 'gm').exec(source)[1];
+    }
+
+    async getVideoSources(endpoint: string) {
+        const response = await this.get(endpoint);
+
+        const hlsUrl = this.readWebPlayerConfig(response.body, 'setVideoHLS');
+
+        return <VideoSource>{
+            mp4Low: this.readWebPlayerConfig(response.body, 'setVideoUrlLow'),
+            mp4High:this.readWebPlayerConfig(response.body, 'setVideoUrlHigh'),
+            hlsAuto: hlsUrl,
+            quailities: await this.parseVideoQualities(hlsUrl)
+        };
     }
 }
