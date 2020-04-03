@@ -36,7 +36,7 @@ export default class XnxxApi {
     private getCurrentDateFormatted(): string {
         const date = new Date();
         let year = date.getFullYear();
-        let month = date.getMonth() - 1;
+        let month = date.getMonth();
 
         if (month == 0) {
             year -= 1;
