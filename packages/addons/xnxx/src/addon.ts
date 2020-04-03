@@ -22,7 +22,7 @@ async function initAddon() {
             metas = (await xnxx.searchVideos(extra.search)).map(vid => toMetaPreview(vid));
         }
 
-        return Promise.resolve({metas});
+        return Promise.resolve({metas, cacheMaxAge: 24 * 3600});
     });
 
     addon.defineMetaHandler(async ({id}) => {
@@ -31,14 +31,14 @@ async function initAddon() {
 
         let meta = toMetaDetails(videoDetails);
 
-        return Promise.resolve({meta});
+        return Promise.resolve({meta, cacheMaxAge: 24 * 3600 * 3});
     });
 
     addon.defineStreamHandler(async ({id}) => {
         const endpoint = b64decode(id.split(':')[1]);
         const videoSources = await xnxx.getVideoSources(endpoint);
 
-        return Promise.resolve({streams: toStreams(videoSources)});
+        return Promise.resolve({streams: toStreams(videoSources), cacheMaxAge: 24 * 3600 * 7});
     });
 
     return addon.getInterface();
