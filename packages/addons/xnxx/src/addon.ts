@@ -14,12 +14,20 @@ async function initAddon() {
         let metas = [];
         console.log(extra);
 
+        let endpoint;
         if (id == 'categories') {
             const category = (await xnxx.getAllCategories()).find(cat => cat.name == extra.genre);
-            const videos = await xnxx.getVideos(category.endpoint, extra.skip != null ? Math.round(extra.skip / VIDS_PER_PAGE) : null);
-           // console.log(videos);
-            metas = videos.map(vid => toMetaPreview(vid));
+            endpoint = category.endpoint;
+        } else if (id = 'search') {
+            endpoint = xnxx.getSearchEndpoint(extra.search);
+        } else {
+            throw new Error('unexpected category id: ' + id);
         }
+
+        const videos = await xnxx.getVideos(endpoint, extra.skip != null ? Math.round(extra.skip / VIDS_PER_PAGE) : null);
+        // console.log(videos);
+        metas = videos.map(vid => toMetaPreview(vid));
+        
 
         return Promise.resolve({metas});
     });

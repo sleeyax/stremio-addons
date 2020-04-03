@@ -27,6 +27,17 @@ export default async (): Promise<Manifest> => ({
                     name: 'genre',
                     isRequired: true,
                     options: (await xnxx.getAllCategories()).map(cat => cat.name)
+                },
+            ]
+        },
+        {
+            id: 'search',
+            name: 'search results',
+            type: 'movie',
+            extra: [
+                {
+                    name: 'search',
+                    isRequired: true
                 }
             ]
         }

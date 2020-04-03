@@ -165,4 +165,8 @@ export default class XnxxApi {
             quailities: await this.parseVideoQualities(hlsUrl)
         };
     }
+    
+    getSearchEndpoint(query: string) {
+        return '/search/' + query.split(' ').join('+');
+    }
 }
