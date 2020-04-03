@@ -30,7 +30,7 @@ export function toMetaDetails(video: Video) {
         genres: video.tags,
         runtime: video.duration,
         background: video.thumbSlide || video.thumbnail,
-        releaseInfo: `${video.views} views | ${video.likes} likes | ${video.dislikes} dislikes`
+        releaseInfo: `${video.views || 0} views | ${video.likes || 0} likes | ${video.dislikes || 0} dislikes`
     };
 }
 
