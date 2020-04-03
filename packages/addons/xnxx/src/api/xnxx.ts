@@ -6,6 +6,8 @@ import Video from '../models/video';
 import VideoSource, { VideoQuality } from '../models/vide_source';
 
 export default class XnxxApi {
+    // minimum amount of videos that should be scraped per skip
+    readonly vidsPerPage = 50;
     private readonly url = 'https://www.xnxx.com';
     private readonly headers = {
         'User-Agent': 'Stremio Client'
@@ -77,12 +79,13 @@ export default class XnxxApi {
      * Get all videos of specified tag
      * @param tag target endpoint
      * @param page 
+     * @param prevVideos list of videos from a previous page (that will be concatinated with the results of this page)
      */
-    async getVideos(tag: string, page?: number): Promise<Video[]> {
+    async getVideos(tag: string, page?: number, prevVideos: Video[] = []): Promise<Video[]> {
         const response = await this.get(`${tag}/${page || ''}`);
         const $ = cheerio.load(response.body);
         
-        return $('div.mozaique > div.thumb-block').map((_, element) => {
+        let videos = $('div.mozaique > div.thumb-block').map((_, element) => {
             const thumbnailElement = $(element).find('.thumb-inside > .thumb > a');
             const detailsElement = $(element).find('.thumb-under');
             const metaElement = $(detailsElement).find('.metadata');
@@ -97,6 +100,19 @@ export default class XnxxApi {
                 rating: metaElement.find('.right > .superfluous').text(),
             };
         }).get();
+
+        // append videos from previous page to the videos of this page
+        videos = [...prevVideos, ...videos];
+
+        // continue fetching videos if the minimum amount of videos are not scraped yet
+        if (videos.length < this.vidsPerPage) {
+            const nextPage = (page || 0) + 1;
+            // check if the next page exists
+            if ($(`.pagination a[href="${tag}/${nextPage}"]`).length > 0 || $(`.pagination a[href="${tag}/${nextPage}/"]`).length > 0)
+                videos = await this.getVideos(tag, nextPage, videos);
+        }
+
+        return videos;
     }
     
     async getVideoDetails(endpoint: string) {
@@ -153,6 +169,10 @@ export default class XnxxApi {
         return new RegExp(`html5player\\.${value}\\('(.+?)'\\)`, 'gm').exec(source)[1];
     }
 
+    /**
+     * Returns all available qualities & resolutions of a given video
+     * @param endpoint 
+     */
     async getVideoSources(endpoint: string) {
         const response = await this.get(endpoint);
 
@@ -165,7 +185,7 @@ export default class XnxxApi {
             quailities: await this.parseVideoQualities(hlsUrl)
         };
     }
-    
+
     getSearchEndpoint(query: string) {
         return '/search/' + query.split(' ').join('+');
     }

@@ -3,7 +3,6 @@ import loadManifest from './manifest';
 import XnxxApi from './api/xnxx';
 import { toMetaPreview, toMetaDetails, toStreams } from './converter';
 import { b64decode } from './helpers';
-const VIDS_PER_PAGE = 48;
 
 const xnxx = new XnxxApi();
 
@@ -24,7 +23,7 @@ async function initAddon() {
             throw new Error('unexpected category id: ' + id);
         }
 
-        const videos = await xnxx.getVideos(endpoint, extra.skip != null ? Math.round(extra.skip / VIDS_PER_PAGE) : null);
+        const videos = await xnxx.getVideos(endpoint, extra.skip != null ? Math.floor(extra.skip / xnxx.vidsPerPage) : null);
         // console.log(videos);
         metas = videos.map(vid => toMetaPreview(vid));
         
