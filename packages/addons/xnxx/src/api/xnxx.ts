@@ -16,17 +16,14 @@ export default class XnxxApi {
     /**
      * Get the top categories from the homepage
      */
-    async getTopCategories() {
+    async getTopCategories(): Promise<Category[]> {
         const response = await this.get('/');
         const $ = cheerio.load(response.body);
 
-        const categories: Category[] = [];
-        $('p.title a[href*="top"]').each((_, element) => categories.push({
+        return $('p.title a[href*="top"]').map((_, element) => (<Category>{
             endpoint: $(element).attr('href').split('&')[0].replace('?top', ''),
             name: $(element).attr('title')
-        }));
-
-        return categories;
+        })).get();
     }
 
      private getCurrentDateFormatted(): string {
@@ -74,23 +71,23 @@ export default class XnxxApi {
      * @param tag target endpoint
      * @param page 
      */
-    async getVideos(tag: string, page?: number) {
+    async getVideos(tag: string, page?: number): Promise<Video[]> {
         const response = await this.get(`${tag}/${page || ''}`);
         const $ = cheerio.load(response.body);
         
         return $('div.mozaique > div.thumb-block').map((_, element) => {
-            const thumbnailElement = $(element).find('.thumb-inside a');
+            const thumbnailElement = $(element).find('.thumb-inside > .thumb > a');
             const detailsElement = $(element).find('.thumb-under');
             const metaElement = $(detailsElement).find('.metadata');
 
             return <Video>{
                 id: thumbnailElement.find('img').attr('data-videoid'),
-                thumbnail: thumbnailElement.find('img').attr('src'),
+                thumbnail: thumbnailElement.find('img').attr('data-src'),
                 endpoint: thumbnailElement.attr('href'),
                 title: detailsElement.find('a').attr('title'),
-                duration: metaElement.text().trim().split('\n')[1],
+                duration: metaElement[0].childNodes[1].nodeValue.trim(),
                 views: metaElement.find('.right').text().split(' ')[0].trim(),
-                quality: metaElement.find('.video-hd').text().split('-')[1].trim(),
+                quality: metaElement.find('.video-hd')[0].childNodes[1].nodeValue.trim(),
                 watchTime: metaElement.find('.right > .superfluous').text(),
             };
         }).get();

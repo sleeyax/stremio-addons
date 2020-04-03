@@ -1,6 +1,7 @@
 import {addonBuilder} from 'stremio-addon-sdk';
 import loadManifest from './manifest';
 import XnxxApi from './api/xnxx';
+import { toMetaPreview } from './converter';
 
 const xnxx = new XnxxApi();
 
@@ -12,11 +13,10 @@ async function initAddon() {
 
         if (id == 'categories') {
             const category = (await xnxx.getAllCategories()).find(cat => cat.name == extra.genre);
-            metas = await xnxx.getVideos(category.endpoint);
+            const videos = await xnxx.getVideos(category.endpoint);
+            console.log(videos);
+            metas = videos.map(vid => toMetaPreview(vid));
         }
-
-        // TODO: videos to correct meta format
-        console.log(metas);
 
         return Promise.resolve({metas});
     });
