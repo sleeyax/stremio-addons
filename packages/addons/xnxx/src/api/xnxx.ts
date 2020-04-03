@@ -88,7 +88,7 @@ export default class XnxxApi {
             const metaElement = $(detailsElement).find('.metadata');
 
             return <Video>{
-                thumbnail: thumbnailElement.find('img').attr('data-src'),
+                thumbnail: thumbnailElement.find('img').attr('data-src').replace('THUMBNUM', '24'), // (THUMBNUM == the frame number of a part of the vid to show as thumbnail)
                 endpoint: thumbnailElement.attr('href'),
                 title: detailsElement.find('a').attr('title'),
                 duration: metaElement[0].childNodes[1].nodeValue.trim(),
