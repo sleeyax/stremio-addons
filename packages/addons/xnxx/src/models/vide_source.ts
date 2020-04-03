@@ -1,9 +1,11 @@
 
 export default interface VideoSource {
+    // link to the original video
+    externalUrl: string,
     mp4High: string,
     mp4Low: string,
     hlsAuto: string, 
-    quailities: VideoQuality[]
+    qualities: VideoQuality[]
 }
 
 type quality = '1080p' | '720p' | '480p' | '360p' | '250p';

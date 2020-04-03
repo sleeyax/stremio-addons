@@ -179,10 +179,11 @@ export default class XnxxApi {
         const hlsUrl = this.readWebPlayerConfig(response.body, 'setVideoHLS');
 
         return <VideoSource>{
+            externalUrl: `${this.url}${endpoint}`,
             mp4Low: this.readWebPlayerConfig(response.body, 'setVideoUrlLow'),
             mp4High:this.readWebPlayerConfig(response.body, 'setVideoUrlHigh'),
             hlsAuto: hlsUrl,
-            quailities: await this.parseVideoQualities(hlsUrl)
+            qualities: await this.parseVideoQualities(hlsUrl)
         };
     }
 

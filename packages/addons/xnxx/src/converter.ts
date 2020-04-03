@@ -35,7 +35,7 @@ export function toMetaDetails(video: Video) {
 }
 
 export function toStreams(videoSources: VideoSource) {
-    const qualities = videoSources.quailities
+    const qualities = videoSources.qualities
         .sort((a, b) => +b.quality.slice(0, -1) - +a.quality.slice(0, -1))
         .map(quality => <Stream>{
             name: 'XNXX',
@@ -59,6 +59,11 @@ export function toStreams(videoSources: VideoSource) {
             name: 'XNXX',
             title: 'MP4 low quality',
             url: videoSources.mp4Low
+        },
+        {
+            name: 'XNXX',
+            title: 'watch on xnxx.com',
+            externalUrl: videoSources.externalUrl
         }
     ];
 }
