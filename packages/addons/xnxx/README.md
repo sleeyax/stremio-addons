@@ -1,11 +1,13 @@
-# `xnxx`
+# XNXX
 
-> TODO: description
+Watch free porn from xnxx.com on Stremio.
 
-## Usage
+**Warning: obviously this addon contains adult content.**
 
-```
-const xnxx = require('xnxx');
+### Features
+- supports all available resolutions
+- catalog of popular tags, today's selection, best of & hits
+- search any video
 
-// TODO: DEMONSTRATE API
-```
+## Screenshots
+![blurred screenshot](assets/screenshot.jpg)
