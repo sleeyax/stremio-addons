@@ -16,7 +16,7 @@ export default async (): Promise<Manifest> => ({
         adult: true
     },
     logo: Assets.LOGO,
-    background: Assets.BACKGROUND,
+    background: Assets.BACKGROUND_PLAIN_BLUE,
     catalogs: [
         {
             id: 'categories',
