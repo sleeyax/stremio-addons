@@ -8,6 +8,7 @@ List of working addons:
 * [Stream Quality Filter (SQF)](packages/addons/stream-quality-filter) *
 * [1337x torrents](packages/addons/1337x-torrents)
 * [RARBG torrents](packages/addons/rarbg-torrents)
+* [XNXX](packages/addons/xnxx)
 * [Anime torrents from horriblesubs](packages/addons/horriblesubs)
 * [Livestreams from dlive.tv](packages/addons/dlive)
 * [ASMR from Tingles](packages/addons/asmr-from-tingles) *
