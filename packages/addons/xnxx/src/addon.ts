@@ -3,6 +3,7 @@ import loadManifest from './manifest';
 import XnxxApi from './api/xnxx';
 import { toMetaPreview, toMetaDetails, toStreams } from './converter';
 import { b64decode } from './helpers';
+const VIDS_PER_PAGE = 48;
 
 const xnxx = new XnxxApi();
 
@@ -11,10 +12,11 @@ async function initAddon() {
 
     addon.defineCatalogHandler(async ({extra, id}) => {
         let metas = [];
+        console.log(extra);
 
         if (id == 'categories') {
             const category = (await xnxx.getAllCategories()).find(cat => cat.name == extra.genre);
-            const videos = await xnxx.getVideos(category.endpoint);
+            const videos = await xnxx.getVideos(category.endpoint, extra.skip != null ? Math.round(extra.skip / VIDS_PER_PAGE) : null);
            // console.log(videos);
             metas = videos.map(vid => toMetaPreview(vid));
         }

@@ -1,6 +1,7 @@
 import { Manifest } from "stremio-addon-sdk";
 const {version, description} = require('../package.json');
 import XnxxApi from './api/xnxx';
+import Assets from "./assets";
 
 const xnxx = new XnxxApi();
 
@@ -14,8 +15,8 @@ export default async (): Promise<Manifest> => ({
     behaviorHints: {
         adult: true
     },
-    logo: '../assets/logo.png',
-    background: '../assets/background.png',
+    logo: Assets.LOGO,
+    background: Assets.BACKGROUND,
     catalogs: [
         {
             id: 'categories',

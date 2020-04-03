@@ -2,15 +2,16 @@ import Video from "./models/video";
 import { MetaPreview, MetaDetail, Stream } from "stremio-addon-sdk";
 import { b64encode } from "./helpers";
 import VideoSource from "./models/vide_source";
+import Assets from "./assets";
 
 export function toMetaPreview(video: Video) {
     return <MetaPreview>{
         id: `xnxx:${b64encode(video.endpoint)}`,
         name: video.title,
         type: 'movie',
-        background: '../assets/background_blue.png',
+        background: Assets.BACKGROUND_PLAIN_BLUE,
         description: `${video.duration} ${video.quality} ${video.views} views`,
-        logo: '../assets/logo_round.png',
+        logo: Assets.LOGO_ROUND,
         poster: video.thumbnail,
         posterShape: 'landscape'
     };
@@ -27,7 +28,7 @@ export function toMetaDetails(video: Video) {
             url: `xnxx:${b64encode('/search/' + name)}`
         })),
         runtime: video.duration,
-        background: video.thumbSlide || video.thumbnail
+        background: video.thumbSlide || video.thumbnail,
     };
 }
 
