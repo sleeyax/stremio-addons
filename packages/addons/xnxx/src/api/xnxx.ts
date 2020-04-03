@@ -1,9 +1,9 @@
 import needle from 'needle';
 import cheerio from 'cheerio';
 import m3u8 from 'm3u8-reader';
-import Category from './category';
-import Video from './video';
-import VideoSource, { VideoQuality } from './vide_source';
+import Category from '../models/category';
+import Video from '../models/video';
+import VideoSource, { VideoQuality } from '../models/vide_source';
 
 export default class XnxxApi {
     private readonly url = 'https://www.xnxx.com';

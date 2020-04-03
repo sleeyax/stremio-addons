@@ -1,7 +1,7 @@
-import Video from "./api/video";
+import Video from "./models/video";
 import { MetaPreview, MetaDetail, Stream } from "stremio-addon-sdk";
 import { b64encode } from "./helpers";
-import VideoSource from "./api/vide_source";
+import VideoSource from "./models/vide_source";
 
 export function toMetaPreview(video: Video) {
     return <MetaPreview>{
