@@ -10,10 +10,10 @@ export function toMetaPreview(video: Video) {
         name: video.title,
         type: 'movie',
         background: Assets.BACKGROUND_PLAIN_BLUE,
-        description: `${video.duration} ${video.quality} ${video.views} views`,
+        description: `⌚ ${video.duration}\n🤪 ${video.quality}\n👀 ${video.views}`,
         logo: Assets.LOGO_ROUND,
         poster: video.thumbnail,
-        posterShape: 'landscape'
+        posterShape: 'landscape',
     };
 }
 
@@ -21,14 +21,16 @@ export function toMetaDetails(video: Video) {
     const metaPreview = toMetaPreview(video);
     return <MetaDetail>{
         ...metaPreview,
-        description: video.description || metaPreview.description,
+        description: `<b>${video.title}</b>\n${video.description || ''}`,
         links: (video.tags || []).map(name => ({
             category: 'genre',
             name,
             url: `xnxx:${b64encode('/search/' + name)}`
         })),
+        genres: video.tags,
         runtime: video.duration,
         background: video.thumbSlide || video.thumbnail,
+        releaseInfo: `${video.views} views | ${video.likes} likes | ${video.dislikes} dislikes`
     };
 }
 
