@@ -17,6 +17,7 @@
     "url": "git+https://github.com/sleeyax/stremio-addons.git"
   },
   "scripts": {
+    "start": "node build/server.js",
     "tsc": "tsc",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
