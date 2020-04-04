@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "dotenv": "^8.2.0",
     "m3u8-reader": "^1.1.0",
     "needle": "^2.3.3",
     "stremio-addon-sdk": "^1.6.2"

@@ -1,4 +1,6 @@
-import needle from 'needle';
+import needle, { NeedleOptions } from 'needle';
+import dotenv from 'dotenv';
+dotenv.config();
 import cheerio from 'cheerio';
 import m3u8 from 'm3u8-reader';
 import Category from '../models/category';
@@ -13,13 +15,23 @@ export default class XnxxApi {
         'User-Agent': 'Stremio Client'
     };
 
-    private get(endpoint: string) {
-        return needle('get', `${this.url}${endpoint}`, { 
+    private get(endpoint: string, proxy?: string) {
+        let options: NeedleOptions = { 
             headers: this.headers, 
             follow_max: 3,
-            follow_set_cookies: true,
-            follow_set_referer: true,
-        });
+        };
+
+        if (proxy) {
+            options.proxy = proxy;
+            options.headers['proxy-type'] = 'all';
+        }
+
+        return needle('get', `${this.url}${endpoint}`, options)
+            .then(response => {
+                if (Buffer.isBuffer(response.body))
+                    response.body = response.body.toString();
+                return response;
+            });
     }
     
     /**
@@ -166,7 +178,7 @@ export default class XnxxApi {
      * @param value config value to retrieve
      */
     private readWebPlayerConfig(source: string, value: string) {
-        return new RegExp(`html5player\\.${value}\\('(.+?)'\\)`, 'gm').exec(source)[1];
+        return (new RegExp(`html5player\\.${value}\\('(.+?)'\\)`, 'gm').exec(source) || [])[1];
     }
 
     /**
@@ -174,8 +186,8 @@ export default class XnxxApi {
      * @param endpoint 
      */
     async getVideoSources(endpoint: string) {
-        const response = await this.get(endpoint);
-
+        const response = await this.get(endpoint, process.env.PROXY);
+        
         const hlsUrl = this.readWebPlayerConfig(response.body, 'setVideoHLS');
 
         return <VideoSource>{
@@ -183,7 +195,7 @@ export default class XnxxApi {
             mp4Low: this.readWebPlayerConfig(response.body, 'setVideoUrlLow'),
             mp4High:this.readWebPlayerConfig(response.body, 'setVideoUrlHigh'),
             hlsAuto: hlsUrl,
-            qualities: await this.parseVideoQualities(hlsUrl)
+            qualities: hlsUrl && await this.parseVideoQualities(hlsUrl)
         };
     }
 
