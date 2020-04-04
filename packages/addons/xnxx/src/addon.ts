@@ -37,8 +37,11 @@ async function initAddon() {
     addon.defineStreamHandler(async ({id}) => {
         const endpoint = b64decode(id.split(':')[1]);
         const videoSources = await xnxx.getVideoSources(endpoint);
-
-        return Promise.resolve({streams: toStreams(videoSources), cacheMaxAge: 24 * 3600 * 7});
+        
+        const streams = toStreams(videoSources);
+        
+        // streams will not be cached if the result is only low quality + link to website
+        return Promise.resolve({streams, cacheMaxAge: 24 * 3600 * (streams.length > 2 ? 7 : 0)});
     });
 
     return addon.getInterface();
