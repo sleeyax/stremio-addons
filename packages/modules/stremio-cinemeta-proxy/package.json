@@ -1,6 +1,6 @@
 {
   "name": "stremio-cinemeta-proxy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Fetch meta info of movies and series using Stremio's remote cinemeta addon",
   "main": "src/index.js",
   "scripts": {
