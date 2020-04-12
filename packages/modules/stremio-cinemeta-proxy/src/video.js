@@ -1,7 +1,7 @@
 const CinemetaProxy = require('./cinemeta');
 
 class Video {
-    constructor(id, opts) {
+    constructor(id, opts = {useHttps: true}) {
         const splitted = id.split(':');
 
         this.imdbid = splitted[0];
@@ -11,7 +11,7 @@ class Video {
         } else if (id.indexOf(':') > -1) {
             throw new Error(`Invalid VideoID: ${id}. Expected format: imdbid:season:episode`);
         }
-        this.api = new CinemetaProxy(opts.useHttps || true);
+        this.api = new CinemetaProxy(opts.useHttps);
     }
 
     getType() { return this.season !== undefined ? 'series' : 'movie';}
