@@ -28,11 +28,11 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "got": "^11.5.1",
+    "slugify": "^1.4.4",
     "stremio-addon-sdk": "^1.6.2",
     "stremio-cinemeta-proxy": "^1.0.2"
   },
   "devDependencies": {
-    "@types/cheerio": "^0.22.21",
-    "slugify": "^1.4.4"
+    "@types/cheerio": "^0.22.21"
   }
 }
