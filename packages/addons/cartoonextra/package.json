@@ -32,6 +32,7 @@
     "stremio-cinemeta-proxy": "^1.0.2"
   },
   "devDependencies": {
-    "@types/cheerio": "^0.22.21"
+    "@types/cheerio": "^0.22.21",
+    "slugify": "^1.4.4"
   }
 }

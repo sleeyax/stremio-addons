@@ -8,7 +8,7 @@ export default <Manifest>{
   version,
   description,
   logo: 'https://i.imgur.com/aSI1e79.png',
-  types: ['series', 'movie'],
+  types: ['series'],
   resources: ['stream'],
   catalogs: [],
   idPrefixes: ['tt']

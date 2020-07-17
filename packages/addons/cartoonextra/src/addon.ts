@@ -1,7 +1,8 @@
 import manifest from './manifest';
-import {addonBuilder, Stream} from 'stremio-addon-sdk';
+import {addonBuilder, Stream, serveHTTP} from 'stremio-addon-sdk';
 import Video from 'stremio-cinemeta-proxy';
 import CartoonExtra from './cartoonextra';
+import slugify from 'slugify';
 
 const cartoonExtra = new CartoonExtra();
 
@@ -14,28 +15,28 @@ addon.defineStreamHandler(async ({id, type}) => {
   const vid = new Video(id);
   const {name, _, episode} = await vid.getInfo();
 
-  // search show and get streams
-  const shows = await cartoonExtra.search(name);
-  const show = shows.find((show) => show.title == name);
+  // convert name to slug (this way we don't have to search for the show first, which reduces load on the website)
+  let slug = slugify(name.toLowerCase(), {remove: /[*+~.()'"!:@]/g});
 
-  if (show != undefined) {
-    let slug = show.getSlug();
-
-    if (type == 'series') {
-      const optionalSeason = episode.season != undefined && episode.season != 1 ? `-season-${episode.season}` : '';
-      slug += `${optionalSeason}-episode-${episode.number}`;
-    }
-   
+  const optionalSeason = episode.season != 1 ? `-season-${episode.season}` : '';
+  slug += `${optionalSeason}-episode-${episode.number}`;
+ 
+  try {
     const cartoonStreams = await cartoonExtra.getStreams(slug);
 
     streams = cartoonStreams.map((url, i) => (<Stream>{
       name: 'Cartoon Extra',
       url,
-      title: `${show.title} ${type == 'series' ? `Season ${episode.season} Episode ${episode.number}\n` : ''}Server ${i + 1}`
+      title: `${name} ${type == 'series' ? `Season ${episode.season} Episode ${episode.number}\n` : ''}Server ${i + 1}`
     }));
+  } catch(err) {
+    if (process.env.NODE_ENV != 'production') {
+      console.log(`failed to get cartoon with slug: ${slug}`);
+      throw err;
+    }
   }
 
-  return Promise.resolve({streams});
+  return {streams, cacheMaxAge: process.env.NODE_ENV != 'production' || process.env.NODE_ENV == undefined ? 0 : 3600};
 });
 
 export default addon.getInterface();
