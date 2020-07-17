@@ -1,0 +1,37 @@
+{
+  "name": "cartoonextra",
+  "version": "0.0.1",
+  "description": "Watch free HTTP streams of cartoons from cartoonextra",
+  "author": "Sleeyax <yourd3veloper@gmail.com>",
+  "homepage": "https://github.com/sleeyax/stremio-addons/cartoonextra",
+  "license": "MIT",
+  "main": "build/server.js",
+  "directories": {
+    "lib": "build"
+  },
+  "files": [
+    "build"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sleeyax/stremio-addons.git"
+  },
+  "scripts": {
+    "start": "node build/server.js",
+    "start:watch": "nodemon build/server.js",
+    "tsc": "tsc",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/sleeyax/stremio-addons/issues"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "got": "^11.5.1",
+    "stremio-addon-sdk": "^1.6.2",
+    "stremio-cinemeta-proxy": "^1.0.2"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.21"
+  }
+}
