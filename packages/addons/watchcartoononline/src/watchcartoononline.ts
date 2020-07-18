@@ -4,12 +4,39 @@ import safeEval from 'notevil';
 import urlLib from 'url';
 import querystring from 'querystring';
 
-interface VideoSource {
+interface VideoHost {
+  /**
+   * direct CDN where the video is hosted
+   */
   cdn: string;
+  /**
+   * SD
+   */
   enc: string;
+  /**
+   * HD
+   */
   hd: string;
+  /**
+   * indirect server where the video comes from
+   */
   server: string;
 }
+
+interface Source {
+  quality: 'HD' | 'SD';
+  url: string;
+}
+
+interface Video {
+  /**
+   * full name of the video file
+   */
+  fileName: string;
+  sources: Source[];
+}
+
+type ParsedQuery = { [key: string]: string; };
 
 export default class WatchCartoonOnline {
   private httpClient: Got;
@@ -51,7 +78,7 @@ export default class WatchCartoonOnline {
     return decodedHtml;
   }
 
-  private async getVideoSource(params: { fileName: string, embed: string, hd: string }): Promise<VideoSource> {
+  private async getVideoHost(params: { fileName: string, embed: string, hd: string }): Promise<VideoHost> {
     const response = await this.httpClient.get(`inc/embed/getvidlink.php?v=${params.embed}/${params.fileName}&embed=${params.embed}&hd=${params.hd}`, {
       headers: {
         'Accept': 'application/json, text/javascript, */*; q=0.01',
@@ -60,34 +87,59 @@ export default class WatchCartoonOnline {
       responseType: 'json'
     });
 
-    return response.body as VideoSource;
+    return response.body as VideoHost;
   }
 
-  async getVideo(slug: string) {
+  private readVideoSources(videoHost: VideoHost) {
+    const sources: Source[] = [];
+
+    if (videoHost.hd != '')
+      sources.push({
+        quality: 'HD',
+        url: `${videoHost.cdn}/getvid?evid=${videoHost.hd}`,
+      });
+    if (videoHost.enc != '')
+      sources.push({
+        quality: 'SD',
+        url: `${videoHost.cdn}/getvid?evid=${videoHost.enc}`
+      });
+
+    return sources;
+  }
+
+  async getVideos(slug: string) {
     const response = await this.httpClient.get(slug);
     let $ = cheerio.load(response.body);
 
-    // the actual video file name is hidden in some obfuscated javascript
+    // the actual iframes containg the video(s) are hidden in some obfuscated javascript
     // so we have to decode that to readable HTML first
-    const challengeJs = $('#hide-cizgi-video-0').next().html().trim();
-    const decodedHtml = this.decodeJavascriptChallenge(challengeJs);
-    $ = cheerio.load(decodedHtml);
+    // (each challenge contains 1 iframe - containing 1 video - when solved)
+    const jsChallenges: string[] = $('[id^=hide-cizgi-video-]').next().map((_, el) => $(el).html().trim()).get();
+    const videos: Video[] = [];
+    for (const challenge of jsChallenges) {
+      const decodedHtml = this.decodeJavascriptChallenge(challenge);
+      $ = cheerio.load(decodedHtml);
 
-    // extract file details from iframe source url
-    const iframeSrc = $('iframe').attr('src');
-    const url = urlLib.parse(`${this.url}${iframeSrc}`);
-    const params: { [key: string]: string; } = querystring.parse(url.query) as { [key: string]: string; };
+      // extract file details from the iframe source url on the page
+      const iframeSrc = $('iframe').attr('src');
 
-    // fially, get the video source
-    const videoSource = await this.getVideoSource({
-      fileName: params.file.replace('.flv', '.mp4'),
-      embed: params.embed,
-      hd: params.hd
-    });
+      const url = urlLib.parse(`${this.url}${iframeSrc}`);
+      const params: ParsedQuery = querystring.parse(url.query) as ParsedQuery;
 
-    return {
-      'HD': `${videoSource.cdn}/getvid?evid=${videoSource.hd}`,
-      'SD': `${videoSource.cdn}/getvid?evid=${videoSource.enc}`
+      // finally, get the actual video source
+      const fileName = params.file.replace('.flv', '.mp4');
+      const videoHost = await this.getVideoHost({
+        fileName,
+        embed: params.embed,
+        hd: params.hd
+      });
+
+      videos.push({
+        fileName,
+        sources: this.readVideoSources(videoHost)
+      });
     };
+
+    return videos;
   }
 }
