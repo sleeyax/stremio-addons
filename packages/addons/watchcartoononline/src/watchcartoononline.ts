@@ -79,7 +79,7 @@ export default class WatchCartoonOnline {
   }
 
   private async getVideoHost(params: { fileName: string, embed: string, hd: string }): Promise<VideoHost> {
-    const response = await this.httpClient.get(`inc/embed/getvidlink.php?v=${params.embed}/${params.fileName}&embed=${params.embed}&hd=${params.hd}`, {
+    const response = await this.httpClient.get(`inc/embed/getvidlink.php?v=${params.embed == 'cizgi' ? params.embed + '/' : ''}${params.fileName}&embed=${params.embed}&hd=${params.hd}`, {
       headers: {
         'Accept': 'application/json, text/javascript, */*; q=0.01',
         'X-Requested-With': 'XMLHttpRequest'
@@ -114,7 +114,7 @@ export default class WatchCartoonOnline {
     // the actual iframes containg the video(s) are hidden in some obfuscated javascript
     // so we have to decode that to readable HTML first
     // (each challenge contains 1 iframe - containing 1 video - when solved)
-    const jsChallenges: string[] = $('[id^=hide-cizgi-video-]').next().map((_, el) => $(el).html().trim()).get();
+    const jsChallenges: string[] = $('[id*=-video-]').next().map((_, el) => $(el).html().trim()).get();
     const videos: Video[] = [];
     for (const challenge of jsChallenges) {
       const decodedHtml = this.decodeJavascriptChallenge(challenge);
