@@ -5,8 +5,6 @@ All of my [Stremio](https://www.stremio.com/) addons in one monorepo. Read more 
 List of working addons:
 
 ### Remote
-* [1337x torrents](packages/addons/1337x-torrents)
-* [RARBG torrents](packages/addons/rarbg-torrents)
 * [XNXX](packages/addons/xnxx)
 * [Anime torrents from horriblesubs](packages/addons/horriblesubs)
 * [Livestreams from dlive.tv](packages/addons/dlive)
@@ -18,9 +16,13 @@ List of working addons:
 * [IPTV from RedBox](packages/addons/redbox-tv)
 
 ### Archived
-Addons that are not maintained by me anymore but are kept for reference. If you want to resurrect any of these addons, create a pull requests to become its maintainer!
-* [Stream Quality Filter (SQF)](packages/addons/stream-quality-filter)
+Addons that are not maintained by me anymore but are kept for reference. Some of these still work, others probably don't. If you want to resurrect any of these addons, create a pull requests to become its maintainer!
 * [ASMR from Tingles](packages/addons/asmr-from-tingles)
+  * requires update (see #6) but no-one uses this anyways
+* Archived in favor of [Torrentio](https://github.com/TheBeastLT/torrentio-scraper/tree/master/addon)
+  * [Stream Quality Filter (SQF)](packages/addons/stream-quality-filter)
+  * [1337x torrents](packages/addons/1337x-torrents)
+  * [RARBG torrents](packages/addons/rarbg-torrents)
 
 ## Project structure
 Overview of how this project is structured:
