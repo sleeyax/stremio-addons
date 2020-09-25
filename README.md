@@ -18,7 +18,7 @@ List of working addons:
 ### Archived
 Addons that are not maintained by me anymore but are kept for reference. Some of these still work, others probably don't. If you want to resurrect any of these addons, create a pull requests to become its maintainer!
 * [ASMR from Tingles](packages/addons/asmr-from-tingles)
-  * requires update (see #6) but no-one uses this anyways
+  * requires update (see https://github.com/sleeyax/stremio-addons/issues/6) but no-one used this addon anyways
 * Archived in favor of [Torrentio](https://github.com/TheBeastLT/torrentio-scraper/tree/master/addon)
   * [Stream Quality Filter (SQF)](packages/addons/stream-quality-filter)
   * [1337x torrents](packages/addons/1337x-torrents)
