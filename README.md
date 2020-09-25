@@ -51,6 +51,9 @@ To install all dependencies of all addons at once, you can enter the command `np
 You can transpile all addons at once with lerna by executing: `npm run build` or you can also head to a specific addon directory and run `npm run tsc`.
 The target addon(s) should now each have a `build` directory next to the `src` directory, containing the transpiled javascript files. To run a debug server for instance, you would usually run `node build/server.js` to start it. 
 
+### Docker
+This repository is docker-ready with [docker compose](https://docs.docker.com/compose/) setup to get all addons up and running easily. Enter `docker-compose up -d` in your terminal and you're ready to go!
+
 ### Conventions
 #### Commit messages
 Commit messages should respect the following convention table:

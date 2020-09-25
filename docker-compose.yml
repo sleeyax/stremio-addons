@@ -1,0 +1,7 @@
+version: "3.8"
+services:
+  xnxx:
+    container_name: xnxx
+    build: ./packages/addons/xnxx
+    ports: 
+      - "7777:80"
