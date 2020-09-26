@@ -1,7 +1,15 @@
 version: "3.8"
 services:
+  ts-addon:
+    container_name: ts-addon
+    image: stremio-ts-addon
+    build: 
+      context: .
+      dockerfile: ./docker/ts-addon/Dockerfile
   xnxx:
     container_name: xnxx
+    depends_on: 
+      - ts-addon
     build: ./packages/addons/xnxx
     ports: 
       - "7777:80"
