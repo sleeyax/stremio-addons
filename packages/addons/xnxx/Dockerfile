@@ -3,7 +3,7 @@ FROM stremio-ts-addon
 
 WORKDIR /usr/src/addon
 
-ENV PROXY=null
+ENV PROXY=
 
 COPY package*.json ./
 

@@ -13,3 +13,5 @@ services:
     build: ./packages/addons/xnxx
     ports: 
       - "7777:80"
+    env_file: 
+      - ./packages/addons/xnxx/.env
