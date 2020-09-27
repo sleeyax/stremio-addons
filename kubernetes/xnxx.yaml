@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xnxx
+  labels:
+    app: xnxx
+    type: stremio-addon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xnxx
+  template:
+    metadata:
+      labels:
+        app: xnxx
+        type: stremio-addon
+    spec:
+      containers:
+      - name: xnxx
+        image: stremio-addons_xnxx
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: xnxx
+  labels:
+    type: stremio-addon
+spec:
+  selector:
+    app: xnxx
+  type:  NodePort
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
