@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app }}
+  labels:
+    app: {{ .Values.app }}
+    type: {{ .Chart.Name }}
+spec:
+  replicas: {{ .Values.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app }}
+        type: {{ .Chart.Name }}
+    spec:
+      containers:
+      - name: {{ .Values.app }}
+        image: {{ .Values.deployment.image }}
+        imagePullPolicy: Never
+        ports:
+        - containerPort: {{ .Values.deployment.containerPort | default 80 }}
+        # optionally load environment variables 
+        # from one or more stored secrets ..
+        {{ if .Values.secrets }}
+        env:
+        {{- range $value := .Values.secrets }}
+        - name: {{ $value.name }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ $value.secret }}
+              key: {{ $value.key }}
+        {{- end }}
+        {{ end }}
+        # .. or public
+        {{ if .Values.env }}
+        env:
+        {{- range $key, $val := .Values.env }}
+        - name: {{ $key }}
+          value: {{ $val }}
+        {{- end }}
+        {{ end }}

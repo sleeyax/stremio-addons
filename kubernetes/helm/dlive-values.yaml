@@ -1,0 +1,5 @@
+app: dlive
+
+deployment:
+  replicaCount: 1
+  image: "stremio-addons_dlive"

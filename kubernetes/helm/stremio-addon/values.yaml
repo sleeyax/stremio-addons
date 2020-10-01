@@ -1,0 +1,24 @@
+# Default values for stremio-addons.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# NOTE: this is an example file, use one of the other <addon>-values.yaml files for your deployments!
+
+# app: myaddon
+
+# deployment:
+#   replicaCount: 1
+#   image: "stremio-addons_addon"
+#   containerPort: 80
+
+# service:
+#   port: 80
+#   targetPort: 80
+
+# secrets:
+#   - name: MY_SECRET
+#     secret: secrets
+#     key: secretkey
+
+# env:
+#   MY_ENVIRONMENT_VARIABLE: "hello world"

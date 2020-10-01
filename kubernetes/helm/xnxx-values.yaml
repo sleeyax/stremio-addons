@@ -1,0 +1,10 @@
+app: xnxx
+
+deployment:
+  replicaCount: 1
+  image: "stremio-addons_xnxx"
+
+secrets:
+  - name: PROXY
+    secret: xnxx
+    key: PROXY
