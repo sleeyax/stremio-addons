@@ -65,6 +65,7 @@ Commit messages should respect the following convention table:
 | cli     | changes to cli packages or adding a new one                      | <br>`cli/publisher: support IPFS publish`<br>`cli: add tool x`                    |
 | module  | changes to (npm) modules or adding a new one                     | `module/extension: fix Y`<br>`module: add extension`                              |
 | script  | pure shell, bash or batch helper scripts                         | `script: add deployment script`                                                   |
+| kubernetes | Anything that has to do with Kubernetes deployments           | `kubernetes: update config`                                                   |
 
 ### Issues
 When creating an issue, please append the subject (and optionally the keyword) in square brackets to your title.
