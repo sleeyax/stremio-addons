@@ -16,8 +16,8 @@ Same as above, but also check YAML file validity: `helm install <addon_name> str
 
 Example commands for deployments:
 ```
-$ helm install dlive stremio-addon/ -f dlive-values.yaml
-$ helm upgrade dlive stremio-addon/ -f dlive-values.yaml
+$ helm install dlive stremio-addon/ -f dlive-values.yaml -n stremio
+$ helm upgrade dlive stremio-addon/ -f dlive-values.yaml -n stremio
 ```
 
-Apply ingress nginx configuration: `kubectl apply -f ingress.yaml`.
+Apply ingress nginx configuration: `helm install nginx nginx/ -n stremio`.

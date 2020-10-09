@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-nginx
+  namespace: stremio
+  {{ if .Values.enableSslCertificates }}
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  {{ end }}
+spec:
+  {{ if .Values.enableSslCertificates }}
+  tls:
+    - hosts:
+      {{ range $value := .Values.services }}
+      - {{ $value.host }}
+      {{ end }}
+      # name of the certificate (kubectl get certificate -n stremio)
+      secretName: stremio-addon-cert
+  {{ end }}
+  rules:
+   {{- range $value := .Values.services }}
+    - host: {{ $value.host }}
+      http:
+        paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: {{ $value.name }}
+              port:
+                number: {{ $value.port | default 80 }}
+    {{- end }}

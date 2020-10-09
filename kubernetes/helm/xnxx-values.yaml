@@ -2,7 +2,7 @@ app: xnxx
 
 deployment:
   replicaCount: 1
-  image: "stremio-addons_xnxx"
+  image: "registry.gitlab.com/sleeyax-docker/stremio/xnxx:0.0.1"
 
 secrets:
   - name: PROXY
