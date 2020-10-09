@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.app }}
   labels:
     type: {{ .Chart.Name }}
+  namespace: stremio
 spec:
   selector:
     app: {{ .Values.app }}

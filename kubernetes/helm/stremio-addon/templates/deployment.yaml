@@ -5,6 +5,7 @@ metadata:
   labels:
     app: {{ .Values.app }}
     type: {{ .Chart.Name }}
+  namespace: stremio
 spec:
   replicas: {{ .Values.deployment.replicaCount }}
   selector:
@@ -19,7 +20,7 @@ spec:
       containers:
       - name: {{ .Values.app }}
         image: {{ .Values.deployment.image }}
-        imagePullPolicy: Never
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: {{ .Values.deployment.containerPort | default 80 }}
         # optionally load environment variables 
@@ -42,3 +43,5 @@ spec:
           value: {{ $val }}
         {{- end }}
         {{ end }}
+      imagePullSecrets:
+      - name: gitlab-reg-cred

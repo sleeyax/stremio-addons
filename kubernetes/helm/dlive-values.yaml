@@ -2,4 +2,4 @@ app: dlive
 
 deployment:
   replicaCount: 1
-  image: "stremio-addons_dlive"
+  image: "registry.gitlab.com/sleeyax-docker/stremio/dlive:0.0.4"
