@@ -10,9 +10,6 @@ Currently images are stored on my private gitlab container image registry. If yo
 Because secrets almost never change over time and can't be stored in source control anyways, just create your secrets once using `kubectl create secret generic my-secret --from-env-file=path/to/bar.env`.
 
 ## Getting started
-Compile configuration files and show the result on screen: `helm template <addon_name> <addon_dir> -f <addon_values>.yaml`.
-
-Same as above, but also check YAML file validity: `helm install <addon_name> stremio <addon_dir> -f <addon_values> --dry-run`.
 
 Example commands for deployments:
 ```
@@ -21,3 +18,8 @@ $ helm upgrade dlive stremio-addon/ -f dlive.yaml -n stremio
 ```
 
 Apply ingress nginx configuration: `helm install nginx nginx/ -n stremio`.
+
+## Useful commands
+Compile configuration files and show the result on screen: `helm template <addon_name> <addon_dir> -f <addon_values>.yaml`.
+
+Same as above, but also check YAML file validity: `helm install <addon_name> stremio <addon_dir> -f <addon_values> --dry-run`.

@@ -55,6 +55,9 @@ The target addon(s) should now each have a `build` directory next to the `src` d
 ### Docker
 This repository is docker-ready with [docker compose](https://docs.docker.com/compose/). To get all addons up and running in production, enter `docker-compose up -d` in your terminal and you should be ready to go! (Don't forget adjust your `.env` files in each addon directory so all environment variables are set up properly)
 
+#### Kubernetes
+If you're hardcore like me, you can also deploy maintained addons to a Kubernetes cluster. See the [kubernetes](./kubernetes/README.md) directory for basic installation instructions.
+
 ### Conventions
 #### Commit messages
 Commit messages should respect the following convention table:
