@@ -1,6 +1,12 @@
 enableSslCertificates: true
 services:
+  - name: cartoonextra
+    host: "cartoonextra.unlimited-fun.xyz"
   - name: dlive
     host: "dlive.unlimited-fun.xyz"
+  - name: podcasts
+    host: "podcasts.unlimited-fun.xyz"
+  - name: wco
+    host: "wco.unlimited-fun.xyz"
   - name: xnxx
     host: "xnxx.unlimited-fun.xyz"

@@ -1,0 +1,5 @@
+app: wco
+
+deployment:
+  replicaCount: 1
+  image: "registry.gitlab.com/sleeyax-docker/stremio/watchcartoononline:0.0.1"
