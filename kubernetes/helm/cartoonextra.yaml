@@ -1,0 +1,5 @@
+app: cartoonextra
+
+deployment:
+  replicaCount: 1
+  image: "registry.gitlab.com/sleeyax-docker/stremio/cartoonextra:0.0.1"

@@ -1,0 +1,20 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.app }}
+  labels:
+    type: {{ .Chart.Name }}
+  namespace: stremio
+spec:
+  selector:
+    app: {{ .Values.app }}
+  type:  NodePort
+  ports:
+  - name: http
+    {{ if .Values.service }}
+    port: {{ .Values.service.port | default 80 }}
+    targetPort: {{ .Values.service.targetPort | default 80 }}
+    {{ else }}
+    port: 80
+    targetPort: 80
+    {{ end }}

@@ -1,0 +1,41 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-nginx
+  namespace: stremio
+  {{ if .Values.enableSslCertificates }}
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/proxy-buffering: "on"
+    nginx.ingress.kubernetes.io/server-snippet: |
+      proxy_cache my_cache;
+      proxy_cache_lock on;
+      proxy_cache_background_update on;
+      proxy_cache_min_uses 3;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      add_header X-Cache-Status $upstream_cache_status;
+  {{ end }}
+spec:
+  {{ if .Values.enableSslCertificates }}
+  tls:
+    - hosts:
+      {{ range $value := .Values.services }}
+      - {{ $value.host }}
+      {{ end }}
+      # name of the certificate (kubectl get certificate -n stremio)
+      secretName: stremio-addon-cert
+  {{ end }}
+  rules:
+   {{- range $value := .Values.services }}
+    - host: {{ $value.host }}
+      http:
+        paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: {{ $value.name }}
+              port:
+                number: {{ $value.port | default 80 }}
+    {{- end }}

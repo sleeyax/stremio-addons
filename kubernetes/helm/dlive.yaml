@@ -1,0 +1,5 @@
+app: dlive
+
+deployment:
+  replicaCount: 1
+  image: "registry.gitlab.com/sleeyax-docker/stremio/dlive:0.0.4"
