@@ -9,6 +9,21 @@ Currently images are stored on my private gitlab container image registry. If yo
 ## Secrets & Environment Variables
 Because secrets almost never change over time and can't be stored in source control anyways, just create your secrets once using `kubectl create secret generic my-secret --from-env-file=path/to/bar.env`.
 
+## Node selectors
+Due to my personal kubernetes cluster being a mix of high quality and low(er) quality servers, by default I made sure stremio addons only deploy to lower quality servers, that have the `pro: "false"` label. If you need to change this, either edit `helm/stremio-addon/templates/deployment.yaml` or overwrite it by specifying the `nodeSelector` value in your addon values yaml. 
+
+For example, if you want to run the dlive addon on a node that has SSD storage for whatever reason, edit `dlive.yaml` like this:
+```yaml
+app: dlive
+
+nodeSelector:
+  diskType: ssd
+
+deployment:
+  replicaCount: 1
+  image: "registry.gitlab.com/sleeyax-docker/stremio/dlive:0.0.4" # you probably want to change this too
+```
+
 ## Getting started
 
 Example commands for deployments:

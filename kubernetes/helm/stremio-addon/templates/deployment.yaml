@@ -17,6 +17,13 @@ spec:
         app: {{ .Values.app }}
         type: {{ .Chart.Name }}
     spec:
+      {{ if .Values.nodeSelector }}
+      nodeSelector:
+        {{ toYaml .Values.nodeSelector }}
+      {{ else }}
+      nodeSelector:
+        pro: "false"
+      {{ end }}
       containers:
       - name: {{ .Values.app }}
         image: {{ .Values.deployment.image }}
