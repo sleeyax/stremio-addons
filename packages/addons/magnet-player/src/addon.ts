@@ -15,21 +15,62 @@ addon.defineCatalogHandler(async ({extra}) => {
 
   const {infoHash, announce} = decodeMagnet(extra.search);
   
-  if (!infoHash) return {metas: [], cacheMaxAge};
-  
-  const engine = await createEngine(infoHash, announce);
-  
-  return {metas: [{
-    id: prefix + engine.infoHash,
-    name: engine.name,
-    type: 'channel',
-    poster: manifest.logo,
-    logo: manifest.logo,
-  }], cacheMaxAge};
+  // torrent
+  if (infoHash) {    
+    const engine = await createEngine(infoHash, announce);
+    
+    return {metas: [{
+      id: prefix + engine.infoHash,
+      name: engine.name,
+      type: 'channel',
+      poster: manifest.logo,
+      logo: manifest.logo,
+    }], cacheMaxAge};
+  } 
+  // regular media file
+  else if (/.mkv$|.avi$|.mp4$|.wmv$|.vp8$|.mov$|.mpg$|.mp3$|.flac$/i.test(extra.search)) {
+    return {metas: [{
+      id: prefix + extra.search,
+      name: extra.search.split('/').pop(),
+      type: 'channel',
+      poster: manifest.logo,
+      logo: manifest.logo,
+    }], cacheMaxAge};
+  } else {
+    return {metas: [], cacheMaxAge};
+  }
 });
 
 addon.defineMetaHandler(async ({id}) => {
-  const infoHash = id.split(':')[1];
+  const infoHash = id.split(prefix).pop();
+
+  // if it's not an infohash but a remote media file
+  if (infoHash.startsWith('https://') || infoHash.startsWith('http://')) {
+    const name = infoHash.split('/').pop();
+    const description = 'Play remote media file';
+    return {meta: {
+      id, 
+      name,
+      type: 'channel',
+      description,
+      logo: manifest.logo,
+      poster: manifest.logo,
+      website: infoHash,
+      videos: [
+        {
+          id,
+          title: name,
+          released: new Date().toISOString(),
+          description,
+          // NOTE: 'streams' array doesn't seem to work (at least on android), but single stream property does
+          stream: {
+            url: infoHash,
+          }
+        }
+      ]
+    }, cacheMaxAge};
+  }
+
   const metaResponse = await fetchMeta(infoHash);
 
   const meta = metaResponse.meta;
