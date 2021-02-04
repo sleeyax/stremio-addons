@@ -7,17 +7,17 @@ export default {
   version,
   description,
   name: 'Play URL/Magnet link',
-  logo: 'https://i.imgur.com/Zxpf2bR.png',
+  logo: 'https://i.imgur.com/1aFTsca.png',
   resources: ['catalog', 'meta'],
   catalogs: [{
-    id: prefix + 'search',
+    id: 'mpl-search',
     name: 'Search Results',
     type: 'channel',
     extra: [{
       name: 'search',
-      isRequired: true
+      isRequired: true,
     }]
   }],
-  types: ['channel'],
+  types: ['channel', 'movie', 'series', 'tv', 'other'],
   idPrefixes: [prefix]
 } as Manifest;
