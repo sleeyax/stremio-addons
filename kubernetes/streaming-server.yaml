@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: stremio-streaming-server-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: streaming-server
+  labels: 
+    app: streaming-server
+    type: stremio-microservice
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: streaming-server
+  template:
+    metadata:
+      labels:
+        app: streaming-server
+        type: stremio-microservice
+    spec:
+      nodeSelector: 
+        pro: "false"
+      volumes:
+      - name: volv
+        persistentVolumeClaim:
+          claimName: stremio-streaming-server-pvc
+      containers:
+      - name: streaming-server
+        image: sleeyax/stremio-streaming-server:latest
+        volumeMounts:
+        - name: volv
+          mountPath: /root/.stremio-server
+        ports:
+        - containerPort: 11470
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: streaming-server
+  labels:
+    type: stremio-microservice
+  namespace: stremio
+spec:
+  selector:
+    app: streaming-server
+  type:  ClusterIP
+  ports:
+  - name: http
+    port:  11470
+    targetPort: 11470

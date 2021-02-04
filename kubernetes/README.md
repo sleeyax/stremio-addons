@@ -34,6 +34,11 @@ $ helm upgrade dlive stremio-addon/ -f dlive.yaml -n stremio
 
 Apply ingress nginx configuration: `helm install nginx nginx/ -n stremio`.
 
+### Stremio streaming server
+Some addons might depends on a local streaming server in order to work. If you want to set that up, execute `kubectl apply -f streaming-server.yaml`.
+
+This will set up a local [stremio-streaming-server](https://hub.docker.com/r/sleeyax/stremio-streaming-server) within your cluster. It will work like a micro service so for security reasons it's not accessible from the outside. But your addons should still be able to send requests to it by its service name `streaming-server`, of course. 
+
 ## Useful commands
 Compile configuration files and show the result on screen: `helm template <addon_name> <addon_dir> -f <addon_values>.yaml`.
 
