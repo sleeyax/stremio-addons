@@ -75,11 +75,11 @@ addon.defineMetaHandler(async ({id}) => {
 
   const meta = metaResponse.meta;
   meta.id = id;
-  meta.videos = meta.videos?.map(video => {
-    video.thumbnail = video.thumbnail?.replace(streamingServerUrl, addonUrl);
+  meta.videos = (meta.videos || []).map(video => {
+    video.thumbnail = video.thumbnail ? video.thumbnail.replace(streamingServerUrl, addonUrl) : undefined;
     return video;
   });
-  meta.background = meta.background?.replace(streamingServerUrl, addonUrl);
+  meta.background = meta.background ? meta.background.replace(streamingServerUrl, addonUrl) : undefined;
   
   return {meta, cacheMaxAge};
 });
