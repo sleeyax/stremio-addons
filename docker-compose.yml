@@ -12,6 +12,11 @@ services:
     container_name: js-addon
     image: stremio-js-addon
     build: ./docker/js-addon
+  streaming-server:
+    container_name: streaming-server
+    image: sleeyax/stremio-streaming-server:latest
+    ports: 
+    - "11470:11470"
   cartoonextra:
     container_name: cartoonextra
     depends_on: 
@@ -49,3 +54,14 @@ services:
       - "7781:80"
     env_file: 
       - ./packages/addons/xnxx/.env
+  magnetplayer: 
+    container_name: magnetplayer
+    depends_on: 
+      - ts-addon
+      - streaming-server
+    build: ./packages/addons/magnet-player
+    ports: 
+      - "7782:80"
+    environment:
+      - STREAMING_SERVER_URL=http://streaming-server:11470
+      - ADDON_URL=http://127.0.0.1:7782
