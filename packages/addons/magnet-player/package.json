@@ -1,7 +1,7 @@
 {
   "name": "magnet-player",
   "version": "0.0.1",
-  "description": "Play magnet links directly in Stremio by copy and pasting them in the search bar. This addon is specifically made for Android, because Stremio on desktop already supports this out of the box.",
+  "description": "Play magnet links or URLs directly in Stremio by copy and pasting them in the search bar. This addon is specifically made for Android, because Stremio on desktop already supports this out of the box.",
   "author": "Sleeyax <yourd3veloper@gmail.com>",
   "homepage": "https://github.com/sleeyax/stremio-addons/magnet-player",
   "license": "MIT",
