@@ -8,3 +8,4 @@ export const infoHashLongRegex = /^[a-f0-9]{40}$/i;
 export const infoHashRegex = /^[a-z2-7]{32}$/i;
 export const mediaFileRegex = /.mkv$|.avi$|.mp4$|.wmv$|.vp8$|.mov$|.mpg$|.mp3$|.flac$/i;
 export const ttidRegex = /^(tt)?(\d{7,})$/;
+export const remoteTorrentRegex = /\.torrent$/;

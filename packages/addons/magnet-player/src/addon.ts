@@ -4,7 +4,8 @@ import { addonBuilder } from 'stremio-addon-sdk';
 import manifest from './manifest';
 import createEngine, { fetchMeta } from './engine';
 import { addonUrl, prefix, streamingServerUrl } from './constants';
-import { isImdbId, isMediaFile, isTorrent, parseTorrent } from './converters';
+import { isImdbId, isMediaFile, isRemoteTorrent, isTorrent, parseRemoteTorrent } from './converters';
+import parseTorrent from 'parse-torrent';
 import imdbToMeta from './imdb';
 
 const cacheMaxAge = process.env.NODE_ENV === 'development' ? 0 : (24 * 3600 * 7);
@@ -16,8 +17,8 @@ addon.defineCatalogHandler(async ({extra}) => {
 
   let searchValue = extra.search;
 
-  if (isTorrent(searchValue)) {
-    const {infoHash, announce} = parseTorrent(searchValue);
+  if (isTorrent(searchValue) || isRemoteTorrent(searchValue)) {
+    const {infoHash, announce} = isRemoteTorrent(searchValue) ? (await parseRemoteTorrent(searchValue)) : parseTorrent(searchValue);
 
     if (infoHash) {    
       const engine = await createEngine(infoHash, announce);

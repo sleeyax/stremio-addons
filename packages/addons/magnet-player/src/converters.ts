@@ -1,17 +1,16 @@
-import {decode as decodeMagnet} from 'magnet-uri';
-import { infoHashLongRegex, infoHashRegex, magnetRegex, mediaFileRegex, ttidRegex } from './constants';
+import { infoHashLongRegex, infoHashRegex, magnetRegex, mediaFileRegex, remoteTorrentRegex, ttidRegex } from './constants';
+import { remote as fetchRemoteTorrent, Instance as ParseTorrentInstance} from 'parse-torrent';
 
-export function parseTorrent (value: string) {
-  // full magnet uri
-  if (magnetRegex.test(value))
-    return decodeMagnet(value);
-  // info hash only (hex string)
-  else if ((infoHashLongRegex.test(value) || infoHashRegex.test(value)))
-    return decodeMagnet(`magnet:?xt=urn:btih:${value}`);
-  else
-    return null;
+export function parseRemoteTorrent(torrentId: string): Promise<ParseTorrentInstance> {
+  return new Promise((resolve, reject) => {
+    fetchRemoteTorrent(torrentId, (err, parsedTorrent) => {
+      if (err) reject(err);
+      else resolve(parsedTorrent);
+    })
+  });
 }
 
-export const isTorrent = (value: string) => magnetRegex.test(value) || (infoHashLongRegex.test(value) || infoHashRegex.test(value));
-export const isMediaFile = (value: string) => mediaFileRegex.test(value);
-export const isImdbId = (value: string) => ttidRegex.test(value);
+export const isTorrent       = (value: string) => magnetRegex.test(value) || (infoHashLongRegex.test(value) || infoHashRegex.test(value));
+export const isMediaFile     = (value: string) => mediaFileRegex.test(value);
+export const isImdbId        = (value: string) => ttidRegex.test(value);
+export const isRemoteTorrent = (value: string) => remoteTorrentRegex.test(value);

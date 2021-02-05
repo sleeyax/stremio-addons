@@ -26,10 +26,10 @@
     "url": "https://github.com/sleeyax/stremio-addons/issues"
   },
   "dependencies": {
+    "@types/parse-torrent": "^5.8.3",
     "cheerio": "^1.0.0-rc.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "magnet-uri": "^6.1.0",
     "phin": "^3.5.1",
     "stremio-addon-sdk": "^1.6.4"
   },
@@ -37,7 +37,8 @@
     "@types/cheerio": "^0.22.23",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.11",
-    "@types/magnet-uri": "^5.1.2",
-    "@types/phin": "^3.4.0"
+    "@types/phin": "^3.4.0",
+    "install": "^0.13.0",
+    "parse-torrent": "^9.1.1"
   }
 }
