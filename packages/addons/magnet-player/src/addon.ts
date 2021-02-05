@@ -1,10 +1,11 @@
 import {config as configEnv} from 'dotenv';
 configEnv();
 import { addonBuilder } from 'stremio-addon-sdk';
-import { decode as decodeMagnet } from 'magnet-uri';
+import { decode as decodeMagnet, encode as encodeMagnet } from 'magnet-uri';
 import manifest from './manifest';
 import createEngine, { fetchMeta } from './engine';
 import { addonUrl, prefix, streamingServerUrl } from './constants';
+import { isMediaFile, isTorrent, parseTorrent } from './converters';
 
 const cacheMaxAge = process.env.NODE_ENV === 'development' ? 0 : (24 * 3600 * 7);
 
@@ -13,32 +14,34 @@ const addon = new addonBuilder(manifest);
 addon.defineCatalogHandler(async ({extra}) => {
   if (!extra.search) return {metas: [], cacheMaxAge};
 
-  const {infoHash, announce} = decodeMagnet(extra.search);
-  
-  // torrent
-  if (infoHash) {    
-    const engine = await createEngine(infoHash, announce);
-    
-    return {metas: [{
-      id: prefix + engine.infoHash,
-      name: engine.name,
-      type: 'channel',
-      poster: manifest.logo,
-      logo: manifest.logo,
-    }], cacheMaxAge};
-  } 
-  // regular media file
-  else if (/.mkv$|.avi$|.mp4$|.wmv$|.vp8$|.mov$|.mpg$|.mp3$|.flac$/i.test(extra.search)) {
-    return {metas: [{
-      id: prefix + extra.search,
-      name: extra.search.split('/').pop(),
-      type: 'channel',
-      poster: manifest.logo,
-      logo: manifest.logo,
-    }], cacheMaxAge};
-  } else {
-    return {metas: [], cacheMaxAge};
+  let searchValue = extra.search;
+
+  if (isTorrent(searchValue)) {
+    const {infoHash, announce} = parseTorrent(searchValue);
+
+    if (infoHash) {    
+      const engine = await createEngine(infoHash, announce);
+
+      return {metas: [{
+        id: prefix + engine.infoHash,
+        name: engine.name,
+        type: 'channel',
+        poster: manifest.logo,
+        logo: manifest.logo,
+      }], cacheMaxAge};
+    } 
   }
+  else if (isMediaFile(searchValue)) {
+    return {metas: [{
+      id: prefix + searchValue,
+      name: searchValue.split('/').pop(),
+      type: 'channel',
+      poster: manifest.logo,
+      logo: manifest.logo,
+    }], cacheMaxAge};
+  }
+
+  return {metas: [], cacheMaxAge};
 });
 
 addon.defineMetaHandler(async ({id}) => {
