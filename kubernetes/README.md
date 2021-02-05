@@ -32,7 +32,7 @@ $ helm install dlive stremio-addon/ -f dlive.yaml -n stremio
 $ helm upgrade dlive stremio-addon/ -f dlive.yaml -n stremio
 ```
 
-Apply ingress nginx configuration: `helm install nginx nginx/ -n stremio`.
+Apply ingress nginx configuration: `helm install nginx nginx/ -n stremio` (replace `install` with `upgrade` to update the configuration).
 
 ### Stremio streaming server
 Some addons might depends on a local streaming server in order to work. If you want to set that up, execute `kubectl apply -f streaming-server.yaml`.

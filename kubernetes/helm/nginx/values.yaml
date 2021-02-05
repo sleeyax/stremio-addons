@@ -10,3 +10,5 @@ services:
     host: "wco.unlimited-fun.xyz"
   - name: xnxx
     host: "xnxx.unlimited-fun.xyz"
+  - name: searchandplay
+    host: "searchandplay.unlimited-fun.xyz"
