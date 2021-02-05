@@ -5,7 +5,7 @@ All of my [Stremio](https://www.stremio.com/) addons in one monorepo. Read more 
 List of working addons:
 
 ### Remote
-* [Search and Play](packages/addons/searchandplay)
+* [Search and Play](packages/addons/search-and-play)
 * [XNXX](packages/addons/xnxx)
 * [Livestreams from dlive.tv](packages/addons/dlive)
 * [Podcasts](packages/addons/podcasts)
