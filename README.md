@@ -53,7 +53,9 @@ You can transpile all addons at once with lerna by executing: `npm run build` or
 The target addon(s) should now each have a `build` directory next to the `src` directory, containing the transpiled javascript files. To run a debug server for instance, you would usually run `node build/server.js` to start it. 
 
 ### Docker
-This repository is docker-ready with [docker compose](https://docs.docker.com/compose/). To get all addons up and running in production, enter `docker-compose up -d` in your terminal and you should be ready to go! (Don't forget adjust your `.env` files in each addon directory so all environment variables are set up properly)
+This repository is docker-ready with [docker compose](https://docs.docker.com/compose/). To get all addons up and running in production, enter `docker-compose up -d` in your terminal and you should be ready to go! Don't forget adjust your `.env` files in each addon directory so all environment variables are set up properly.
+
+If you're not using docker compose, make sure the `stremio-ts-addon` and/or `stremio-js-addon` images are built locally before building any of the addon docker images.
 
 #### Kubernetes
 If you're hardcore like me, you can also deploy maintained addons to a Kubernetes cluster. See the [kubernetes](./kubernetes/README.md) directory for basic installation instructions.

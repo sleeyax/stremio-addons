@@ -1,0 +1,13 @@
+app: searchandplay
+
+deployment:
+  replicaCount: 1
+  image: "registry.gitlab.com/sleeyax-docker/stremio/searchandplay:0.0.1"
+
+secrets:
+  - name: STREAMING_SERVER_URL
+    secret: searchandplay
+    key: STREAMING_SERVER_URL
+  - name: ADDON_URL
+    secret: searchandplay
+    key: ADDON_URL

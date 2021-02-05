@@ -1,0 +1,43 @@
+{
+  "name": "search-and-play",
+  "version": "0.0.1",
+  "description": "Play magnet links, torrent files, media URLs, info hashes & IMDDB IDs directly by copy and pasting them into the search bar. This addon is specifically made with Android in mind, because Stremio on desktop already supports some of these features.",
+  "author": "Sleeyax <yourd3veloper@gmail.com>",
+  "homepage": "https://github.com/sleeyax/stremio-addons/search-and-play",
+  "license": "MIT",
+  "main": "build/server.js",
+  "directories": {
+    "lib": "build"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sleeyax/stremio-addons.git"
+  },
+  "scripts": {
+    "start": "node build/server.js",
+    "start:watch": "nodemon build/server.js",
+    "tsc": "tsc",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/sleeyax/stremio-addons/issues"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "parse-torrent": "^9.1.1",
+    "phin": "^3.5.1",
+    "stremio-addon-sdk": "^1.6.4"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.23",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.11",
+    "@types/parse-torrent": "^5.8.3",
+    "@types/phin": "^3.4.0"
+  }
+}
