@@ -54,12 +54,12 @@ services:
       - "7781:80"
     env_file: 
       - ./packages/addons/xnxx/.env
-  magnetplayer: 
-    container_name: magnetplayer
+  searchandplay: 
+    container_name: searchandplay
     depends_on: 
       - ts-addon
       - streaming-server
-    build: ./packages/addons/magnet-player
+    build: ./packages/addons/search-and-play
     ports: 
       - "7782:80"
     environment:

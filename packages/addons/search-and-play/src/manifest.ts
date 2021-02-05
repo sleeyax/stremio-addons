@@ -3,14 +3,14 @@ import { prefix } from './constants';
 const {version, description} = require('../package.json');
 
 export default {
-  id: 'com.sleeyax.magnetplayer',
+  id: 'com.sleeyax.searchandplay',
   version,
   description,
-  name: 'Play URL/Magnet link',
-  logo: 'https://i.imgur.com/1aFTsca.png',
+  name: 'Search and Play',
+  logo: 'https://i.imgur.com/Y2plbJv.png',
   resources: ['catalog', 'meta'],
   catalogs: [{
-    id: 'mpl-search',
+    id: 'sap-search',
     name: 'Search Results',
     type: 'channel',
     extra: [{
