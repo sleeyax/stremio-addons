@@ -10,6 +10,7 @@ Find and play content from magnet links, URLs, info hashes or IMDB IDs directly 
 * Any magnet link
 * HTTP(S) URL ending and responding with media content of type: `.mkv`, `.avi`, `.mp4`, `.wmv`, `.vp8`, `.mov`, `.mpg`, `.mp3` or `.flac`
 * Info hash (case insensitive) e.g: `a3fbda1961fbc908026ec7cc4569d5fbef840c1e`
+* [IMDB](https://www.imdb.com) ID e.g: `tt1254207`
 
 ## FAQ:
 **My link isn't working**

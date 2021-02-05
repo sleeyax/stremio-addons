@@ -1,5 +1,5 @@
 import {decode as decodeMagnet} from 'magnet-uri';
-import { infoHashLongRegex, infoHashRegex, magnetRegex, mediaFileRegex } from './constants';
+import { infoHashLongRegex, infoHashRegex, magnetRegex, mediaFileRegex, ttidRegex } from './constants';
 
 export function parseTorrent (value: string) {
   // full magnet uri
@@ -14,3 +14,4 @@ export function parseTorrent (value: string) {
 
 export const isTorrent = (value: string) => magnetRegex.test(value) || (infoHashLongRegex.test(value) || infoHashRegex.test(value));
 export const isMediaFile = (value: string) => mediaFileRegex.test(value);
+export const isImdbId = (value: string) => ttidRegex.test(value);

@@ -1,11 +1,11 @@
 import {config as configEnv} from 'dotenv';
 configEnv();
 import { addonBuilder } from 'stremio-addon-sdk';
-import { decode as decodeMagnet, encode as encodeMagnet } from 'magnet-uri';
 import manifest from './manifest';
 import createEngine, { fetchMeta } from './engine';
 import { addonUrl, prefix, streamingServerUrl } from './constants';
-import { isMediaFile, isTorrent, parseTorrent } from './converters';
+import { isImdbId, isMediaFile, isTorrent, parseTorrent } from './converters';
+import imdbToMeta from './imdb';
 
 const cacheMaxAge = process.env.NODE_ENV === 'development' ? 0 : (24 * 3600 * 7);
 
@@ -39,6 +39,10 @@ addon.defineCatalogHandler(async ({extra}) => {
       poster: manifest.logo,
       logo: manifest.logo,
     }], cacheMaxAge};
+  }
+  else if (isImdbId(searchValue)) {
+    const meta = await imdbToMeta(searchValue);
+    return {metas: meta != null ? [meta] : [], cacheMaxAge};
   }
 
   return {metas: [], cacheMaxAge};
@@ -79,10 +83,12 @@ addon.defineMetaHandler(async ({id}) => {
   const meta = metaResponse.meta;
   meta.id = id;
   meta.videos = (meta.videos || []).map(video => {
-    video.thumbnail = video.thumbnail ? video.thumbnail.replace(streamingServerUrl, addonUrl) : undefined;
+    if (video.thumbnail)
+      video.thumbnail = video.thumbnail.replace(streamingServerUrl, addonUrl);
     return video;
   });
-  meta.background = meta.background ? meta.background.replace(streamingServerUrl, addonUrl) : undefined;
+  if (meta.background)
+    meta.background = meta.background.replace(streamingServerUrl, addonUrl);
   
   return {meta, cacheMaxAge};
 });
