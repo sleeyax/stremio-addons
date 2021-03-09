@@ -1,5 +1,0 @@
-app: podcasts
-
-deployment:
-  replicaCount: 1
-  image: "registry.gitlab.com/sleeyax-docker/stremio/podcasts:2.1.3"

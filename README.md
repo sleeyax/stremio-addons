@@ -8,7 +8,6 @@ List of working addons:
 * [Search and Play](packages/addons/search-and-play)
 * [XNXX](packages/addons/xnxx)
 * [Livestreams from dlive.tv](packages/addons/dlive)
-* [Podcasts](packages/addons/podcasts)
 * [Cartoon Extra](packages/addons/cartoonextra)
 * [Watch Cartoon Online (WCO)](packages/addons/watchcartoononline)
 
@@ -24,7 +23,7 @@ Addons that are not maintained by me anymore but are kept for reference. Some of
   * [1337x torrents](packages/addons/1337x-torrents)
   * [RARBG torrents](packages/addons/rarbg-torrents)
 * Archived [Anime torrents from horriblesubs](packages/addons/horriblesubs) because [horriblesubs was killed by COVID-19](https://www.twitlonger.com/show/n_1sre2m4)
-
+* Archived [Podcasts](packages/addons/podcasts) in favor of [Podcasts for All](https://github.com/NivM1/podcasts-for-all).
 
 ## Project structure
 Overview of how this project is structured:
