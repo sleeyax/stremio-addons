@@ -43,7 +43,7 @@ export default class WatchCartoonOnline {
   private url: string;
 
   constructor() {
-    this.url = 'https://www.thewatchcartoononline.tv';
+    this.url = 'https://www.wcofun.com';
     this.httpClient = got.extend({
       prefixUrl: this.url + '/',
       headers: {

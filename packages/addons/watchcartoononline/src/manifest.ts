@@ -7,7 +7,7 @@ export default <Manifest>{
   name: 'Watch Cartoon Online',
   version,
   description,
-  logo: 'https://www.thewatchcartoononline.tv/logo.gif',
+  logo: 'https://www.wcofun.com/logo.gif',
   background: 'https://i.imgur.com/ERLkgpY.png',
   types: ['series'],
   resources: ['stream'],
