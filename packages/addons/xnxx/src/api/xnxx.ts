@@ -16,7 +16,7 @@ export default class XnxxApi {
     };
 
     private get(endpoint: string, proxy?: string) {
-        let options: NeedleOptions = { 
+        let options: NeedleOptions = {
             headers: this.headers, 
             follow_max: 3,
         };
@@ -143,7 +143,7 @@ export default class XnxxApi {
             likes: Number.parseInt(votes.find('.vote-action-good .value').text()) || undefined,
             dislikes: Number.parseInt(votes.find('.vote-action-bad .value').text()) || undefined,
             tags: $('div.video-tags a').map((_, tagElement) => $(tagElement).text()).get(),
-            endpoint: $('input#copy-video-link').val().replace('http', 'https').replace(this.url, ''),
+            endpoint: $('input#copy-video-link').val().replace(/\bhttp\b/g, 'https').replace(this.url, ''),
             thumbnail: this.readWebPlayerConfig(response.body, 'setThumbUrl'),
             thumbSlide: this.readWebPlayerConfig(response.body, 'setThumbSlide'),
             description: $('.video-description').text().trim() || undefined
