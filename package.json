@@ -7,8 +7,9 @@
     "build": "lerna run tsc"
   },
   "devDependencies": {
-    "lerna": "^3.20.2",
-    "typescript": "^3.8.3",
-    "nodemon": "^2.0.2"
+    "@types/node": "^17.0.24",
+    "lerna": "^4.0.0",
+    "nodemon": "^2.0.15",
+    "typescript": "^4.6.3"
   }
 }
