@@ -23,7 +23,7 @@ Addons that are not maintained by me anymore but are kept for reference. Some of
 * Archived [Anime torrents from horriblesubs](packages/addons/horriblesubs) because [horriblesubs was killed by COVID-19](https://www.twitlonger.com/show/n_1sre2m4)
 * Archived [Podcasts](packages/addons/podcasts) in favor of [Podcasts for All](https://github.com/NivM1/podcasts-for-all).
 * Arhived [Cartoon Extra](packages/addons/cartoonextra) because it has been taken down.
-* Archived [Search and Play](packages/addons/search-and-play) due to technical difficulties. I could fix this, though I think no one uses this addon anymore anyways.
+* Archived [Search and Play](packages/addons/search-and-play) due to technical difficulties regarding hosting. Could be fixed, but only very few people used this addon anyways.
 
 ## Project structure
 Overview of how this project is structured:
