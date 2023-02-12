@@ -16,6 +16,6 @@
 		"stremio-addon-sdk": "^1.4.0"
 	},
 	"devDependencies": {
-		"nodemon": "^1.18.11"
+		"nodemon": "^2.0.20"
 	}
 }

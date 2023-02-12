@@ -20,7 +20,7 @@
 		"stremio-addon-sdk": "^1.4.0"
 	},
 	"devDependencies": {
-		"nodemon": "^1.19.0",
+		"nodemon": "^2.0.20",
 		"rimraf": "^2.6.3"
 	}
 }
