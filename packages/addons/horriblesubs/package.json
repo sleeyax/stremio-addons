@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "node-horriblesubs": "1.1.0",
-    "nodemon": "^1.19.0",
+    "nodemon": "^2.0.20",
     "parse-torrent": "^6.1.2",
     "stremio-addon-sdk": "^1.4.0"
   }
