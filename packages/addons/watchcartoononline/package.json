@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
-    "got": "^11.5.1",
+    "got": "^12.5.3",
     "notevil": "^1.3.3",
     "slugify": "^1.4.4",
     "stremio-addon-sdk": "^1.6.2",
