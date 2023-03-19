@@ -7,7 +7,6 @@ List of working addons:
 ### Remote
 * [XNXX](packages/addons/xnxx)
 * [Livestreams from dlive.tv](packages/addons/dlive)
-* [Watch Cartoon Online (WCO)](packages/addons/watchcartoononline)
 
 ### Local
 * [IPTV from RedBox](packages/addons/redbox-tv)
@@ -24,6 +23,7 @@ Addons that are not maintained by me anymore but are kept for reference. Some of
 * Archived [Podcasts](packages/addons/podcasts) in favor of [Podcasts for All](https://github.com/NivM1/podcasts-for-all).
 * Arhived [Cartoon Extra](packages/addons/cartoonextra) because it has been taken down.
 * Archived [Search and Play](packages/addons/search-and-play) due to technical difficulties regarding hosting. Could be fixed, but only very few people used this addon anyways.
+* Archived [Watch Cartoon Online (WCO)](packages/addons/watchcartoononline) becausee it seems broken and I no longer care to fix it.
 
 ## Project structure
 Overview of how this project is structured:
