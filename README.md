@@ -2,13 +2,6 @@
 All of my [Stremio](https://www.stremio.com/) addons in one monorepo. Read more about the advantages of monorepos [here](https://danluu.com/monorepo/).
 
 ## Addons
-List of working addons:
-
-### Remote
-* [XNXX](packages/addons/xnxx)
-
-### Local
-* [IPTV from RedBox](packages/addons/redbox-tv) (**probably no longer works**)
 
 ### Archived
 Addons that are not maintained by me anymore but are kept for reference. Some of these still work, others probably don't. If you want to resurrect any of these addons, create a pull requests to become its maintainer!
@@ -24,7 +17,8 @@ Addons that are not maintained by me anymore but are kept for reference. Some of
 * Archived [Search and Play](packages/addons/search-and-play) due to technical difficulties regarding hosting. Could be fixed, but only very few people used this addon anyways.
 * Archived [Watch Cartoon Online (WCO)](packages/addons/watchcartoononline) becausee it seems broken and I no longer care to fix it.
 * Archived [Livestreams from dlive.tv](packages/addons/dlive) becaude the addon hasn't been upated for a while. Search is broken and livestreams don't fully load.
-
+* Archived [XNXX](packages/addons/xnxx) because the free HTTP proxy it requires stopped working. The addon itself still works fine though, feel free to run it locally.'
+* Archived [IPTV from RedBox](packages/addons/redbox-tv) (local addon)
 
 ## Project structure
 Overview of how this project is structured:
